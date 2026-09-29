@@ -7,7 +7,7 @@ EDITOR       = "code"
 CALCULATOR   = "gnome-calculator"
 
 -- Monitors
-MONITOR1 = ""
+MONITOR1 = "HDMI-A-1"
 MONITOR2 = ""
 MONITOR3 = ""
 PRIMARY_MONITOR = MONITOR1
