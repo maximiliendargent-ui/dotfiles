@@ -145,7 +145,9 @@ bind("CTRL + ALT + Delete",     "Menu d'alimentation",                noct("pane
 bind(mainMod .. " + SHIFT + L", "Mise en veille",                     hl.dsp.exec_cmd("systemctl suspend-then-hibernate"), locked)
 bind(mainMod .. " + N",         "Centre de contrôle / notifications", noct("panel-toggle control-center notifications"))
 bind(mainMod .. " + Z",         "Réglages de Noctalia",               noct("settings-toggle"))
-bind(mainMod .. " + SHIFT + W", "Changer de fond d'écran",            noct("panel-toggle wallpaper"))
+bind(mainMod .. " + SHIFT + W", "Carrousel de fonds d'écran",
+     hl.dsp.exec_cmd(HOME .. "/.local/bin/wallpicker-toggle"))
+bind(mainMod .. " + CTRL + W",  "Sélecteur de fonds d'écran Noctalia", noct("panel-toggle wallpaper"))
 bind(mainMod .. " + V",         "Historique du presse-papiers",       noct("panel-toggle clipboard"))
 bind(mainMod .. " + Period",    "Emojis",                             noct("panel-toggle launcher /emo"))
 

@@ -1,0 +1,8 @@
+#!/bin/sh
+# Ouvre le carrousel de fonds d'écran, ou le ferme s'il est déjà ouvert.
+# Le motif « wallpicke[r] » évite que pgrep/pkill se trouvent eux-mêmes.
+if pgrep -f 'qs -c wallpicke[r]' > /dev/null; then
+    pkill -f 'qs -c wallpicke[r]'
+else
+    exec qs -c wallpicker
+fi
