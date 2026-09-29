@@ -1,40 +1,71 @@
 #!/bin/sh
-# Aide des raccourcis Hyprland, en deux niveaux :
-#   1. la liste des sections ;
-#   2. les raccourcis de la section choisie (Échap pour revenir).
-# Lit la liste générée par binds.lua dans ~/.cache/hypr-keybinds.tsv.
+# Aide des raccourcis Hyprland, en deux niveaux (sections, puis raccourcis).
+# Lit les descriptions directement depuis Hyprland (hyprctl binds).
+# Format attendu des descriptions dans binds.lua : "Section: texte".
 
-file="$HOME/.cache/hypr-keybinds.tsv"
 all="Tous les raccourcis (recherche)"
 
-if [ ! -f "$file" ]; then
-    echo "Liste introuvable : recharge Hyprland (hyprctl reload) puis réessaie."
+list=$(hyprctl binds -j | jq -r '.[] | select(.description != "") | [.modmask, .key, .description] | @tsv' | awk -F'\t' '
+function keyname(k) {
+    if (k ~ /^code:1[0-9]$/) { n = substr(k, 6) - 9; return (n == 10) ? "0" : n }
+    if (k == "code:20") return "Moins"
+    if (k == "code:21") return "Égal"
+    if (k == "SUPER_L") return ""
+    if (k == "Return") return "Entrée"
+    if (k == "Space") return "Espace"
+    if (k == "Escape") return "Échap"
+    if (k == "BackSpace") return "Retour arrière"
+    if (k == "Print") return "Impr. écran"
+    if (k == "Left") return "←"
+    if (k == "Right") return "→"
+    if (k == "Up") return "↑"
+    if (k == "Down") return "↓"
+    if (k == "Comma") return "Virgule"
+    if (k == "Period") return "Point"
+    if (k == "Backslash") return "\\"
+    if (k == "mouse:272") return "clic gauche"
+    if (k == "mouse:273") return "clic droit"
+    if (k == "mouse_down") return "molette ↓"
+    if (k == "mouse_up") return "molette ↑"
+    if (k == "XF86AudioPlay") return "Lecture"
+    return k
+}
+{
+    m = $1; combo = ""
+    if (int(m / 64) % 2) combo = combo "Super + "
+    if (int(m / 4) % 2)  combo = combo "Ctrl + "
+    if (int(m / 8) % 2)  combo = combo "Alt + "
+    if (m % 2)           combo = combo "Shift + "
+    k = keyname($2)
+    combo = (k == "") ? substr(combo, 1, length(combo) - 3) " (seul)" : combo k
+
+    i = index($3, ": ")
+    sec = (i > 0) ? substr($3, 1, i - 1) : "Divers"
+    txt = (i > 0) ? substr($3, i + 2) : $3
+    if (!(sec in seen)) { seen[sec] = 1; order[++n] = sec }
+    items[sec] = items[sec] combo "\t" txt "\n"
+}
+END { for (j = 1; j <= n; j++) printf "\t%s\n%s", order[j], items[order[j]] }
+')
+
+if [ -z "$list" ]; then
+    echo "Aucun raccourci décrit trouvé (Hyprland est-il lancé ?)."
     sleep 3
     exit 1
 fi
 
 while true; do
-    # Niveau 1 : les sections
-    section=$( { echo "$all"; awk -F'\t' '$1 == "" { print $2 }' "$file"; } | fzf \
+    section=$( { echo "$all"; printf '%s\n' "$list" | awk -F'\t' '$1 == "" { print $2 }'; } | fzf \
         --prompt='Sections › ' \
         --header='Entrée ou double-clic pour ouvrir · Échap pour fermer' \
-        --layout=reverse \
-        --no-sort \
-        --info=hidden \
-        --no-scrollbar ) || exit 0
+        --layout=reverse --no-sort --info=hidden --no-scrollbar ) || exit 0
 
-    # Niveau 2 : les raccourcis de la section (ou tous)
-    awk -F'\t' -v s="$section" -v all="$all" '
+    printf '%s\n' "$list" | awk -F'\t' -v s="$section" -v all="$all" '
         $1 == "" { cur = $2; next }
-        s == all || cur == s { printf "\033[36m%-28s\033[0m %s\n", $1, $2 }
-    ' "$file" | fzf \
-        --ansi \
+        NF >= 2 && (s == all || cur == s) { printf "\033[36m%-32s\033[0m %s\n", $1, $2 }
+    ' | fzf --ansi \
         --prompt="$section › " \
         --header='Tape pour chercher · Échap pour revenir aux sections' \
-        --layout=reverse \
-        --no-sort \
-        --info=hidden \
-        --no-scrollbar \
-        --pointer=' ' \
-        --bind='enter:ignore'
+        --layout=reverse --no-sort --info=hidden --no-scrollbar \
+        --pointer=' ' --bind='enter:ignore'
 done
