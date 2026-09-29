@@ -1,0 +1,7 @@
+background-opacity = 0.9
+cursor-style = block
+cursor-style-blink = false
+window-padding-x = 14
+window-padding-y = 14
+theme = noctalia
+keybind = ctrl+shift+c=copy_to_clipboard:plain
