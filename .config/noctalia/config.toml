@@ -21,3 +21,4 @@ directory = "/home/maximilien/Pictures/Wallpapers"
 
 [shell]
 font_family = "JetBrainsMono Nerd Font"
+polkit_agent = true
