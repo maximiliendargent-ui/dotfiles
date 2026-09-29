@@ -1,0 +1,40 @@
+#!/bin/sh
+# Aide des raccourcis Hyprland, en deux niveaux :
+#   1. la liste des sections ;
+#   2. les raccourcis de la section choisie (Échap pour revenir).
+# Lit la liste générée par binds.lua dans ~/.cache/hypr-keybinds.tsv.
+
+file="$HOME/.cache/hypr-keybinds.tsv"
+all="Tous les raccourcis (recherche)"
+
+if [ ! -f "$file" ]; then
+    echo "Liste introuvable : recharge Hyprland (hyprctl reload) puis réessaie."
+    sleep 3
+    exit 1
+fi
+
+while true; do
+    # Niveau 1 : les sections
+    section=$( { echo "$all"; awk -F'\t' '$1 == "" { print $2 }' "$file"; } | fzf \
+        --prompt='Sections › ' \
+        --header='Entrée ou double-clic pour ouvrir · Échap pour fermer' \
+        --layout=reverse \
+        --no-sort \
+        --info=hidden \
+        --no-scrollbar ) || exit 0
+
+    # Niveau 2 : les raccourcis de la section (ou tous)
+    awk -F'\t' -v s="$section" -v all="$all" '
+        $1 == "" { cur = $2; next }
+        s == all || cur == s { printf "\033[36m%-28s\033[0m %s\n", $1, $2 }
+    ' "$file" | fzf \
+        --ansi \
+        --prompt="$section › " \
+        --header='Tape pour chercher · Échap pour revenir aux sections' \
+        --layout=reverse \
+        --no-sort \
+        --info=hidden \
+        --no-scrollbar \
+        --pointer=' ' \
+        --bind='enter:ignore'
+done

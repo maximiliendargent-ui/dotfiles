@@ -126,3 +126,4 @@ hl.layer_rule({
   blur = true,
   blur_popups = true,
 })
+hl.window_rule({ match = { class = "^(dev.keybinds)$" }, float = true, size = { "monitor_w*0.55", "monitor_h*0.65" } })

@@ -91,10 +91,10 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-7jeozo.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gwdvxq.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-7jeozo.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gwdvxq.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-7jeozo.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gwdvxq.jpg"
