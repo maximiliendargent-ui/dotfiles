@@ -89,6 +89,8 @@ avant de modifier quelque chose.
 
 - Terminal **Ghostty** (`~/.config/ghostty/config`), shell fish (`~/.config/fish/config.fish`),
   prompt **Starship** (`~/.config/starship.toml`, couleurs ANSI pour suivre Ghostty).
+- Ghostty : `performable:ctrl+v=paste_from_clipboard` → Ctrl + V colle le texte ; sans texte (image), la
+  touche passe à l'appli (Claude Code colle alors l'image). Ne pas retirer `performable:`.
 - Navigateurs : Firefox (Pywalfox) et Zen ; éditeur VS Code officiel (`code`) ; fichiers : Dolphin.
 - `EDITOR=code-wait` (dans `config.fish`) : Ctrl + G dans Claude Code ouvre le prompt dans VS Code.
 - Thème Qt : **qt6ct-kde**, schéma de couleurs KDE `Noctalia`. Les applis GTK 4 ne rechargent leurs
