@@ -1,0 +1,3 @@
+#!/bin/sh
+# Éditeur pour $EDITOR : VS Code en mode attente, sans les avertissements de code-flags.conf
+exec code --wait "$@" 2>/dev/null

@@ -1,7 +1,7 @@
 source /usr/share/cachyos-fish-config/cachyos-config.fish
 
 # Éditeur par défaut (Ctrl + G dans Claude Code, git…)
-set -gx EDITOR "code --wait"
+set -gx EDITOR code-wait
 
 # overwrite greeting
 # potentially disabling fastfetch

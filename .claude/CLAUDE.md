@@ -83,12 +83,14 @@ avant de modifier quelque chose.
   fond via `noctalia msg wallpaper-set`.
 - Bouton **Claude** dans la barre Noctalia (`[widget.claude]` dans `config.toml`, icône
   `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty.
+- `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
 
 ## Applis et thèmes
 
 - Terminal **Ghostty** (`~/.config/ghostty/config`), shell fish (`~/.config/fish/config.fish`),
   prompt **Starship** (`~/.config/starship.toml`, couleurs ANSI pour suivre Ghostty).
 - Navigateurs : Firefox (Pywalfox) et Zen ; éditeur VS Code officiel (`code`) ; fichiers : Dolphin.
+- `EDITOR=code-wait` (dans `config.fish`) : Ctrl + G dans Claude Code ouvre le prompt dans VS Code.
 - Thème Qt : **qt6ct-kde**, schéma de couleurs KDE `Noctalia`. Les applis GTK 4 ne rechargent leurs
   couleurs qu'au démarrage (limite de GTK).
 - Curseur choisi avec `nwg-look`.
