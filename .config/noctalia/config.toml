@@ -8,7 +8,7 @@ enable_builtin_templates = true
 builtin_ids = ["ghostty", "btop", "gtk3", "gtk4", "kcolorscheme", "qt"]
 
 enable_community_templates = true
-community_ids = ["vscode", "zen-browser", "neovim", "pywalfox"]
+community_ids = ["vscode", "zen-browser", "pywalfox"]
 
 [shell.screenshot]
 directory = "/home/maximilien/Pictures/Screenshots"

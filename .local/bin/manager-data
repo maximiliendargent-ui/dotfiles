@@ -1,0 +1,245 @@
+#!/usr/bin/env python3
+"""Données de la fenêtre Manager (~/.config/quickshell/manager) : paquets et plugins Noctalia, en JSON.
+
+Usage :
+  manager-data official                   paquets des dépôts officiels
+  manager-data installed                  paquets installés explicitement
+  manager-data aur-search <texte>         recherche dans l'AUR (API)
+  manager-data info <official|aur|installed> <nom>
+  manager-data install <official|aur> <nom>   (mot de passe via l'agent Polkit de Noctalia)
+  manager-data remove <nom>
+  manager-data plugins                    catalogue des plugins Noctalia (+ vignettes)
+  manager-data plugin-toggle <id>
+  manager-data plugins-update
+"""
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tomllib
+import urllib.parse
+import urllib.request
+
+ENV = {**os.environ, "LC_ALL": "C"}  # champs de pacman en anglais, pour pouvoir les lire
+SOURCES = os.path.expanduser("~/.local/state/noctalia/plugins/sources")
+THUMBS = os.path.expanduser("~/.cache/quickshell-manager/thumbs")
+AUR_RPC = "https://aur.archlinux.org/rpc/v5"
+
+
+def run(cmd, **kw):
+    return subprocess.run(cmd, capture_output=True, text=True, env=ENV, **kw).stdout
+
+
+def out(data):
+    json.dump(data, sys.stdout)
+
+
+def installed_set():
+    return set(run(["pacman", "-Qq"]).split())
+
+
+# ---- Paquets ----
+
+def official():
+    inst, seen, pkgs = installed_set(), set(), []
+    for line in run(["expac", "-S", "%r\t%n\t%v\t%d"]).splitlines():
+        repo, name, version, desc = (line.split("\t") + [""] * 4)[:4]
+        if name in seen:  # premier dépôt qui fournit le paquet, comme pacman
+            continue
+        seen.add(name)
+        pkgs.append({"name": name, "repo": repo, "version": version, "desc": desc,
+                     "installed": name in inst, "kind": "official"})
+    out(pkgs)
+
+
+def installed():
+    foreign = set(run(["pacman", "-Qqm"]).split())
+    explicit = run(["pacman", "-Qqe"]).split()
+    pkgs = []
+    for line in run(["expac", "-Q", "%n\t%v\t%d\t%N", *explicit]).splitlines():
+        name, version, desc, required = (line.split("\t") + [""] * 4)[:4]
+        pkgs.append({"name": name, "version": version, "desc": desc, "installed": True,
+                     "kind": "installed", "aur": name in foreign, "requiredBy": required.split()})
+    out(pkgs)
+
+
+def aur_get(path):
+    with urllib.request.urlopen(AUR_RPC + path, timeout=10) as r:
+        return json.load(r).get("results", [])
+
+
+def aur_search(query):
+    if len(query) < 2:
+        return out([])
+    inst = installed_set()
+    try:
+        res = aur_get("/search/" + urllib.parse.quote(query) + "?by=name-desc")
+    except Exception:
+        return out([])
+    res.sort(key=lambda p: -(p.get("NumVotes") or 0))
+    out([{"name": p["Name"], "version": p.get("Version", ""), "desc": p.get("Description") or "",
+          "votes": p.get("NumVotes", 0), "popularity": p.get("Popularity", 0),
+          "outOfDate": bool(p.get("OutOfDate")), "installed": p["Name"] in inst, "kind": "aur"}
+         for p in res[:60]])
+
+
+def parse_pacman_info(text):
+    info, key = {}, None
+    for line in text.splitlines():
+        if not line.strip():
+            if info:  # une fiche par dépôt : on garde la première, comme pacman
+                break
+            continue
+        if " : " in line and not line.startswith(" "):
+            key, _, value = line.partition(" : ")
+            key = key.strip()
+            info[key] = value.strip()
+        elif key and line.startswith(" "):
+            info[key] += " " + line.strip()
+    return info
+
+
+def none(v):
+    return "" if v in ("None", None) else v
+
+
+def info(kind, name):
+    if kind == "aur":
+        try:
+            p = aur_get("/info?arg[]=" + urllib.parse.quote(name))[0]
+        except Exception:
+            return out({"name": name})
+        return out({"name": name, "source": "AUR", "version": p.get("Version", ""),
+                    "desc": p.get("Description") or "", "url": p.get("URL") or "",
+                    "votes": p.get("NumVotes", 0), "popularity": round(p.get("Popularity", 0), 2),
+                    "outOfDate": bool(p.get("OutOfDate")), "maintainer": p.get("Maintainer") or "none",
+                    "depends": " ".join(p.get("Depends", [])),
+                    "installed": name in installed_set()})
+    i = parse_pacman_info(run(["pacman", "-Qi" if kind == "installed" else "-Si", name]))
+    aur = kind == "installed" and name in set(run(["pacman", "-Qqm"]).split())
+    out({"name": name, "source": "AUR" if aur else "Official",
+         "repo": i.get("Repository", ""), "version": i.get("Version", ""),
+         "desc": i.get("Description", ""), "url": none(i.get("URL", "")),
+         "size": i.get("Installed Size", ""), "depends": none(i.get("Depends On", "")),
+         "requiredBy": none(i.get("Required By", "")),
+         "installed": kind == "installed" or name in installed_set()})
+
+
+def install(kind, name):
+    if kind == "aur":
+        cmd = ["paru", "-S", "--aur", "--needed", "--noconfirm", "--skipreview", "--sudo", "pkexec", name]
+    else:
+        cmd = ["pkexec", "pacman", "-S", "--needed", "--noconfirm", name]
+    os.execvpe(cmd[0], cmd, ENV)
+
+
+def remove(name):
+    cmd = ["pkexec", "pacman", "-Rns", "--noconfirm", name]
+    os.execvpe(cmd[0], cmd, ENV)
+
+
+# ---- Plugins Noctalia ----
+
+def enabled_ids():
+    return {l.split()[0] for l in run(["noctalia", "msg", "plugins", "list"]).splitlines()
+            if l.split() and l.split()[-1] == "enabled"}
+
+
+def git_blobs(repo, specs):
+    """Lit plusieurs fichiers d'un dépôt en une fois : {spec: octets}."""
+    if not specs:
+        return {}
+    res = subprocess.run(["git", "-C", repo, "cat-file", "--batch"],
+                         input="".join(s + "\n" for s in specs).encode(), capture_output=True).stdout
+    blobs, i = {}, 0
+    for spec in specs:
+        nl = res.index(b"\n", i)
+        header = res[i:nl].split()
+        i = nl + 1
+        if len(header) == 3 and header[1] == b"blob":
+            size = int(header[2])
+            blobs[spec] = res[i:i + size]
+            i += size + 1
+    return blobs
+
+
+def plugins():
+    os.makedirs(THUMBS, exist_ok=True)
+    enabled, inst = enabled_ids(), installed_set()
+    catalog = []
+    for source in ("official", "community"):
+        repo = os.path.join(SOURCES, source, "repo")
+        if not os.path.isdir(repo):
+            continue
+        # Fiches et vignettes : chemins et identifiants d'objets Git
+        tree = run(["git", "-C", repo, "ls-tree", "-r", "HEAD"]).splitlines()
+        files = {}
+        for line in tree:
+            meta, _, path = line.partition("\t")
+            parts = path.split("/")
+            if len(parts) == 2 and parts[1] in ("plugin.toml", "thumbnail.webp", "thumbnail.png"):
+                files.setdefault(parts[0], {})[parts[1]] = meta.split()[2]
+        tomls = git_blobs(repo, [f"HEAD:{d}/plugin.toml" for d in files if "plugin.toml" in files[d]])
+        # Vignettes : nommées par identifiant d'objet, extraites une seule fois
+        missing = {}
+        for d, f in files.items():
+            name = next((n for n in ("thumbnail.webp", "thumbnail.png") if n in f), None)
+            if name:
+                path = os.path.join(THUMBS, f[name] + os.path.splitext(name)[1])
+                f["thumb"] = path
+                if not os.path.exists(path):
+                    missing[f"HEAD:{d}/{name}"] = path
+        for spec, data in git_blobs(repo, list(missing)).items():
+            with open(missing[spec], "wb") as fh:
+                fh.write(data)
+        for d, f in files.items():
+            raw = tomls.get(f"HEAD:{d}/plugin.toml")
+            if raw is None:
+                continue
+            try:
+                t = tomllib.loads(raw.decode())
+            except Exception:
+                continue
+            deps = t.get("dependencies", [])
+            catalog.append({
+                "id": t.get("id", d), "name": t.get("name", d), "desc": t.get("description", ""),
+                "author": t.get("author", ""), "version": t.get("version", ""),
+                "tags": t.get("tags", []), "source": source,
+                "enabled": t.get("id", d) in enabled,
+                "hasSettings": bool(t.get("setting")),
+                "missing": [x for x in deps if x not in inst and not shutil.which(x)],
+                "thumb": f.get("thumb", ""),
+            })
+    catalog.sort(key=lambda p: (not p["enabled"], p["source"] != "official", p["name"].lower()))
+    out(catalog)
+
+
+def plugin_toggle(pid):
+    action = "disable" if pid in enabled_ids() else "enable"
+    run(["noctalia", "msg", "plugins", action, pid])
+    out({"id": pid, "enabled": pid in enabled_ids()})
+
+
+def plugins_update():
+    for source in ("official", "community"):
+        run(["noctalia", "msg", "plugins", "update", source])
+    out({"ok": True})
+
+
+if __name__ == "__main__":
+    a = sys.argv[1:]
+    cmds = {
+        "official": lambda: official(),
+        "installed": lambda: installed(),
+        "aur-search": lambda: aur_search(" ".join(a[1:])),
+        "info": lambda: info(a[1], a[2]),
+        "install": lambda: install(a[1], a[2]),
+        "remove": lambda: remove(a[1]),
+        "plugins": lambda: plugins(),
+        "plugin-toggle": lambda: plugin_toggle(a[1]),
+        "plugins-update": lambda: plugins_update(),
+    }
+    if not a or a[0] not in cmds:
+        sys.exit(__doc__)
+    cmds[a[0]]()

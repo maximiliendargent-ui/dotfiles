@@ -102,6 +102,13 @@ ShellRoot {
                 .sort((a, b) => a.name.localeCompare(b.name))
         }
 
+        // Applis masquées des catégories et de All, mais trouvables par la recherche
+        readonly property var hiddenIds: ["bssh", "bvnc", "avahi-discover", "assistant", "designer", "linguist", "qdbusviewer"]
+
+        function listedApps() {
+            return allApps().filter(e => !hiddenIds.includes(normId(e.id)))
+        }
+
         function appItem(e) {
             return {
                 name: e.name,
@@ -118,11 +125,50 @@ ShellRoot {
             app(id + ".desktop")
         }
 
-        function appsIn(cats, exclude) {
-            const ex = exclude || []
-            return allApps()
-                .filter(e => e.categories.some(k => cats.includes(k)) && !e.categories.some(k => ex.includes(k)))
-                .map(appItem)
+        // Une seule catégorie par appli : la première qui correspond, dans cet ordre
+        readonly property var catOrder: [
+            ["Games", ["Game"]],
+            ["Development", ["Development"]],
+            ["Graphics", ["Graphics"]],
+            ["Multimedia", ["AudioVideo", "Audio", "Video"]],
+            ["Office", ["Office", "FileManager"]],
+            ["Internet", ["Network"]],
+            ["System", ["Settings", "System", "Utility"]]
+        ]
+
+        function categoryOf(e) {
+            for (const [name, cats] of catOrder)
+                if (e.categories.some(k => cats.includes(k))) return name
+            return ""
+        }
+
+        function appsIn(name) {
+            return listedApps().filter(e => categoryOf(e) === name).map(appItem)
+        }
+
+        // Sous-sections de System : d'abord par appli, puis selon ses catégories, sinon Tools
+        readonly property var systemSectionById: ({
+            "nvidia-settings": "Hardware", "org.cachyos.KernelManager": "Hardware",
+            "org.cachyos.scx-manager": "Hardware", "org.kde.partitionmanager": "Hardware",
+            "org.kde.kinfocenter": "Hardware", "lstopo": "Hardware",
+            "btop": "Monitoring", "org.kde.plasma-systemmonitor": "Monitoring", "org.kde.filelight": "Monitoring",
+            "btrfs-assistant": "Maintenance", "limine-snapper-restore": "Maintenance", "arch-update": "Maintenance",
+            "cachyos-pi": "Maintenance", "com.shellyorg.shelly": "Maintenance", "cachyos-hello": "Maintenance"
+        })
+
+        function systemSection(e) {
+            const known = systemSectionById[normId(e.id)]
+            if (known) return known
+            const c = e.categories
+            if (c.includes("TerminalEmulator")) return "Terminals"
+            if (c.includes("HardwareSettings")) return "Hardware"
+            if (c.includes("Monitor")) return "Monitoring"
+            if (c.includes("Settings")) return "Settings"
+            return "Tools"
+        }
+
+        function systemApps(section) {
+            return listedApps().filter(e => categoryOf(e) === "System" && systemSection(e) === section).map(appItem)
         }
 
         function recentApps() {
@@ -136,14 +182,14 @@ ShellRoot {
 
         readonly property var root: [
             // Applis
-            { name: "All", glyph: "", apps: () => allApps().map(appItem) },
+            { name: "All", glyph: "", apps: () => listedApps().map(appItem) },
             { name: "Recent", glyph: "", apps: () => recentApps() },
-            { name: "Internet", glyph: "", apps: () => appsIn(["Network"]) },
-            { name: "Multimedia", glyph: "", apps: () => appsIn(["AudioVideo", "Audio", "Video"]) },
-            { name: "Games", glyph: "", apps: () => appsIn(["Game"]) },
-            { name: "Office", glyph: "", apps: () => appsIn(["Office", "FileManager"]) },
-            { name: "Graphics", glyph: "", apps: () => appsIn(["Graphics"]) },
-            { name: "Development", glyph: "", apps: () => appsIn(["Development"]) },
+            { name: "Internet", glyph: "", apps: () => appsIn("Internet") },
+            { name: "Multimedia", glyph: "", apps: () => appsIn("Multimedia") },
+            { name: "Games", glyph: "", apps: () => appsIn("Games") },
+            { name: "Office", glyph: "", apps: () => appsIn("Office") },
+            { name: "Graphics", glyph: "", apps: () => appsIn("Graphics") },
+            { name: "Development", glyph: "", apps: () => appsIn("Development") },
 
             // Actions et style
             { name: "Trigger", glyph: "", children: [
@@ -158,40 +204,50 @@ ShellRoot {
             { name: "Style", glyph: "", children: [
                 { name: "Wallpaper carousel", glyph: "", run: () => run([home + "/.local/bin/wallpicker-toggle"]) },
                 { name: "Wallpaper panel", glyph: "", run: () => msg("panel-toggle", "wallpaper") },
-                { name: "Noctalia settings", glyph: "", run: () => msg("settings-open") },
-                { name: "GTK theme", glyph: "", run: () => app("nwg-look") },
-                { name: "Qt theme", glyph: "", run: () => app("qt6ct") },
                 { name: "Hyprland look", glyph: "", run: () => edit(home + "/.config/hypr/config/decorations.lua") }
             ] },
-
-            // Réglages
-            { name: "Setup", glyph: "", children: [
-                { name: "Audio", glyph: "", run: () => msg("panel-toggle", "control-center", "audio") },
-                { name: "Audio mixer", glyph: "", run: () => app("pavucontrol") },
-                { name: "Wi-Fi", glyph: "", run: () => msg("panel-toggle", "control-center", "network") },
-                { name: "Bluetooth", glyph: "", run: () => msg("panel-toggle", "control-center", "bluetooth") },
-                { name: "Hyprland settings", glyph: "", run: () => app(home + "/.local/bin/hyprmod") },
-                { name: "Keybindings editor", glyph: "", run: () => app("ghostty", "--class=dev.keybinds", "-e",
-                    home + "/.local/share/keybind-editor/kbe", home + "/.config/hypr/config/binds.lua") },
-                { name: "Mirrors", glyph: "", run: () => term("sudo cachyos-rate-mirrors") },
-                { name: "Config files", glyph: "", children: [
-                    { name: "Hyprland", glyph: "", run: () => edit(home + "/.config/hypr") },
-                    { name: "Noctalia", glyph: "", run: () => edit(home + "/.config/noctalia/config.toml") },
-                    { name: "Ghostty", glyph: "", run: () => edit(home + "/.config/ghostty/config") },
-                    { name: "Fish", glyph: "", run: () => edit(home + "/.config/fish/config.fish") },
-                    { name: "Starship", glyph: "", run: () => edit(home + "/.config/starship.toml") },
-                    { name: "This menu", glyph: "", run: () => edit(home + "/.config/quickshell/menu/shell.qml") },
-                    { name: "CLAUDE.md", glyph: "", run: () => edit(home + "/.claude/CLAUDE.md") }
-                ] }
+            // Plugins Noctalia : fenêtre Manager (~/.config/quickshell/manager)
+            { name: "Plugins", glyph: "\uf12e", children: [
+                { name: "Manage", glyph: "\uf12e", run: () => app(home + "/.local/bin/manager-open", "plugins") },
+                { name: "Store", glyph: "\uf07a", run: () => msg("settings-open", "plugins") },
+                { name: "Update catalog", glyph: "\uf021", run: () => term(
+                    "noctalia msg plugins update official && noctalia msg plugins update community && echo && echo \"✓ Done\"") }
             ] },
-            { name: "Settings", glyph: "", apps: () => appsIn(["Settings"]) },
-            { name: "System", glyph: "", apps: () => appsIn(["System", "Utility"], ["FileManager"]) },
+
+            // Réglages : Setup, Settings et System réunis, en sous-sections
+            { name: "System", glyph: "\uf013", children: [
+                { name: "Connections", glyph: "\uf1eb", children: [
+                    { name: "Audio", glyph: "\uf028", run: () => msg("panel-toggle", "control-center", "audio") },
+                    { name: "Wi-Fi", glyph: "\uf1eb", run: () => msg("panel-toggle", "control-center", "network") },
+                    { name: "Bluetooth", glyph: "\uf293", run: () => msg("panel-toggle", "control-center", "bluetooth") }
+                ] },
+                { name: "Settings", glyph: "\uf1de", apps: () => systemApps("Settings"), children: [
+                    { name: "Keybindings editor", glyph: "\uf11c", run: () => app("ghostty", "--class=dev.keybinds", "-e",
+                        home + "/.local/share/keybind-editor/kbe", home + "/.config/hypr/config/binds.lua") },
+                    { name: "Config files", glyph: "", children: [
+                        { name: "Hyprland", glyph: "", run: () => edit(home + "/.config/hypr") },
+                        { name: "Noctalia", glyph: "", run: () => edit(home + "/.config/noctalia/config.toml") },
+                        { name: "Ghostty", glyph: "", run: () => edit(home + "/.config/ghostty/config") },
+                        { name: "Fish", glyph: "", run: () => edit(home + "/.config/fish/config.fish") },
+                        { name: "Starship", glyph: "", run: () => edit(home + "/.config/starship.toml") },
+                        { name: "This menu", glyph: "", run: () => edit(home + "/.config/quickshell/menu/shell.qml") },
+                        { name: "CLAUDE.md", glyph: "", run: () => edit(home + "/.claude/CLAUDE.md") }
+                    ] }
+                ] },
+                { name: "Hardware", glyph: "\uf2db", apps: () => systemApps("Hardware") },
+                { name: "Monitoring", glyph: "\uf080", apps: () => systemApps("Monitoring") },
+                { name: "Maintenance", glyph: "\uf0ad", apps: () => systemApps("Maintenance"), children: [
+                    { name: "Mirrors", glyph: "\uf0ac", run: () => term("sudo cachyos-rate-mirrors") }
+                ] },
+                { name: "Terminals", glyph: "\uf120", apps: () => systemApps("Terminals") },
+                { name: "Tools", glyph: "\uf1b2", apps: () => systemApps("Tools") }
+            ] },
 
             // Maintenance
-            // Paquets officiels et AUR : fenêtres de ~/.local/bin/menu-pkg
+            // Paquets officiels et AUR : fenêtre Manager (~/.config/quickshell/manager)
             { name: "Package", glyph: "", children: [
-                { name: "Add", glyph: "", run: () => app("ghostty", "--class=dev.menu", "-e", home + "/.local/bin/menu-pkg", "add") },
-                { name: "Remove", glyph: "", run: () => app("ghostty", "--class=dev.menu", "-e", home + "/.local/bin/menu-pkg", "remove") }
+                { name: "Add", glyph: "", run: () => app(home + "/.local/bin/manager-open", "packages", "add") },
+                { name: "Remove", glyph: "", run: () => app(home + "/.local/bin/manager-open", "packages", "installed") }
             ] },
             // Tout mettre à jour sans confirmation (snapshots automatiques via snap-pac)
             { name: "Update", glyph: "", run: () => term(
@@ -226,7 +282,7 @@ ShellRoot {
         function refresh(keepIndex) {
             const q = search.text.trim().toLowerCase()
             const node = stack.length ? stack[stack.length - 1] : null
-            let items = !node ? root : node.children ? node.children : node.apps()
+            let items = !node ? root : (node.children || []).concat(node.apps ? node.apps() : [])
             if (q !== "") {
                 if (!node)
                     items = root.concat(leaves(root)).concat(allApps().map(appItem))

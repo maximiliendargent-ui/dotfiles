@@ -80,6 +80,9 @@ widget_order = [ "lockscreen-login-box@WAYLAND-1", "lockscreen-login-box@HDMI-A-
         show_unlock_hint = true
         show_weather = true
 
+[plugins]
+enabled = [ "noctalia/bongocat" ]
+
 [shell]
 corner_radius_scale = 0.0
 
@@ -91,10 +94,10 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"

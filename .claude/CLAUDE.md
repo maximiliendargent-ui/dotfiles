@@ -68,7 +68,7 @@ avant de modifier quelque chose.
   `caffeine-toggle`, `settings-toggle`, `session lock`, `screenshot-region`, `greeter-sync`.
 - Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe).
   Modèles actifs : `builtin_ids` (ghostty, btop, gtk3, gtk4, kcolorscheme, qt), `community_ids`
-  (vscode, zen-browser, neovim, pywalfox) et un modèle perso `hyprland_borders`
+  (vscode, zen-browser, pywalfox) et un modèle perso `hyprland_borders`
   (`~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`).
 - Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
@@ -85,9 +85,13 @@ avant de modifier quelque chose.
   `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty.
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
-  (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). Fenêtres
-  Package › Add/Remove : `~/.local/bin/menu-pkg` (officiels + AUR). Update = `paru -Syu --noconfirm` +
-  `flatpak update -y` (snapshots via `snap-pac`).
+  (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). Package et
+  Plugins ouvrent la fenêtre Manager. Update = `paru -Syu --noconfirm` + `flatpak update -y`
+  (snapshots via `snap-pac`).
+- Fenêtre **Manager** en Quickshell (paquets officiels + AUR, plugins Noctalia) :
+  `~/.config/quickshell/manager/shell.qml`, données via `~/.local/bin/manager-data` (JSON), ouverte par
+  `~/.local/bin/manager-open [packages|plugins] [add|installed]`. Mots de passe via l'agent Polkit de
+  Noctalia (`pkexec`).
 
 ## Applis et thèmes
 

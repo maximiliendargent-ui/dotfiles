@@ -127,3 +127,6 @@ hl.layer_rule({
   blur_popups = true,
 })
 hl.window_rule({ match = { class = "^(dev.keybinds)$" }, float = true, size = { "monitor_w*0.55", "monitor_h*0.65" } })
+
+-- Fenêtre Manager (paquets et plugins) : ~/.config/quickshell/manager
+hl.window_rule({ match = { class = "^(org\\.quickshell)$", title = "^(Manager)$" }, float = true, center = true, size = { "monitor_w*0.60", "monitor_h*0.70" } })
