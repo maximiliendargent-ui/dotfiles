@@ -117,9 +117,10 @@ avant de modifier quelque chose.
 
 ## Maintenance de ce fichier
 
-À la fin de chaque tâche où tu as modifié mon système, vérifie que ce fichier est encore exact.
-Sinon, propose-moi les modifications précises (**sans les appliquer avant mon accord**), puis
-sauvegarde-le avec `dots` une fois validé.
+**Chaque fois que tu modifies un fichier de config, mets à jour ce fichier dans la même tâche**
+(ajoute ou corrige la ligne concernée), montre-moi la modification, et sauvegarde-le avec `dots`
+en même temps que la config. À la fin de chaque tâche qui a modifié mon système, vérifie aussi
+que le reste de ce fichier est encore exact.
 
 À mettre à jour quand je :
 - change d'outil principal (terminal, shell, éditeur, gestionnaire de fichiers, navigateur,
@@ -132,9 +133,8 @@ sauvegarde-le avec `dots` une fois validé.
 - change une préférence ou une règle de fonctionnement ;
 - modifie ma méthode de sauvegarde des dotfiles.
 
-Pas besoin de mise à jour pour : un raccourci ajouté ou modifié (`binds.lua` se décrit lui-même),
-un ajustement de valeur (tailles, vitesses, espacements, police), un changement de fond d'écran,
-l'installation d'une appli secondaire.
+Seules exceptions : un raccourci ajouté ou modifié dans `binds.lua` (il se décrit lui-même), un
+changement de fond d'écran, l'installation d'une appli secondaire.
 
 Garde ce fichier concis : c'est une carte de mon système et de mes règles, pas une documentation
 complète.
