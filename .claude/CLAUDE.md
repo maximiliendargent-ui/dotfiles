@@ -108,3 +108,27 @@ avant de modifier quelque chose.
 - Les fichiers système (`/etc/greetd`, `/etc/pam.d/greetd`, `/etc/systemd/logind.conf.d`,
   `/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop`, `/var/lib/noctalia-greeter`) ne sont **pas**
   dans ce dépôt.
+
+## Maintenance de ce fichier
+
+À la fin de chaque tâche où tu as modifié mon système, vérifie que ce fichier est encore exact.
+Sinon, propose-moi les modifications précises (**sans les appliquer avant mon accord**), puis
+sauvegarde-le avec `dots` une fois validé.
+
+À mettre à jour quand je :
+- change d'outil principal (terminal, shell, éditeur, gestionnaire de fichiers, navigateur,
+  shell de bureau, gestionnaire de fenêtres) ;
+- ajoute, renomme, déplace ou supprime un fichier de config, un dossier important (fonds d'écran,
+  captures) ou un fichier de `~/.config/hypr/config/` ;
+- change le format des descriptions de raccourcis ou la façon de lier les touches ;
+- ajoute un outil perso (script dans `~/.local/bin`, composant Quickshell, plugin Noctalia) ;
+- change de matériel (carte graphique, écran, clavier) ;
+- change une préférence ou une règle de fonctionnement ;
+- modifie ma méthode de sauvegarde des dotfiles.
+
+Pas besoin de mise à jour pour : un raccourci ajouté ou modifié (`binds.lua` se décrit lui-même),
+un ajustement de valeur (tailles, vitesses, espacements, police), un changement de fond d'écran,
+l'installation d'une appli secondaire.
+
+Garde ce fichier concis : c'est une carte de mon système et de mes règles, pas une documentation
+complète.
