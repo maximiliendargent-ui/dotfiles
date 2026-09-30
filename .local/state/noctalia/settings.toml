@@ -2,7 +2,7 @@ config_version = 14
 
 [bar.default]
 color = "primary"
-end = [ "tray", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
+end = [ "claude", "tray", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
 font_weight = 700
 icon_color = "primary"
 margin_ends = 0
@@ -91,10 +91,10 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-e7821r.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-e7821r.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-e7821r.jpg"

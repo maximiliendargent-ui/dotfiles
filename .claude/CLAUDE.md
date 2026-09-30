@@ -81,6 +81,8 @@ avant de modifier quelque chose.
 - Carrousel de fonds d'écran en **Quickshell 0.3.1** (QML) : `~/.config/quickshell/wallpicker/shell.qml`,
   lancé par `~/.local/bin/wallpicker-toggle` (Super + Ctrl + Espace et Super + Shift + W). Il applique le
   fond via `noctalia msg wallpaper-set`.
+- Bouton **Claude** dans la barre Noctalia (`[widget.claude]` dans `config.toml`, icône
+  `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty.
 
 ## Applis et thèmes
 

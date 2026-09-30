@@ -40,7 +40,7 @@ hl.bind("XF86Calculator",          hl.dsp.exec_cmd("uwsm app -- gnome-calculator
 ------------
 ---- IA ----
 ------------
-hl.bind("SUPER + SHIFT + A", hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.ai -e ollama run qwen2.5-coder:7b"), { description = "IA: Assistant IA local (Ollama)" })
+hl.bind("SUPER + SHIFT + A", hl.dsp.exec_cmd("uwsm app -- google-chrome-stable --app=https://claude.ai"), { description = "IA: Claude" })
 
 ------------------
 ---- FENÊTRES ----
@@ -222,3 +222,4 @@ hl.bind("ALT + SHIFT + XF86AudioPlay", hl.dsp.exec_cmd("noctalia msg media previ
 hl.bind("SUPER + SHIFT + M",    hl.dsp.exec_cmd("noctalia msg volume-mute"), { locked = true, description = "Médias: Couper / rétablir le son" })
 hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("noctalia msg brightness-up"),   { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("noctalia msg brightness-down"), { locked = true, repeating = true })
+hl.bind("SUPER + CTRL + SHIFT + A", hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.ai -e claude"), { description = "IA: Agent Claude Code" })

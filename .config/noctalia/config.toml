@@ -22,3 +22,12 @@ directory = "/home/maximilien/Pictures/Wallpapers"
 [shell]
 font_family = "JetBrainsMono Nerd Font"
 polkit_agent = true
+
+[widget.claude]
+type = "custom_button"
+custom_image = "/home/maximilien/.config/noctalia/icons/claude.svg"
+custom_image_colorize = true
+tooltip = "Claude Code"
+
+[widget.claude.actions]
+left = "exec uwsm app -- ghostty -e claude"
