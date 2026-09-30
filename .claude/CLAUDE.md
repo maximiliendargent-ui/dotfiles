@@ -86,7 +86,8 @@ avant de modifier quelque chose.
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
   (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). Fenêtres
-  Package › Add/Remove : `~/.local/bin/menu-pkg` (officiels + AUR).
+  Package › Add/Remove : `~/.local/bin/menu-pkg` (officiels + AUR). Update = `paru -Syu --noconfirm` +
+  `flatpak update -y` (snapshots via `snap-pac`).
 
 ## Applis et thèmes
 

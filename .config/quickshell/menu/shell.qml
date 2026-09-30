@@ -118,8 +118,11 @@ ShellRoot {
             app(id + ".desktop")
         }
 
-        function appsIn(cats) {
-            return allApps().filter(e => e.categories.some(k => cats.includes(k))).map(appItem)
+        function appsIn(cats, exclude) {
+            const ex = exclude || []
+            return allApps()
+                .filter(e => e.categories.some(k => cats.includes(k)) && !e.categories.some(k => ex.includes(k)))
+                .map(appItem)
         }
 
         function recentApps() {
@@ -138,7 +141,7 @@ ShellRoot {
             { name: "Internet", glyph: "", apps: () => appsIn(["Network"]) },
             { name: "Multimedia", glyph: "", apps: () => appsIn(["AudioVideo", "Audio", "Video"]) },
             { name: "Games", glyph: "", apps: () => appsIn(["Game"]) },
-            { name: "Office", glyph: "", apps: () => appsIn(["Office"]) },
+            { name: "Office", glyph: "", apps: () => appsIn(["Office", "FileManager"]) },
             { name: "Graphics", glyph: "", apps: () => appsIn(["Graphics"]) },
             { name: "Development", glyph: "", apps: () => appsIn(["Development"]) },
 
@@ -170,6 +173,7 @@ ShellRoot {
                 { name: "Hyprland settings", glyph: "", run: () => app(home + "/.local/bin/hyprmod") },
                 { name: "Keybindings editor", glyph: "", run: () => app("ghostty", "--class=dev.keybinds", "-e",
                     home + "/.local/share/keybind-editor/kbe", home + "/.config/hypr/config/binds.lua") },
+                { name: "Mirrors", glyph: "", run: () => term("sudo cachyos-rate-mirrors") },
                 { name: "Config files", glyph: "", children: [
                     { name: "Hyprland", glyph: "", run: () => edit(home + "/.config/hypr") },
                     { name: "Noctalia", glyph: "", run: () => edit(home + "/.config/noctalia/config.toml") },
@@ -181,7 +185,7 @@ ShellRoot {
                 ] }
             ] },
             { name: "Settings", glyph: "", apps: () => appsIn(["Settings"]) },
-            { name: "System", glyph: "", apps: () => appsIn(["System", "Utility"]) },
+            { name: "System", glyph: "", apps: () => appsIn(["System", "Utility"], ["FileManager"]) },
 
             // Maintenance
             // Paquets officiels et AUR : fenêtres de ~/.local/bin/menu-pkg
@@ -189,11 +193,10 @@ ShellRoot {
                 { name: "Add", glyph: "", run: () => app("ghostty", "--class=dev.menu", "-e", home + "/.local/bin/menu-pkg", "add") },
                 { name: "Remove", glyph: "", run: () => app("ghostty", "--class=dev.menu", "-e", home + "/.local/bin/menu-pkg", "remove") }
             ] },
-            { name: "Update", glyph: "", children: [
-                { name: "System (pacman)", glyph: "", run: () => term("sudo pacman -Syu") },
-                { name: "System + AUR (paru)", glyph: "", run: () => term("paru -Syu") },
-                { name: "Mirrors", glyph: "", run: () => term("sudo cachyos-rate-mirrors") }
-            ] },
+            // Tout mettre à jour sans confirmation (snapshots automatiques via snap-pac)
+            { name: "Update", glyph: "", run: () => term(
+                'paru -Syu --noconfirm && flatpak update -y && echo && echo "✓ Done" ' +
+                '|| { echo; echo "✗ Update failed: read the message above"; }') },
 
             // Aide
             { name: "Learn", glyph: "", children: [
