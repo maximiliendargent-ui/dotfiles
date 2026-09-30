@@ -84,6 +84,9 @@ avant de modifier quelque chose.
 - Bouton **Claude** dans la barre Noctalia (`[widget.claude]` dans `config.toml`, icône
   `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty.
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
+- Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
+  (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). Fenêtres
+  Package › Add/Remove : `~/.local/bin/menu-pkg` (officiels + AUR).
 
 ## Applis et thèmes
 
@@ -110,7 +113,7 @@ avant de modifier quelque chose.
   (privé, GitHub).
 - Après une modification : `dots add -u` (fichiers déjà suivis), `dots add <nouveau fichier>`,
   `dots commit -m "..."`, `dots push`.
-- Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`.
+- Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`, `.config/quickshell/menu/colors.json`.
 - Les fichiers système (`/etc/greetd`, `/etc/pam.d/greetd`, `/etc/systemd/logind.conf.d`,
   `/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop`, `/var/lib/noctalia-greeter`) ne sont **pas**
   dans ce dépôt.

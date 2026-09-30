@@ -31,3 +31,7 @@ tooltip = "Claude Code"
 
 [widget.claude.actions]
 left = "exec uwsm app -- ghostty -e claude"
+
+[theme.templates.user.menu_colors]
+input_path  = "$XDG_CONFIG_HOME/noctalia/templates/menu-colors.json"
+output_path = "$XDG_CONFIG_HOME/quickshell/menu/colors.json"

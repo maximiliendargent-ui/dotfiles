@@ -10,7 +10,7 @@ local gaps_off = false
 -----------------
 ---- LANCEUR ----
 -----------------
-hl.bind("SUPER + SUPER_L",     hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"), { release = true, description = "Lanceur: Ouvrir le lanceur (appui seul sur Super)" })
+hl.bind("SUPER + SUPER_L",     hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/menu-toggle"), { release = true, description = "Lanceur: Menu (appui seul sur Super)" })
 hl.bind("SUPER + Space",       hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"), { description = "Lanceur: Ouvrir le lanceur" })
 hl.bind("SUPER + ALT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"), { description = "Lanceur: Ouvrir le lanceur (applications)" })
 hl.bind("SUPER + CTRL + E",    hl.dsp.exec_cmd("noctalia msg panel-toggle launcher /emo"), { description = "Lanceur: Emojis" })

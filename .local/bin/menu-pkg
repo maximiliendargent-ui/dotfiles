@@ -1,0 +1,144 @@
+#!/bin/bash
+# Fenêtres « Package › Add / Remove » du menu (~/.config/quickshell/menu), inspirées d'omarchy-pkg-*.
+# Paquets officiels (Arch/CachyOS, via pacman) et AUR (communautaire, via paru) dans la même liste.
+# Usage : menu-pkg add | remove        (preview <official|aur|installed> <nom> : fiche du bas, pour fzf)
+
+export LC_ALL=C   # champs de pacman/paru en anglais, pour pouvoir les lire
+self=$(readlink -f "$0")
+
+# Couleurs ANSI (suivent le thème de Ghostty)
+G=$'\e[32m'; Y=$'\e[33m'; RED=$'\e[31m'; D=$'\e[2m'; B=$'\e[1m'; R=$'\e[0m'
+
+field() { sed -n "s/^$1 *: //p" | head -1; }
+row() { [ -n "$2" ] && printf '%s%-12s%s %s\n' "$D" "$1" "$R" "$2"; }
+
+preview() {
+    local kind=$1 name=$2 info
+    case $kind in
+        official)
+            info=$(pacman -Si "$name" 2>/dev/null)
+            printf '%s%s%s  %sOfficial%s (%s)' "$B" "$name" "$R" "$G" "$R" "$(field Repository <<< "$info")"
+            pacman -Q "$name" &>/dev/null && printf '  %s✓ installed%s' "$G" "$R"
+            echo; echo
+            row Version "$(field Version <<< "$info")"
+            row Description "$(field Description <<< "$info")"
+            row Website "$(field URL <<< "$info")"
+            row Size "$(field 'Installed Size' <<< "$info")"
+            ;;
+        aur)
+            info=$(paru -Sia "$name" 2>/dev/null)
+            local votes; votes=$(field Votes <<< "$info")
+            printf '%s%s%s  %sAUR%s (community)' "$B" "$name" "$R" "$Y" "$R"
+            pacman -Q "$name" &>/dev/null && printf '  %s✓ installed%s' "$G" "$R"
+            echo; echo
+            row Version "$(field Version <<< "$info")"
+            row Description "$(field Description <<< "$info")"
+            row Website "$(field URL <<< "$info")"
+            row Votes "$votes"
+            row Popularity "$(field Popularity <<< "$info")"
+            local ood; ood=$(field Out-of-date <<< "$info")
+            [ -n "$ood" ] && [ "$ood" != "No" ] && row Out-of-date "$RED$ood$R"
+            if [ "${votes:-0}" -lt 10 ] 2>/dev/null; then
+                echo; echo "$RED⚠ Few votes: few people use this package. Check it before installing.$R"
+            fi
+            ;;
+        installed)
+            info=$(pacman -Qi "$name" 2>/dev/null)
+            if pacman -Qqm "$name" &>/dev/null; then
+                printf '%s%s%s  %sAUR%s\n\n' "$B" "$name" "$R" "$Y" "$R"
+            else
+                printf '%s%s%s  %sOfficial%s\n\n' "$B" "$name" "$R" "$G" "$R"
+            fi
+            row Version "$(field Version <<< "$info")"
+            row Description "$(field Description <<< "$info")"
+            row Website "$(field URL <<< "$info")"
+            row Size "$(field 'Installed Size' <<< "$info")"
+            local req; req=$(field 'Required By' <<< "$info")
+            if [ "$req" != "None" ]; then
+                local -a deps=($req)
+                local more=""; [ ${#deps[@]} -gt 5 ] && more=", …"
+                row 'Needed by' "$Y${#deps[@]} package(s)$R ($(printf '%s\n' "${deps[@]:0:5}" | paste -sd, | sed 's/,/, /g')$more)"
+            fi
+            ;;
+    esac
+}
+
+# Ligne de liste : type <TAB> nom <TAB> étiquette <TAB> nom <TAB> description (on ne cherche que dans le nom)
+# Tri : officiels puis AUR, noms les plus courts d'abord (le nom exact remonte en tête)
+by_length() { sort -t$'\t' -k1,1n -k2,2n -s | cut -f3-; }
+
+list_add() {
+    local installed; installed=$(pacman -Qq)
+    {
+        # Officiels (premier dépôt qui fournit le paquet, comme pacman)
+        expac -S '%n\t%d' | awk -F'\t' '!seen[$1]++ { print "official\t" $0 }'
+        # AUR, sans les noms déjà présents dans les dépôts officiels
+        paru -Slqa 2>/dev/null | awk '{ print "aur\t" $1 "\t" }'
+    } | awk -F'\t' -v G="$G" -v Y="$Y" -v D="$D" -v R="$R" -v inst="$installed" '
+        BEGIN { n = split(inst, a, "\n"); for (i = 1; i <= n; i++) have[a[i]] = 1 }
+        $1 == "official" { off[$2] = 1 }
+        $1 == "aur" && ($2 in off) { next }
+        {
+            tag = ($1 == "official") ? G "Official" R : Y "AUR     " R
+            mark = ($2 in have) ? G " ✓" R : "  "
+            printf "%d\t%d\t%s\t%s\t%s%s\t%-30s\t%s%s%s\n", ($1 == "aur"), length($2), $1, $2, tag, mark, $2, D, $3, R
+        }' | by_length
+}
+
+list_remove() {
+    local foreign; foreign=$(pacman -Qqm)
+    expac -Q '%n\t%d' $(pacman -Qqe) | awk -F'\t' -v G="$G" -v Y="$Y" -v D="$D" -v R="$R" -v f="$foreign" '
+        BEGIN { n = split(f, a, "\n"); for (i = 1; i <= n; i++) aur[a[i]] = 1 }
+        { tag = ($1 in aur) ? Y "AUR     " R : G "Official" R
+          printf "0\t%d\tinstalled\t%s\t%s  \t%-30s\t%s%s%s\n", length($1), $1, tag, $1, D, $2, R }' | by_length
+}
+
+pick() { # $1 titre, $2 action (texte de la ligne d'aide)
+    fzf --ansi --multi --delimiter=$'\t' --with-nth=3.. --nth=2 --exact --no-hscroll --tabstop=2 \
+        --layout=reverse --border=rounded --border-label=" $1 " \
+        --prompt='Search › ' --pointer='▶' --marker='+' \
+        --header="${G}Official${R} = Arch/CachyOS, checked · ${Y}AUR${R} = community, check the votes" \
+        --header-first --tiebreak=begin,index \
+        --preview="$self preview {1} {2}" \
+        --preview-window=down:40%:wrap:border-top \
+        --preview-label=" Tab: select several · Enter: $2 · Esc: cancel " --preview-label-pos=bottom \
+        --color='pointer:green,marker:green,label:bold'
+}
+
+finish() {
+    echo; echo "$G✓ Done$R — press Enter to close"; read -r
+}
+
+case ${1:-} in
+    preview) preview "$2" "$3" ;;
+
+    add)
+        echo "Loading the package list…"
+        sel=$(list_add | pick "Add a package" "install") || exit 0
+        off=$(awk -F'\t' '$1 == "official" { print $2 }' <<< "$sel" | xargs)
+        aurp=$(awk -F'\t' '$1 == "aur" { print $2 }' <<< "$sel" | xargs)
+        clear
+        echo "${B}To install:${R}"
+        [ -n "$off" ] && echo "  ${G}Official${R}  $off"
+        [ -n "$aurp" ] && echo "  ${Y}AUR${R}       $aurp"
+        echo; read -rp "Install? [Y/n] " ok
+        [[ $ok =~ ^[Nn] ]] && exit 0
+        [ -n "$off" ] && sudo pacman -S --needed $off
+        [ -n "$aurp" ] && paru -S --needed --aur $aurp
+        finish
+        ;;
+
+    remove)
+        sel=$(list_remove | pick "Remove a package" "remove") || exit 0
+        pkgs=$(cut -f2 <<< "$sel" | xargs)
+        clear
+        echo "${B}To remove${R} (with their unused dependencies):"
+        echo "  $pkgs"
+        echo; read -rp "Remove? [y/N] " ok
+        [[ $ok =~ ^[Yy] ]] || exit 0
+        sudo pacman -Rns $pkgs
+        finish
+        ;;
+
+    *) echo "Usage: menu-pkg add | remove" >&2; exit 1 ;;
+esac
