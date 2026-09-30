@@ -73,6 +73,8 @@ avant de modifier quelque chose.
 - Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
 - Agent Polkit de Noctalia activé (`polkit_agent = true`).
+- Plugins activés (gérés dans la fenêtre Manager, enregistrés dans `settings.toml`) : `noctalia/bongocat`,
+  `noctalia/mpvpaper` (Video Wallpaper, dépendance `mpvpaper` pas encore installée).
 
 ## Mes outils perso
 
@@ -91,7 +93,7 @@ avant de modifier quelque chose.
 - Fenêtre **Manager** en Quickshell (paquets officiels + AUR, plugins Noctalia) :
   `~/.config/quickshell/manager/shell.qml`, données via `~/.local/bin/manager-data` (JSON), ouverte par
   `~/.local/bin/manager-open [packages|plugins] [add|installed]`. Mots de passe via l'agent Polkit de
-  Noctalia (`pkexec`).
+  Noctalia (`pkexec`). Couleurs partagées avec le menu (`menu/colors.json`).
 
 ## Applis et thèmes
 
