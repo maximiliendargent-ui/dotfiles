@@ -81,7 +81,7 @@ widget_order = [ "lockscreen-login-box@WAYLAND-1", "lockscreen-login-box@HDMI-A-
         show_weather = true
 
 [plugins]
-enabled = [ "noctalia/bongocat" ]
+enabled = [ "noctalia/bongocat", "noctalia/mpvpaper" ]
 
 [shell]
 corner_radius_scale = 0.0
