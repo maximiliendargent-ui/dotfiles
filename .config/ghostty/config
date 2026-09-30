@@ -5,3 +5,4 @@ window-padding-x = 14
 window-padding-y = 14
 theme = noctalia
 keybind = ctrl+shift+c=copy_to_clipboard:plain
+keybind = performable:ctrl+v=paste_from_clipboard
