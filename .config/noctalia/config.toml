@@ -3,10 +3,6 @@ input_path  = "$XDG_CONFIG_HOME/noctalia/templates/hyprland-borders.lua"
 output_path = "$XDG_CONFIG_HOME/hypr/config/noctalia_colors.lua"
 post_hook   = "hyprctl reload"
 
-[theme.templates.user.niri_borders]
-input_path  = "$XDG_CONFIG_HOME/noctalia/templates/niri-borders.kdl"
-output_path = "$XDG_CONFIG_HOME/niri/noctalia.kdl"
-
 [theme.templates]
 enable_builtin_templates = true
 builtin_ids = ["ghostty", "btop", "gtk3", "gtk4", "kcolorscheme", "qt"]
