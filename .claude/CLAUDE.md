@@ -90,7 +90,8 @@ avant de modifier quelque chose.
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
   (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). L'entrée
   Manager ouvre la fenêtre Manager (paquets et plugins). Update = `paru -Syu --noconfirm` + `flatpak update -y`
-  (snapshots via `snap-pac`).
+  (snapshots via `snap-pac`). Applis triées par usage : compteur du menu
+  (`~/.local/state/quickshell-menu/usage.json`) + celui de Noctalia (`usage_counts.json`).
 - Fenêtre **Manager** en Quickshell (paquets officiels + AUR, plugins Noctalia) :
   `~/.config/quickshell/manager/shell.qml`, données via `~/.local/bin/manager-data` (JSON), ouverte par
   `~/.local/bin/manager-open [packages|plugins] [add|installed]`. Un clic sur un plugin ouvre sa fiche

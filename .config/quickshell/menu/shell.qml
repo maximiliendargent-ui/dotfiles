@@ -31,6 +31,8 @@ ShellRoot {
         property var shown: []          // lignes affichées
         property var recentIds: []      // applis lancées depuis ce menu
         property var noctaliaRecent: [] // historique du lanceur Noctalia
+        property var usage: ({})        // nombre de lancements depuis ce menu, par appli
+        property var noctaliaUsage: ({}) // nombre de lancements depuis le lanceur Noctalia
 
         // Les applis sont chargées en arrière-plan au premier accès : on recalcule quand elles arrivent
         readonly property var entries: DesktopEntries.applications.values
@@ -75,6 +77,31 @@ ShellRoot {
             }
         }
 
+        FileView {
+            id: usageFile
+            path: win.home + "/.local/state/quickshell-menu/usage.json"
+            blockWrites: true
+            printErrors: false
+            onLoaded: {
+                try { win.usage = JSON.parse(text()); refreshTimer.restart() } catch (e) {}
+            }
+        }
+
+        FileView {
+            path: win.home + "/.local/state/noctalia/usage_counts.json"
+            printErrors: false
+            onLoaded: {
+                try {
+                    const counts = JSON.parse(text()).Applications || {}
+                    const out = {}
+                    for (const p in counts)
+                        out[p.split("/").pop().replace(/\.desktop$/, "")] = counts[p]
+                    win.noctaliaUsage = out
+                    refreshTimer.restart()
+                } catch (e) {}
+            }
+        }
+
         // ---- Actions ----
 
         function run(args) {
@@ -96,10 +123,16 @@ ShellRoot {
 
         function normId(id) { return id.replace(/\.desktop$/, "") }
 
+        function useCount(e) {
+            const id = normId(e.id)
+            return (usage[id] || 0) + (noctaliaUsage[id] || 0)
+        }
+
+        // Les plus utilisées d'abord, puis par ordre alphabétique
         function allApps() {
             return entries
                 .filter(e => !e.noDisplay)
-                .sort((a, b) => a.name.localeCompare(b.name))
+                .sort((a, b) => useCount(b) - useCount(a) || a.name.localeCompare(b.name))
         }
 
         // Applis masquées des catégories et de All, mais trouvables par la recherche
@@ -122,6 +155,9 @@ ShellRoot {
             const id = normId(e.id)
             const ids = [id].concat(recentIds.filter(x => x !== id)).slice(0, maxRecent)
             recentFile.setText(JSON.stringify(ids))
+            const counts = Object.assign({}, usage)
+            counts[id] = (counts[id] || 0) + 1
+            usageFile.setText(JSON.stringify(counts))
             app(id + ".desktop")
         }
 
