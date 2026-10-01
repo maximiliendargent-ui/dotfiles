@@ -32,6 +32,10 @@ avant de modifier quelque chose.
   avant de démarrer). **KDE Plasma** est une session secondaire (jeux / secours).
 - `KillUserProcesses=yes` (`/etc/systemd/logind.conf.d/kill-user-processes.conf`).
 - KDE fait aussi le ménage au démarrage : `~/.config/plasma-workspace/env/cleanup-graphical-session.sh`.
+- KDE reprend le look et les raccourcis d'Hyprland, avec Noctalia comme shell :
+  `~/.local/bin/kde-noctalia-start` (autostart `noctalia-kde.desktop`), `~/.config/kwinrulesrc` (sans bordure),
+  `~/.config/kwinrc` (9 bureaux), `~/.config/kglobalshortcutsrc` + lanceurs
+  `~/.local/share/applications/net.local.*.desktop`.
 - KWallet est le gestionnaire de secrets : déverrouillé via `pam_kwallet5` dans `/etc/pam.d/greetd`
   et `/usr/lib/pam_kwallet_init` lancé au démarrage d'Hyprland. gnome-keyring est masqué
   (`~/.local/share/dbus-1/services/org.freedesktop.secrets.service` redirige vers `kwalletd6`).
