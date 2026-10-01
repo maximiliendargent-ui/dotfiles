@@ -118,6 +118,7 @@ avant de modifier quelque chose.
 - Thème Qt : **qt6ct-kde**, schéma de couleurs KDE `Noctalia`. Les applis GTK 4 ne rechargent leurs
   couleurs qu'au démarrage (limite de GTK).
 - Curseur choisi avec `nwg-look`.
+- Démarrage automatique commun à tous les bureaux : `~/.config/autostart/` (Steam en `-silent`).
 
 ## Paquets
 
