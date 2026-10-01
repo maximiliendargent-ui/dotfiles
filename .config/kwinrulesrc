@@ -1,0 +1,9 @@
+[1]
+Description=Style Hyprland : sans barre de titre
+noborder=true
+noborderrule=2
+wmclassmatch=0
+
+[General]
+count=1
+rules=1

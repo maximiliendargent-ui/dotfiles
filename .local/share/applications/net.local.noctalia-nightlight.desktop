@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=noctalia msg nightlight-toggle
+Name=Veilleuse
+NoDisplay=true
+StartupNotify=false
+Type=Application
+X-KDE-GlobalAccel-CommandShortcut=true

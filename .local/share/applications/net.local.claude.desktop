@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=google-chrome-stable --app=https://claude.ai
+Name=Claude
+NoDisplay=true
+StartupNotify=false
+Type=Application
+X-KDE-GlobalAccel-CommandShortcut=true

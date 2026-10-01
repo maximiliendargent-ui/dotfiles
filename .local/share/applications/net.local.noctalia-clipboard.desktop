@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=noctalia msg panel-toggle clipboard
+Name=Historique du presse-papiers
+NoDisplay=true
+StartupNotify=false
+Type=Application
+X-KDE-GlobalAccel-CommandShortcut=true

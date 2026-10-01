@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=systemctl suspend-then-hibernate
+Name=Mise en veille
+NoDisplay=true
+StartupNotify=false
+Type=Application
+X-KDE-GlobalAccel-CommandShortcut=true
