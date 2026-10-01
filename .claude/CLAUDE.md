@@ -58,6 +58,15 @@ avant de modifier quelque chose.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
   d'écran (fichier généré `noctalia_colors.lua`).
 
+## Niri (session secondaire, même config qu'Hyprland)
+
+- Config en KDL : `~/.config/niri/config.kdl` (inclut `binds.kdl`, puis `noctalia.kdl` généré). Rechargée à
+  l'enregistrement ; vérifier avec `niri validate`.
+- Raccourcis liés par symbole AZERTY (`Mod+ampersand`…), titres `hotkey-overlay-title="Section: texte"`.
+  Menu sur Super + M (pas de « Super seul » dans niri), aide intégrée sur Super + K.
+- Environnement dans le bloc `environment` de `config.kdl` (niri ne lit pas `~/.config/uwsm/env`).
+- Secrets via KWallet : `~/.config/xdg-desktop-portal/niri-portals.conf`.
+
 ## Noctalia (shell, **v5** : réécrit en C++, plus basé sur Quickshell)
 
 - Config : `~/.config/noctalia/config.toml`. Les réglages faits dans l'interface sont dans
@@ -68,8 +77,9 @@ avant de modifier quelque chose.
   `caffeine-toggle`, `settings-toggle`, `session lock`, `screenshot-region`, `greeter-sync`.
 - Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe).
   Modèles actifs : `builtin_ids` (ghostty, btop, gtk3, gtk4, kcolorscheme, qt), `community_ids`
-  (vscode, zen-browser, pywalfox) et un modèle perso `hyprland_borders`
-  (`~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`).
+  (vscode, zen-browser, pywalfox) et deux modèles perso : `hyprland_borders`
+  (`~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`) et
+  `niri_borders` (`~/.config/noctalia/templates/niri-borders.kdl` → `~/.config/niri/noctalia.kdl`).
 - Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
 - Agent Polkit de Noctalia activé (`polkit_agent = true`).
@@ -78,8 +88,8 @@ avant de modifier quelque chose.
 
 ## Mes outils perso
 
-- `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j`.
-- `~/.local/share/keybind-editor/kbe` : éditeur de raccourcis (Super + Shift + K).
+- `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j` (Hyprland seulement).
+- `~/.local/share/keybind-editor/kbe` : éditeur de raccourcis (Super + Shift + K, Hyprland seulement).
 - Carrousel de fonds d'écran en **Quickshell 0.3.1** (QML) : `~/.config/quickshell/wallpicker/shell.qml`,
   lancé par `~/.local/bin/wallpicker-toggle` (Super + Ctrl + Espace et Super + Shift + W). Il applique le
   fond via `noctalia msg wallpaper-set`.
@@ -122,7 +132,8 @@ avant de modifier quelque chose.
   (privé, GitHub).
 - Après une modification : `dots add -u` (fichiers déjà suivis), `dots add <nouveau fichier>`,
   `dots commit -m "..."`, `dots push`.
-- Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`, `.config/quickshell/menu/colors.json`.
+- Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`, `.config/niri/noctalia.kdl`,
+  `.config/quickshell/menu/colors.json`.
 - Les fichiers système (`/etc/greetd`, `/etc/pam.d/greetd`, `/etc/systemd/logind.conf.d`,
   `/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop`, `/var/lib/noctalia-greeter`) ne sont **pas**
   dans ce dépôt.
