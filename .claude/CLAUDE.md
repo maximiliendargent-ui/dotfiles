@@ -88,12 +88,13 @@ avant de modifier quelque chose.
   (pas `~`, pour lequel Claude Code redemande la confiance à chaque lancement).
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
-  (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). Package et
-  Plugins ouvrent la fenêtre Manager. Update = `paru -Syu --noconfirm` + `flatpak update -y`
+  (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). L'entrée
+  Manager ouvre la fenêtre Manager (paquets et plugins). Update = `paru -Syu --noconfirm` + `flatpak update -y`
   (snapshots via `snap-pac`).
 - Fenêtre **Manager** en Quickshell (paquets officiels + AUR, plugins Noctalia) :
   `~/.config/quickshell/manager/shell.qml`, données via `~/.local/bin/manager-data` (JSON), ouverte par
-  `~/.local/bin/manager-open [packages|plugins] [add|installed]`. Mots de passe via l'agent Polkit de
+  `~/.local/bin/manager-open [packages|plugins] [add|installed]`. Un clic sur un plugin ouvre sa fiche
+  (README du catalogue, via `manager-data plugin-info`). Mots de passe via l'agent Polkit de
   Noctalia (`pkexec`). Couleurs partagées avec le menu (`menu/colors.json`).
 
 ## Applis et thèmes

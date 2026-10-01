@@ -9,11 +9,13 @@ Usage :
   manager-data install <official|aur> <nom>   (mot de passe via l'agent Polkit de Noctalia)
   manager-data remove <nom>
   manager-data plugins                    catalogue des plugins Noctalia (+ vignettes)
+  manager-data plugin-info <official|community> <dossier>   fiche détaillée (README, ce que le plugin ajoute)
   manager-data plugin-toggle <id>
   manager-data plugins-update
 """
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -146,12 +148,12 @@ def enabled_ids():
             if l.split() and l.split()[-1] == "enabled"}
 
 
-def git_blobs(repo, specs):
+def git_blobs(repo, specs, timeout=None):
     """Lit plusieurs fichiers d'un dépôt en une fois : {spec: octets}."""
     if not specs:
         return {}
     res = subprocess.run(["git", "-C", repo, "cat-file", "--batch"],
-                         input="".join(s + "\n" for s in specs).encode(), capture_output=True).stdout
+                         input="".join(s + "\n" for s in specs).encode(), capture_output=True, timeout=timeout).stdout
     blobs, i = {}, 0
     for spec in specs:
         nl = res.index(b"\n", i)
@@ -207,12 +209,43 @@ def plugins():
                 "author": t.get("author", ""), "version": t.get("version", ""),
                 "tags": t.get("tags", []), "source": source,
                 "enabled": t.get("id", d) in enabled,
-                "hasSettings": bool(t.get("setting")),
+                "hasSettings": bool(t.get("setting")), "dir": d,
                 "missing": [x for x in deps if x not in inst and not shutil.which(x)],
                 "thumb": f.get("thumb", ""),
             })
     catalog.sort(key=lambda p: (not p["enabled"], p["source"] != "official", p["name"].lower()))
     out(catalog)
+
+
+# Sections de plugin.toml, dites en clair dans la fiche
+ADDS = {"widget": "Bar widget", "panel": "Panel", "shortcut": "Control center shortcut",
+        "service": "Background service", "launcher_provider": "Launcher provider",
+        "desktop_widget": "Desktop widget"}
+
+
+def plugin_info(source, d):
+    """Fiche d'un plugin. Le README est téléchargé à la demande (dépôt cloné sans les fichiers)."""
+    repo = os.path.join(SOURCES, source, "repo")
+    toml, readme = f"HEAD:{d}/plugin.toml", f"HEAD:{d}/README.md"
+    try:
+        blobs = git_blobs(repo, [toml, readme], timeout=20)
+        t = tomllib.loads(blobs.get(toml, b"").decode())
+    except Exception:
+        blobs, t = {}, {}
+    text = blobs.get(readme, b"").decode(errors="replace")
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
+    text = re.sub(r"!\[[^\]]*\]\([^)]*\)|<img[^>]*>", "", text)  # images : chemins relatifs au dépôt
+    text = re.sub(r"\[\s*\]\([^)]*\)", "", text)
+    text = re.sub(r"\A\s*#\s[^\n]*\n", "", text)  # titre : déjà affiché dans la fiche
+    adds = []
+    for key, value in t.items():
+        if key != "setting" and isinstance(value, list) and value and isinstance(value[0], dict):
+            label = ADDS.get(key, key.replace("_", " ").capitalize())
+            adds.append(label + (f" ×{len(value)}" if len(value) > 1 else ""))
+    inst = installed_set()
+    out({"dir": d, "readme": text.strip(), "adds": adds, "license": t.get("license", ""),
+         "settings": len(t.get("setting", [])),
+         "depends": [{"name": x, "ok": x in inst or bool(shutil.which(x))} for x in t.get("dependencies", [])]})
 
 
 def plugin_toggle(pid):
@@ -237,6 +270,7 @@ if __name__ == "__main__":
         "install": lambda: install(a[1], a[2]),
         "remove": lambda: remove(a[1]),
         "plugins": lambda: plugins(),
+        "plugin-info": lambda: plugin_info(a[1], a[2]),
         "plugin-toggle": lambda: plugin_toggle(a[1]),
         "plugins-update": lambda: plugins_update(),
     }

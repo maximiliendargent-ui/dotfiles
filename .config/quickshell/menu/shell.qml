@@ -206,14 +206,6 @@ ShellRoot {
                 { name: "Wallpaper panel", glyph: "", run: () => msg("panel-toggle", "wallpaper") },
                 { name: "Hyprland look", glyph: "", run: () => edit(home + "/.config/hypr/config/decorations.lua") }
             ] },
-            // Plugins Noctalia : fenêtre Manager (~/.config/quickshell/manager)
-            { name: "Plugins", glyph: "\uf12e", children: [
-                { name: "Manage", glyph: "\uf12e", run: () => app(home + "/.local/bin/manager-open", "plugins") },
-                { name: "Store", glyph: "\uf07a", run: () => msg("settings-open", "plugins") },
-                { name: "Update catalog", glyph: "\uf021", run: () => term(
-                    "noctalia msg plugins update official && noctalia msg plugins update community && echo && echo \"✓ Done\"") }
-            ] },
-
             // Réglages : Setup, Settings et System réunis, en sous-sections
             { name: "System", glyph: "\uf013", children: [
                 { name: "Connections", glyph: "\uf1eb", children: [
@@ -244,11 +236,8 @@ ShellRoot {
             ] },
 
             // Maintenance
-            // Paquets officiels et AUR : fenêtre Manager (~/.config/quickshell/manager)
-            { name: "Package", glyph: "", children: [
-                { name: "Add", glyph: "", run: () => app(home + "/.local/bin/manager-open", "packages", "add") },
-                { name: "Remove", glyph: "", run: () => app(home + "/.local/bin/manager-open", "packages", "installed") }
-            ] },
+            // Paquets (officiels + AUR) et plugins Noctalia : fenêtre Manager (~/.config/quickshell/manager)
+            { name: "Manager", glyph: "", run: () => app(home + "/.local/bin/manager-open") },
             // Tout mettre à jour sans confirmation (snapshots automatiques via snap-pac)
             { name: "Update", glyph: "", run: () => term(
                 'paru -Syu --noconfirm && flatpak update -y && echo && echo "✓ Done" ' +

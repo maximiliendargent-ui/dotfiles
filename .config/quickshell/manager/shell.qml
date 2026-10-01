@@ -724,6 +724,17 @@ ShellRoot {
             property string filter: "all"
             property bool loaded: false
             property string toggling: ""
+            property string detailId: ""   // plugin dont la fiche est ouverte
+            readonly property var detail: detailId === "" ? null : (all.find(p => p.id === detailId) || null)
+            property var info: null        // README et contenu de la fiche (manager-data plugin-info)
+
+            function openDetail(p) {
+                info = null
+                detailId = p.id
+                readmeFlick.contentY = 0
+                infoProc.command = [win.dataCmd, "plugin-info", p.source, p.dir]
+                infoProc.running = true
+            }
 
             function count(f) { return all.filter(p => match(p, f, "")).length }
 
@@ -761,6 +772,22 @@ ShellRoot {
                         try { pl.all = JSON.parse(this.text) } catch (e) {}
                         pl.loaded = true
                         pl.refresh()
+                        // Test : MANAGER_DETAIL=<id> ouvre directement la fiche de ce plugin
+                        const want = pl.all.find(p => p.id === Quickshell.env("MANAGER_DETAIL"))
+                        if (want && pl.detailId === "") pl.openDetail(want)
+                    }
+                }
+            }
+
+            Process {
+                id: infoProc
+                stdout: StdioCollector {
+                    onStreamFinished: {
+                        let r = null
+                        try { r = JSON.parse(this.text) } catch (e) {}
+                        if (!pl.detail) return
+                        if (r && r.dir === pl.detail.dir) pl.info = r
+                        else pl.info = { dir: pl.detail.dir, readme: "", adds: [], depends: [], license: "", settings: 0 }
                     }
                 }
             }
@@ -791,7 +818,8 @@ ShellRoot {
                 onTextChanged: pl.refresh()
                 onKeyPressed: event => {
                     if (event.key !== Qt.Key_Escape) return
-                    if (plSearch.text !== "") plSearch.text = ""; else Qt.quit()
+                    if (pl.detailId !== "") pl.detailId = ""
+                    else if (plSearch.text !== "") plSearch.text = ""; else Qt.quit()
                     event.accepted = true
                 }
             }
@@ -831,6 +859,7 @@ ShellRoot {
                 cellWidth: Math.floor(width / cols)
                 cellHeight: 318
                 model: pl.shown
+                visible: pl.detail === null
                 clip: true
                 boundsBehavior: Flickable.StopAtBounds
 
@@ -847,7 +876,13 @@ ShellRoot {
                         border.color: cell.modelData.enabled ? win.c.primary : "transparent"
                         border.width: 1
 
-                        MouseArea { id: cardArea; anchors.fill: parent; hoverEnabled: true; acceptedButtons: Qt.NoButton }
+                        MouseArea {
+                            id: cardArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: pl.openDetail(cell.modelData)
+                        }
 
                         // Vignette
                         Rectangle {
@@ -980,6 +1015,180 @@ ShellRoot {
                     visible: grid.count === 0
                     text: pl.loaded ? "No plugin found." : "Loading plugins… (the first time can take a few seconds)"
                     color: win.c.on_surface_variant
+                }
+            }
+
+            // ---- Fiche d'un plugin (clic sur une carte) ----
+            Rectangle {
+                id: detailView
+                anchors.fill: parent
+                visible: pl.detail !== null
+                color: win.c.surface
+
+                readonly property var p: pl.detail || ({ id: "", name: "", author: "", version: "", desc: "", tags: [],
+                    source: "", enabled: false, hasSettings: false, missing: [], thumb: "" })
+
+                MouseArea { anchors.fill: parent }  // la barre de recherche, dessous, ne reçoit pas les clics
+
+                Btn {
+                    id: backBtn
+                    c: win.c
+                    anchors { left: parent.left; top: parent.top }
+                    implicitHeight: 30
+                    label: "← Back"
+                    onClicked: pl.detailId = ""
+                }
+
+                Row {
+                    anchors { right: parent.right; verticalCenter: backBtn.verticalCenter }
+                    spacing: 10
+                    Btn {
+                        c: win.c
+                        anchors.verticalCenter: parent.verticalCenter
+                        implicitHeight: 30
+                        visible: detailView.p.enabled && detailView.p.hasSettings
+                        label: "Settings"
+                        onClicked: Quickshell.execDetached(["noctalia", "msg", "settings-open-plugin", detailView.p.id])
+                    }
+                    Label {
+                        c: win.c
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: detailView.p.enabled ? "Enabled" : "Disabled"
+                        color: detailView.p.enabled ? win.c.primary : win.c.on_surface_variant
+                    }
+                    Toggle {
+                        c: win.c
+                        anchors.verticalCenter: parent.verticalCenter
+                        checked: detailView.p.enabled
+                        busy: pl.toggling !== ""
+                        onToggled: {
+                            pl.toggling = detailView.p.id
+                            toggleProc.command = [win.dataCmd, "plugin-toggle", detailView.p.id]
+                            toggleProc.running = true
+                        }
+                    }
+                }
+
+                // Colonne de gauche : résumé
+                Column {
+                    id: side
+                    anchors { left: parent.left; top: backBtn.bottom; topMargin: 14 }
+                    width: 300
+                    spacing: 6
+
+                    Rectangle {
+                        width: parent.width
+                        height: 132
+                        color: win.c.surface_container_highest
+                        clip: true
+                        Image {
+                            anchors.fill: parent
+                            source: detailView.p.thumb ? "file://" + detailView.p.thumb : ""
+                            fillMode: Image.PreserveAspectCrop
+                            asynchronous: true
+                            sourceSize.width: 640
+                        }
+                    }
+                    Label { c: win.c; width: parent.width; text: detailView.p.name; font.pixelSize: 18; font.bold: true; wrapMode: Text.WordWrap }
+                    Label {
+                        c: win.c
+                        width: parent.width
+                        text: "by " + detailView.p.author + (detailView.p.version ? " · v" + detailView.p.version : "")
+                            + (pl.info && pl.info.license ? " · " + pl.info.license : "")
+                        color: win.c.on_surface_variant
+                        font.pixelSize: 11
+                        wrapMode: Text.WordWrap
+                    }
+                    Pill {
+                        c: win.c
+                        label: detailView.p.source === "official" ? "Official" : "Community"
+                        color: detailView.p.source === "official" ? win.c.primary : win.c.secondary_container
+                        fg: detailView.p.source === "official" ? win.c.on_primary : win.c.on_secondary_container
+                    }
+                    Label { c: win.c; width: parent.width; text: detailView.p.desc; wrapMode: Text.WordWrap }
+                    Label {
+                        c: win.c
+                        width: parent.width
+                        text: detailView.p.tags.map(t => "#" + t).join("  ")
+                        color: win.c.on_surface_variant
+                        font.pixelSize: 11
+                        wrapMode: Text.WordWrap
+                    }
+
+                    Item { width: 1; height: 8 }
+                    Label {
+                        c: win.c
+                        visible: !!pl.info && pl.info.adds.length > 0
+                        text: "WHAT IT ADDS"
+                        color: win.c.on_surface_variant
+                        font.pixelSize: 11
+                        font.bold: true
+                    }
+                    Repeater {
+                        model: pl.info ? pl.info.adds : []
+                        delegate: Label {
+                            required property string modelData
+                            c: win.c
+                            width: side.width
+                            text: "• " + modelData
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+                    Label {
+                        c: win.c
+                        visible: !!pl.info && pl.info.settings > 0
+                        width: parent.width
+                        text: "• " + (pl.info ? pl.info.settings : 0) + " settings"
+                    }
+
+                    Item { width: 1; height: 8; visible: !!pl.info && pl.info.depends.length > 0 }
+                    Label {
+                        c: win.c
+                        visible: !!pl.info && pl.info.depends.length > 0
+                        text: "REQUIRES"
+                        color: win.c.on_surface_variant
+                        font.pixelSize: 11
+                        font.bold: true
+                    }
+                    Repeater {
+                        model: pl.info ? pl.info.depends : []
+                        delegate: Label {
+                            required property var modelData
+                            c: win.c
+                            width: side.width
+                            text: "• " + modelData.name + (modelData.ok ? " (installed)" : " (not installed)")
+                            color: modelData.ok ? win.c.on_surface : win.c.error
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+                }
+
+                // À droite : le README du plugin
+                Flickable {
+                    id: readmeFlick
+                    anchors { left: side.right; leftMargin: 24; right: parent.right; top: backBtn.bottom; topMargin: 14; bottom: parent.bottom }
+                    contentHeight: readme.implicitHeight + 20
+                    clip: true
+                    boundsBehavior: Flickable.StopAtBounds
+
+                    Text {
+                        id: readme
+                        width: readmeFlick.width - 12
+                        textFormat: pl.info && pl.info.readme ? Text.MarkdownText : Text.PlainText
+                        text: !pl.info ? "Loading…"
+                            : pl.info.readme || "No detailed description available (the plugin's README could not be loaded)."
+                        wrapMode: Text.Wrap
+                        color: win.c.on_surface
+                        linkColor: win.c.primary
+                        font.family: "JetBrainsMono Nerd Font"
+                        font.pixelSize: 13
+                        onLinkActivated: link => Qt.openUrlExternally(link)
+                        MouseArea {
+                            anchors.fill: parent
+                            acceptedButtons: Qt.NoButton
+                            cursorShape: readme.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        }
+                    }
                 }
             }
         }
