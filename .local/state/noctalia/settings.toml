@@ -1,6 +1,7 @@
 config_version = 14
 
 [bar.default]
+auto_hide = true
 center = [ "clock", "cat" ]
 color = "primary"
 end = [ "claude", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
@@ -8,14 +9,16 @@ font_weight = 700
 icon_color = "primary"
 margin_ends = 0
 radius = 0
-reserve_space = false
+reserve_space = true
 shadow = false
-smart_auto_hide = true
 start = [ "workspaces", "wallhaven" ]
 thickness = 30
 
 [dock]
 launcher_position = "start"
+
+[location]
+auto_locate = true
 
 [lockscreen_widgets]
 enabled = false
@@ -101,13 +104,13 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gpl8d3.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-2ymdrg.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gpl8d3.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-2ymdrg.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gpl8d3.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-2ymdrg.jpg"
 
 [widget.cat]
 audio_spectrum = true
