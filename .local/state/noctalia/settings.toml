@@ -2,7 +2,7 @@ config_version = 14
 
 [bar.default]
 color = "primary"
-end = [ "claude", "tray", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
+end = [ "claude", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
 font_weight = 700
 icon_color = "primary"
 margin_ends = 0
@@ -101,3 +101,6 @@ path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
 path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
+
+[widget.tray]
+enabled = false

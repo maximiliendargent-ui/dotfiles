@@ -30,7 +30,7 @@ custom_image_colorize = true
 tooltip = "Claude Code"
 
 [widget.claude.actions]
-left = "exec uwsm app -- ghostty -e claude"
+left = "exec uwsm app -- ghostty --working-directory=/home/maximilien/.config -e /home/maximilien/.local/bin/claude"
 
 [theme.templates.user.menu_colors]
 input_path  = "$XDG_CONFIG_HOME/noctalia/templates/menu-colors.json"

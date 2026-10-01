@@ -84,7 +84,8 @@ avant de modifier quelque chose.
   lancé par `~/.local/bin/wallpicker-toggle` (Super + Ctrl + Espace et Super + Shift + W). Il applique le
   fond via `noctalia msg wallpaper-set`.
 - Bouton **Claude** dans la barre Noctalia (`[widget.claude]` dans `config.toml`, icône
-  `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty.
+  `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty, dans le dossier `~/.config`
+  (pas `~`, pour lequel Claude Code redemande la confiance à chaque lancement).
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
   (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). Package et
