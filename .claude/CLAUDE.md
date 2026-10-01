@@ -74,7 +74,7 @@ avant de modifier quelque chose.
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
 - Agent Polkit de Noctalia activé (`polkit_agent = true`).
 - Plugins activés (gérés dans la fenêtre Manager, enregistrés dans `settings.toml`) : `noctalia/bongocat`,
-  `noctalia/mpvpaper` (Video Wallpaper, dépendance `mpvpaper` installée).
+  `noctalia/wallhaven`.
 
 ## Mes outils perso
 

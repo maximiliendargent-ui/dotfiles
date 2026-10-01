@@ -1,6 +1,7 @@
 config_version = 14
 
 [bar.default]
+center = [ "clock", "cat" ]
 color = "primary"
 end = [ "claude", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
 font_weight = 700
@@ -10,7 +11,7 @@ radius = 0
 reserve_space = false
 shadow = false
 smart_auto_hide = true
-start = [ "workspaces" ]
+start = [ "workspaces", "wallhaven" ]
 thickness = 30
 
 [dock]
@@ -80,8 +81,14 @@ widget_order = [ "lockscreen-login-box@WAYLAND-1", "lockscreen-login-box@HDMI-A-
         show_unlock_hint = true
         show_weather = true
 
+[plugin_settings."noctalia/mpvpaper"]
+video_directory = "/home/maximilien/Videos/Wallpapers"
+
+[plugin_settings."noctalia/wallhaven"]
+download_dir = "/home/maximilien/Pictures/Wallpapers"
+
 [plugins]
-enabled = [ "noctalia/bongocat", "noctalia/mpvpaper" ]
+enabled = [ "noctalia/bongocat", "noctalia/wallhaven" ]
 
 [shell]
 corner_radius_scale = 0.0
@@ -94,13 +101,24 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gpl8d3.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gpl8d3.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkvkoe.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-gpl8d3.jpg"
+
+[widget.cat]
+audio_spectrum = true
+font_scale = 0.79000000000000004
+font_weight = 200
+scale = 2.5
+tappy_mode = true
+type = "noctalia/bongocat:cat"
 
 [widget.tray]
 enabled = false
+
+[widget.wallhaven]
+type = "noctalia/wallhaven:wallhaven"

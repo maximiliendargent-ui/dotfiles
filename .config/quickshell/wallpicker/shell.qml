@@ -1,5 +1,6 @@
 // Carrousel de fonds d'écran : cartes inclinées, la carte du centre mise en avant.
-// Flèches / molette pour naviguer, Entrée ou clic pour appliquer, Échap pour fermer.
+// Flèches / molette pour naviguer : le fond est appliqué dès qu'on s'arrête sur une carte.
+// Espace pour un fond au hasard, Entrée, Échap ou clic pour fermer.
 // Le fond d'écran est appliqué par Noctalia (qui met à jour toutes les couleurs).
 // Lancement : qs -c wallpicker
 
@@ -18,7 +19,9 @@ ShellRoot {
         readonly property real cardW: 300
         readonly property real cardH: 380
         readonly property real skew: 0.22   // inclinaison des cartes
+        readonly property int previewDelay: 400   // ms d'arrêt sur une carte avant d'appliquer
         property string currentPath: ""
+        property bool ready: false   // fond actuel connu : on peut appliquer en naviguant
 
         anchors { top: true; bottom: true; left: true; right: true }
         color: "transparent"
@@ -28,8 +31,24 @@ ShellRoot {
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
         function apply(path) {
-            setter.command = ["noctalia", "msg", "wallpaper-set", path]
-            setter.running = true
+            if (!ready || !path || path === currentPath) return
+            currentPath = path
+            Quickshell.execDetached(["noctalia", "msg", "wallpaper-set", path])
+        }
+
+        // Applique la carte sélectionnée sans attendre, puis ferme le carrousel
+        function applyAndQuit() {
+            previewTimer.stop()
+            if (folder.count > 0) apply(folder.get(list.currentIndex, "filePath"))
+            Qt.quit()
+        }
+
+        // Saute à une carte au hasard, différente de la carte sélectionnée
+        function selectRandom() {
+            if (folder.count < 2) return
+            let i = Math.floor(Math.random() * (folder.count - 1))
+            if (i >= list.currentIndex) i++
+            list.currentIndex = i
         }
 
         function selectCurrent() {
@@ -37,16 +56,17 @@ ShellRoot {
             for (let i = 0; i < folder.count; i++) {
                 if (folder.get(i, "filePath") === currentPath) {
                     list.currentIndex = i
-                    list.positionViewAtIndex(i, ListView.Center)
+                    list.positionViewAtIndex(i, PathView.Center)
                     return
                 }
             }
         }
 
-        // Applique le fond d'écran puis ferme le carrousel
-        Process {
-            id: setter
-            onExited: Qt.quit()
+        // Applique le fond d'écran quand on s'arrête sur une carte
+        Timer {
+            id: previewTimer
+            interval: win.previewDelay
+            onTriggered: if (folder.count > 0) win.apply(folder.get(list.currentIndex, "filePath"))
         }
 
         // Récupère le fond d'écran actuel pour le présélectionner
@@ -57,6 +77,7 @@ ShellRoot {
                 onStreamFinished: {
                     win.currentPath = this.text.trim()
                     win.selectCurrent()
+                    win.ready = true
                 }
             }
         }
@@ -80,24 +101,42 @@ ShellRoot {
             }
         }
 
-        ListView {
+        // Carrousel circulaire : après la dernière carte, on retombe sur la première
+        PathView {
             id: list
+
+            readonly property real step: win.cardW + 10   // écart entre deux cartes
+            // Nombre impair de cartes affichées, assez pour dépasser l'écran des deux côtés
+            readonly property int shown: Math.max(1, Math.min(folder.count, 2 * Math.ceil(width / step / 2) + 3))
+
             anchors.centerIn: parent
             width: parent.width
             height: win.cardH * 1.3
-            orientation: ListView.Horizontal
             model: folder
-            spacing: 10
             focus: true
-            keyNavigationWraps: true
-            highlightRangeMode: ListView.StrictlyEnforceRange
-            preferredHighlightBegin: width / 2 - win.cardW / 2
-            preferredHighlightEnd: width / 2 + win.cardW / 2
+            pathItemCount: shown
+            cacheItemCount: 4
+            highlightRangeMode: PathView.StrictlyEnforceRange
+            preferredHighlightBegin: 0.5
+            preferredHighlightEnd: 0.5
             highlightMoveDuration: 300
+            path: Path {
+                startX: list.width / 2 - list.shown * list.step / 2
+                startY: list.height / 2
+                PathLine {
+                    x: list.width / 2 + list.shown * list.step / 2
+                    y: list.height / 2
+                }
+            }
             Component.onCompleted: forceActiveFocus()
 
-            Keys.onReturnPressed: win.apply(folder.get(currentIndex, "filePath"))
-            Keys.onEnterPressed: win.apply(folder.get(currentIndex, "filePath"))
+            onCurrentIndexChanged: previewTimer.restart()
+
+            Keys.onLeftPressed: decrementCurrentIndex()
+            Keys.onRightPressed: incrementCurrentIndex()
+            Keys.onReturnPressed: win.applyAndQuit()
+            Keys.onEnterPressed: win.applyAndQuit()
+            Keys.onSpacePressed: win.selectRandom()
             Keys.onEscapePressed: Qt.quit()
 
             WheelHandler {
@@ -111,7 +150,7 @@ ShellRoot {
                 id: slot
                 required property string filePath
                 required property int index
-                readonly property bool isCurrent: ListView.isCurrentItem
+                readonly property bool isCurrent: PathView.isCurrentItem
 
                 width: win.cardW
                 height: list.height
@@ -164,19 +203,32 @@ ShellRoot {
 
                 MouseArea {
                     anchors.fill: card
-                    onClicked: slot.isCurrent ? win.apply(slot.filePath) : list.currentIndex = slot.index
+                    onClicked: slot.isCurrent ? win.applyAndQuit() : list.currentIndex = slot.index
                 }
             }
         }
 
         // Nom du fichier sélectionné
         Text {
+            id: fileName
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: list.bottom
             anchors.topMargin: 20
             text: folder.count > 0 ? folder.get(list.currentIndex, "fileName") : "Aucune image dans ~/Pictures/Wallpapers"
             color: "white"
             font.pixelSize: 16
+            font.family: "JetBrainsMono Nerd Font"
+        }
+
+        // Rappel des touches
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: fileName.bottom
+            anchors.topMargin: 14
+            text: "←  →  naviguer (appliqué à l'arrêt)    ·    Espace  aléatoire    ·    Entrée / Échap  fermer"
+            color: "white"
+            opacity: 0.55
+            font.pixelSize: 13
             font.family: "JetBrainsMono Nerd Font"
         }
     }
