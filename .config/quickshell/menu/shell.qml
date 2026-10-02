@@ -272,6 +272,8 @@ ShellRoot {
             { name: "Update", glyph: "", run: () => term(
                 'paru -Syu --noconfirm && flatpak update -y && echo && echo "✓ Done" ' +
                 '|| { echo; echo "✗ Update failed: read the message above"; }') },
+            // Redémarre une fois sous Windows (BootNext UEFI), mot de passe demandé par Polkit
+            { name: "Windows", glyph: "", run: () => run([home + "/.local/bin/reboot-windows"]) },
 
             // Aide
             { name: "Learn", glyph: "", children: [
