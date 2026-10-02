@@ -141,6 +141,8 @@ avant de modifier quelque chose.
   couleurs qu'au démarrage (limite de GTK).
 - Curseur choisi avec `nwg-look`.
 - Démarrage automatique commun à tous les bureaux : `~/.config/autostart/` (Steam, fenêtre ouverte à la connexion).
+- Google Drive : montage rclone du distant `gdrive:` sur `~/GoogleDrive`
+  (`~/.config/systemd/user/rclone-gdrive.service`, cache VFS complet, 5 Go max). Ne pas utiliser `kio-gdrive`.
 
 ## Paquets
 
