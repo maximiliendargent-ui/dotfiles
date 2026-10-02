@@ -32,6 +32,9 @@ avant de modifier quelque chose.
   avant de démarrer). **KDE Plasma** est une session secondaire (jeux / secours).
 - **« Niri (Noctalia) »** : session niri via UWSM, calquée sur Hyprland
   (`/usr/share/wayland-sessions/niri-uwsm-clean.desktop`, copie source dans `~/.config/niri/`).
+- Fond d'écran aléatoire à chaque connexion : côté greeter, `/usr/local/bin/noctalia-greeter-random-wallpaper`
+  (commande de `/etc/greetd/config.toml`, hors dépôt) ; côté bureau, `noctalia msg wallpaper-random` au
+  démarrage d'Hyprland (`autostart.lua`), de niri (`config.kdl`) et de KDE (`kde-noctalia-start`).
 - `KillUserProcesses=yes` (`/etc/systemd/logind.conf.d/kill-user-processes.conf`).
 - KDE fait aussi le ménage au démarrage : `~/.config/plasma-workspace/env/cleanup-graphical-session.sh`.
 - KDE reprend le look et les raccourcis d'Hyprland, avec Noctalia comme shell :
@@ -107,6 +110,8 @@ avant de modifier quelque chose.
   (pas `~`, pour lequel Claude Code redemande la confiance à chaque lancement).
 - `~/.local/bin/steam-open` : ouvre la fenêtre de Steam (`steam://open/main`) ; `steam` seul ne fait rien
   quand Steam tourne déjà. Utilisé par `~/.local/share/applications/steam.desktop`.
+- `~/.local/bin/reboot-windows` : redémarre une seule fois sous Windows (`efibootmgr --bootnext` via
+  `pkexec`, le démarrage suivant revient à Limine). Entrée Windows du menu Quickshell.
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
   (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). L'entrée
