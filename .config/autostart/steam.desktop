@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Steam
-Comment=Lance Steam à l'ouverture de session (réduit dans la zone de notification)
-Exec=/usr/bin/steam -silent
+Comment=Lance Steam à l'ouverture de session
+Exec=/usr/bin/steam
 Icon=steam
 Terminal=false
