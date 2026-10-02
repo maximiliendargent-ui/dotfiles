@@ -107,13 +107,13 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zyxvqy.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zyxvqy.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zyxvqy.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
 
 [widget.cat]
 audio_spectrum = true
