@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Ouvre la fenêtre de Steam.
+# Quand Steam tourne déjà (fenêtre fermée, icône dans la zone de notification),
+# « steam » sans argument ne fait rien : il faut lui demander sa fenêtre principale.
+
+if [[ $# -gt 0 ]]; then
+    exec /usr/bin/steam "$@"
+fi
+exec /usr/bin/steam steam://open/main

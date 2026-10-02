@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Niri (Noctalia)
+Comment=niri (uwsm) avec nettoyage de session
+Exec=sh -c "systemctl --user stop graphical-session.target graphical-session-pre.target; exec uwsm start -e -D niri -- niri --session"
+TryExec=uwsm
+DesktopNames=niri
+Type=Application

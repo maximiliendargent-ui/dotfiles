@@ -30,6 +30,8 @@ avant de modifier quelque chose.
 - Session principale : **« Hyprland (Noctalia) »**, via UWSM
   (`/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop`, qui nettoie `graphical-session.target`
   avant de démarrer). **KDE Plasma** est une session secondaire (jeux / secours).
+- **« Niri (Noctalia) »** : session niri via UWSM, calquée sur Hyprland
+  (`/usr/share/wayland-sessions/niri-uwsm-clean.desktop`, copie source dans `~/.config/niri/`).
 - `KillUserProcesses=yes` (`/etc/systemd/logind.conf.d/kill-user-processes.conf`).
 - KDE fait aussi le ménage au démarrage : `~/.config/plasma-workspace/env/cleanup-graphical-session.sh`.
 - KDE reprend le look et les raccourcis d'Hyprland, avec Noctalia comme shell :
@@ -62,6 +64,15 @@ avant de modifier quelque chose.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
   d'écran (fichier généré `noctalia_colors.lua`).
 
+## niri (configuration en **KDL**)
+
+- `~/.config/niri/config.kdl` (apparence, règles de fenêtres, démarrage) inclut `binds.kdl` (raccourcis
+  repris de `binds.lua`, titres `"Section: texte"`) et `noctalia.kdl` (bordures, fichier généré).
+- niri recharge la config à l'enregistrement ; vérifier avec `niri validate`.
+- AZERTY : touches liées par leur symbole sans Maj (`ampersand`, `eacute`… pour 1, 2… ; `parenright` et
+  `minus` pour Moins et Égal). Super seul n'est pas liable : le menu est sur Super + D.
+- Même environnement qu'Hyprland (`~/.config/uwsm/env`) et même préfixe `uwsm app -- `.
+
 ## Noctalia (shell, **v5** : réécrit en C++, plus basé sur Quickshell)
 
 - Config : `~/.config/noctalia/config.toml`. Les réglages faits dans l'interface sont dans
@@ -72,8 +83,11 @@ avant de modifier quelque chose.
   `caffeine-toggle`, `settings-toggle`, `session lock`, `screenshot-region`, `greeter-sync`.
 - Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe).
   Modèles actifs : `builtin_ids` (ghostty, btop, gtk3, gtk4, kcolorscheme, qt), `community_ids`
-  (vscode, zen-browser, pywalfox) et un modèle perso : `hyprland_borders`
-  (`~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`).
+  (vscode, zen-browser, pywalfox) et deux modèles perso : `hyprland_borders` (bordures, groupes et barre
+  d'onglets ; `~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`)
+  et `niri_borders` (`templates/niri-borders.kdl` → `~/.config/niri/noctalia.kdl`).
+- Barre : moniteurs `sysmon` (`cpu`, `ram`, `gpu`, `gpu-temp`) définis dans `config.toml`, placés dans
+  `[bar.default]` de `settings.toml`.
 - Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
 - Agent Polkit de Noctalia activé (`polkit_agent = true`).
@@ -90,6 +104,8 @@ avant de modifier quelque chose.
 - Bouton **Claude** dans la barre Noctalia (`[widget.claude]` dans `config.toml`, icône
   `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty, dans le dossier `~/.config`
   (pas `~`, pour lequel Claude Code redemande la confiance à chaque lancement).
+- `~/.local/bin/steam-open` : ouvre la fenêtre de Steam (`steam://open/main`) ; `steam` seul ne fait rien
+  quand Steam tourne déjà. Utilisé par `~/.local/share/applications/steam.desktop`.
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
   (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). L'entrée
@@ -105,7 +121,8 @@ avant de modifier quelque chose.
 ## Applis et thèmes
 
 - Terminal **Ghostty** (`~/.config/ghostty/config`), shell fish (`~/.config/fish/config.fish`),
-  prompt **Starship** (`~/.config/starship.toml`, couleurs ANSI pour suivre Ghostty).
+  prompt **Starship** (`~/.config/starship.toml`, couleurs ANSI pour suivre Ghostty), accueil
+  **fastfetch** (`~/.config/fastfetch/config.jsonc`, couleurs ANSI aussi).
 - Ghostty : `performable:ctrl+v=paste_from_clipboard` → Ctrl + V colle le texte ; sans texte (image), la
   touche passe à l'appli (Claude Code colle alors l'image). Ne pas retirer `performable:`.
 - Navigateurs : Firefox (Pywalfox) et Zen ; éditeur VS Code officiel (`code`) ; fichiers : Dolphin.
@@ -128,10 +145,11 @@ avant de modifier quelque chose.
   (privé, GitHub).
 - Après une modification : `dots add -u` (fichiers déjà suivis), `dots add <nouveau fichier>`,
   `dots commit -m "..."`, `dots push`.
-- Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`, `.config/quickshell/menu/colors.json`.
+- Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`, `.config/niri/noctalia.kdl`,
+  `.config/quickshell/menu/colors.json`.
 - Les fichiers système (`/etc/greetd`, `/etc/pam.d/greetd`, `/etc/systemd/logind.conf.d`,
-  `/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop`, `/var/lib/noctalia-greeter`) ne sont **pas**
-  dans ce dépôt.
+  `/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop` et `niri-uwsm-clean.desktop`,
+  `/var/lib/noctalia-greeter`) ne sont **pas** dans ce dépôt.
 
 ## Maintenance de ce fichier
 

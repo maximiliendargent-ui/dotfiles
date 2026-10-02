@@ -1,9 +1,18 @@
-# Prompt sobre, style Omarchy.
+# Prompt en deux lignes, style Omarchy enrichi.
 # Les couleurs utilisent les noms ANSI (blue, green, red...) : elles viennent donc
 # de la palette de Ghostty, que Noctalia met à jour selon le fond d'écran.
 
 add_newline = true
-format = "$directory$git_branch$git_status$cmd_duration$line_break$character"
+format = "$os$directory$git_branch$git_status$python$nodejs$rust$lua$golang$docker_context$fill$cmd_duration$jobs$time$line_break$character"
+
+[os]
+disabled = false
+style = "bold blue"
+format = "[$symbol]($style) "
+
+[os.symbols]
+CachyOS = ""
+Arch = ""
 
 [directory]
 style = "bold blue"
@@ -13,7 +22,7 @@ read_only = " 󰌾"
 
 [git_branch]
 format = "[$symbol$branch]($style) "
-symbol = " "
+symbol = " "
 style = "purple"
 
 [git_status]
@@ -25,9 +34,48 @@ staged = "+"
 ahead = "⇡"
 behind = "⇣"
 
+# Langages : affichés seulement dans un projet qui les utilise
+[python]
+format = "[ $version( \\($virtualenv\\))]($style) "
+style = "yellow"
+
+[nodejs]
+format = "[ $version]($style) "
+style = "green"
+
+[rust]
+format = "[ $version]($style) "
+style = "red"
+
+[lua]
+format = "[ $version]($style) "
+style = "blue"
+
+[golang]
+format = "[ $version]($style) "
+style = "cyan"
+
+[docker_context]
+format = "[ $context]($style) "
+style = "blue"
+
+# Partie droite de la première ligne
+[fill]
+symbol = " "
+
 [cmd_duration]
 min_time = 2000
-format = "[$duration]($style) "
+format = "[󱎫 $duration]($style) "
+style = "yellow"
+
+[jobs]
+format = "[ $number]($style) "
+style = "cyan"
+
+[time]
+disabled = false
+format = "[ $time]($style)"
+time_format = "%H:%M"
 style = "bright-black"
 
 [character]

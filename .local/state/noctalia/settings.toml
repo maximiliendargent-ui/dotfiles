@@ -9,9 +9,9 @@ font_weight = 700
 icon_color = "primary"
 margin_ends = 0
 radius = 0
-reserve_space = true
+reserve_space = false
 shadow = false
-start = [ "workspaces", "wallhaven" ]
+start = [ "workspaces", "wallhaven", "cpu", "ram", "gpu", "gpu-temp" ]
 thickness = 30
 
 [dock]
@@ -104,13 +104,13 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-1k1kdv.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-1k1kdv.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-1k1kdv.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
 
 [widget.cat]
 audio_spectrum = true

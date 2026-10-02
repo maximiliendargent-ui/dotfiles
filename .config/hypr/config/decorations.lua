@@ -23,6 +23,16 @@ hl.config({
             border_locked_inactive = CACHYGRAY,
         },
         groupbar = {
+            -- Onglets pleins, carrés, dans la police de la barre (couleurs : noctalia_colors.lua)
+            font_family = "JetBrainsMono Nerd Font",
+            font_size = 10,
+            height = 22,
+            gradients = true,
+            gradient_rounding = 0,
+            rounding = 0,
+            indicator_height = 0,
+            gaps_in = 2,
+            gaps_out = 2,
             col = {
                 active = CACHYLGREEN,
                 inactive = CACHYGRAY,
@@ -41,6 +51,13 @@ hl.config({
             size = 5,
             passes = 4,
             special = true,
+        },
+        -- Ombre douce, réservée aux fenêtres flottantes (règle dans windowrules.lua)
+        shadow = {
+            enabled = true,
+            range = 24,
+            render_power = 3,
+            color = "rgba(00000099)",
         },
     },
 })
