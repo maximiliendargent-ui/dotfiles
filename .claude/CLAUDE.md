@@ -92,7 +92,8 @@ avant de modifier quelque chose.
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
 - Agent Polkit de Noctalia activé (`polkit_agent = true`).
 - Plugins activés (gérés dans la fenêtre Manager, enregistrés dans `settings.toml`) : `noctalia/bongocat`,
-  `noctalia/wallhaven`.
+  `noctalia/wallhaven`, `yuuto/arch-updater` (compteur de mises à jour dans la barre, mise à jour en
+  arrière-plan sans confirmation, mot de passe par Polkit).
 
 ## Mes outils perso
 

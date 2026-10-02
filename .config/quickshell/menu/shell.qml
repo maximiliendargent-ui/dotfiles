@@ -16,8 +16,8 @@ ShellRoot {
         // Réglages
         readonly property string home: Quickshell.env("HOME")
         readonly property string fontName: "JetBrainsMono Nerd Font"
-        readonly property int boxWidth: 320
-        readonly property int rowH: 34
+        readonly property int boxWidth: 420
+        readonly property int rowH: 42
         readonly property int maxRows: 18
         readonly property int maxRecent: 15
 
@@ -221,22 +221,16 @@ ShellRoot {
             { name: "All", glyph: "", apps: () => listedApps().map(appItem) },
             { name: "Recent", glyph: "", apps: () => recentApps() },
             { name: "Internet", glyph: "", apps: () => appsIn("Internet") },
-            { name: "Multimedia", glyph: "", apps: () => appsIn("Multimedia") },
+            // Multimedia et Graphics réunis, en sous-sections
+            { name: "Media", glyph: "", children: [
+                { name: "Multimedia", glyph: "", apps: () => appsIn("Multimedia") },
+                { name: "Graphics", glyph: "", apps: () => appsIn("Graphics") }
+            ] },
             { name: "Games", glyph: "", apps: () => appsIn("Games") },
             { name: "Office", glyph: "", apps: () => appsIn("Office") },
-            { name: "Graphics", glyph: "", apps: () => appsIn("Graphics") },
             { name: "Development", glyph: "", apps: () => appsIn("Development") },
 
             // Actions et style
-            { name: "Trigger", glyph: "", children: [
-                { name: "Screenshot region", glyph: "", run: () => runLater("noctalia msg screenshot-region") },
-                { name: "Screenshot screen", glyph: "", run: () => runLater("noctalia msg screenshot-fullscreen") },
-                { name: "Annotate screen", glyph: "", run: () => runLater("noctalia msg screenshot-annotate") },
-                { name: "Color picker", glyph: "", run: () => runLater("hyprpicker -a") },
-                { name: "Night light", glyph: "", run: () => msg("nightlight-force-toggle") },
-                { name: "Caffeine", glyph: "", run: () => msg("caffeine-toggle") },
-                { name: "Toggle bar", glyph: "", run: () => msg("bar-toggle") }
-            ] },
             { name: "Style", glyph: "", children: [
                 { name: "Wallpaper carousel", glyph: "", run: () => run([home + "/.local/bin/wallpicker-toggle"]) },
                 { name: "Wallpaper panel", glyph: "", run: () => msg("panel-toggle", "wallpaper") },
@@ -287,8 +281,7 @@ ShellRoot {
                 { name: "CachyOS wiki", glyph: "", run: () => url("https://wiki.cachyos.org") },
                 { name: "Noctalia docs", glyph: "", run: () => url("https://docs.noctalia.dev/noctalia/") },
                 { name: "Quickshell docs", glyph: "", run: () => url("https://quickshell.org/docs/") }
-            ] },
-            { name: "About", glyph: "", run: () => term("fastfetch") }
+            ] }
         ]
 
         // Toutes les actions finales (pour la recherche depuis la racine)
@@ -363,7 +356,7 @@ ShellRoot {
                 // Champ de recherche
                 Rectangle {
                     width: parent.width
-                    height: 36
+                    height: 44
                     color: win.c.surface_container
 
                     TextInput {
@@ -373,7 +366,7 @@ ShellRoot {
                         color: win.c.on_surface
                         selectionColor: win.c.primary
                         font.family: win.fontName
-                        font.pixelSize: 14
+                        font.pixelSize: 17
                         focus: true
                         clip: true
                         onTextChanged: win.refresh()
@@ -431,8 +424,8 @@ ShellRoot {
                         Item {
                             id: iconBox
                             anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }
-                            width: 20
-                            height: 20
+                            width: 24
+                            height: 24
 
                             Image {
                                 id: appIcon
@@ -449,7 +442,7 @@ ShellRoot {
                                 text: row.modelData.glyph || ""
                                 color: win.c.primary
                                 font.family: win.fontName
-                                font.pixelSize: 15
+                                font.pixelSize: 18
                             }
                         }
 
@@ -459,7 +452,7 @@ ShellRoot {
                             elide: Text.ElideRight
                             color: row.selected ? win.c.primary : win.c.on_surface
                             font.family: win.fontName
-                            font.pixelSize: 14
+                            font.pixelSize: 17
                         }
 
                         MouseArea {
@@ -476,7 +469,7 @@ ShellRoot {
                         text: "Nothing found"
                         color: win.c.on_surface_variant
                         font.family: win.fontName
-                        font.pixelSize: 13
+                        font.pixelSize: 15
                     }
                 }
             }

@@ -1,16 +1,16 @@
 config_version = 14
 
 [bar.default]
-auto_hide = true
 center = [ "clock", "cat" ]
 color = "primary"
-end = [ "claude", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
+end = [ "widget", "claude", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
 font_weight = 700
 icon_color = "primary"
 margin_ends = 0
 radius = 0
 reserve_space = false
 shadow = false
+smart_auto_hide = true
 start = [ "workspaces", "wallhaven", "cpu", "ram", "gpu", "gpu-temp" ]
 thickness = 30
 
@@ -90,8 +90,11 @@ video_directory = "/home/maximilien/Videos/Wallpapers"
 [plugin_settings."noctalia/wallhaven"]
 download_dir = "/home/maximilien/Pictures/Wallpapers"
 
+[plugin_settings."yuuto/arch-updater"]
+update_mode = "background"
+
 [plugins]
-enabled = [ "noctalia/bongocat", "noctalia/wallhaven" ]
+enabled = [ "noctalia/bongocat", "noctalia/wallhaven", "yuuto/arch-updater" ]
 
 [shell]
 corner_radius_scale = 0.0
@@ -104,13 +107,13 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zyxvqy.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zyxvqy.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zyxvqy.jpg"
 
 [widget.cat]
 audio_spectrum = true
@@ -125,3 +128,6 @@ enabled = false
 
 [widget.wallhaven]
 type = "noctalia/wallhaven:wallhaven"
+
+[widget.widget]
+type = "yuuto/arch-updater:widget"
