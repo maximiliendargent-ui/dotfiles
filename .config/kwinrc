@@ -11,6 +11,9 @@ Id_9=727f39d5-a772-4b13-9054-d9f8d73869b3
 Number=9
 Rows=1
 
+[Effect-overview]
+BorderActivate=7
+
 [Plugins]
 shakecursorEnabled=false
 

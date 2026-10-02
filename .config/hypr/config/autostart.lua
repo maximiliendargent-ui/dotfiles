@@ -8,4 +8,6 @@ hl.on("hyprland.start", function ()
     -- Nouveau fond d'écran à chaque connexion : réessaie jusqu'à ce que Noctalia réponde (10 s max)
     hl.exec_cmd("sh -c 'for i in $(seq 50); do noctalia msg wallpaper-random >/dev/null 2>&1 && break; sleep 0.2; done'")
     hl.exec_cmd("xhost +SI:localuser:root")
+    -- Vue d'ensemble des espaces de travail (coin haut gauche) : ~/.config/quickshell/overview
+    hl.exec_cmd("qs -c overview")
 end)

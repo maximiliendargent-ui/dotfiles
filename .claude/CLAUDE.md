@@ -118,6 +118,10 @@ avant de modifier quelque chose.
   Manager ouvre la fenêtre Manager (paquets et plugins). Update = `paru -Syu --noconfirm` + `flatpak update -y`
   (snapshots via `snap-pac`). Applis triées par usage : compteur du menu
   (`~/.local/state/quickshell-menu/usage.json`) + celui de Noctalia (`usage_counts.json`).
+- Vue d'ensemble des espaces de travail en **Quickshell** (Hyprland) : `~/.config/quickshell/overview/shell.qml`,
+  lancée par `autostart.lua` (`qs -c overview`), coin actif en haut à gauche, couleurs du menu. Bascule :
+  `qs -c overview ipc call overview toggle`. Sous KDE, même coin via KWin (`[Effect-overview]` dans `kwinrc`) ;
+  sous niri, coin natif.
 - Fenêtre **Manager** en Quickshell (paquets officiels + AUR, plugins Noctalia) :
   `~/.config/quickshell/manager/shell.qml`, données via `~/.local/bin/manager-data` (JSON), ouverte par
   `~/.local/bin/manager-open [packages|plugins] [add|installed]`. Un clic sur un plugin ouvre sa fiche

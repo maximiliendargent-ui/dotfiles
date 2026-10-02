@@ -194,9 +194,10 @@ window-rule {
     default-window-height { fixed 756; }
 }
 
-// Noctalia : flou derrière la barre, les panneaux et les notifications.
+// Noctalia : flou derrière les panneaux et les notifications. Pas la barre : masquée, sa surface
+// reste là, transparente, et niri flouterait toute la bande (pas d'équivalent d'ignore_alpha).
 layer-rule {
-    match namespace="^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$"
+    match namespace="^noctalia-(notification|dock|panel|attached-panel|osd|window-switcher)$"
     background-effect {
         blur true
     }
