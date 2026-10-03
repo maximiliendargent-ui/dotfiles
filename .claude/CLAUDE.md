@@ -66,6 +66,8 @@ avant de modifier quelque chose.
   une modification demande de se déconnecter/reconnecter.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
   d'écran (fichier généré `noctalia_colors.lua`).
+- btop et cava : terminaux Ghostty flottants (classes `dev.btop` et `dev.cava`, règles dans
+  `windowrules.lua`), ouverts à la connexion par `autostart.lua`.
 
 ## niri (configuration en **KDL**)
 
@@ -85,7 +87,7 @@ avant de modifier quelque chose.
   `wallpaper-set <chemin>`, `wallpaper-get`, `templates-apply`, `bar-toggle`, `nightlight-toggle`,
   `caffeine-toggle`, `settings-toggle`, `session lock`, `screenshot-region`, `greeter-sync`.
 - Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe).
-  Modèles actifs : `builtin_ids` (ghostty, btop, gtk3, gtk4, kcolorscheme, qt), `community_ids`
+  Modèles actifs : `builtin_ids` (ghostty, btop, cava, gtk3, gtk4, kcolorscheme, qt), `community_ids`
   (vscode, zen-browser, pywalfox) et deux modèles perso : `hyprland_borders` (bordures, groupes et barre
   d'onglets ; `~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`)
   et `niri_borders` (`templates/niri-borders.kdl` → `~/.config/niri/noctalia.kdl`).

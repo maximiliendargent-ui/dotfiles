@@ -10,7 +10,7 @@ output_path = "$XDG_CONFIG_HOME/niri/noctalia.kdl"
 
 [theme.templates]
 enable_builtin_templates = true
-builtin_ids = ["ghostty", "btop", "gtk3", "gtk4", "kcolorscheme", "qt"]
+builtin_ids = ["ghostty", "btop", "cava", "gtk3", "gtk4", "kcolorscheme", "qt"]
 
 enable_community_templates = true
 community_ids = ["vscode", "zen-browser", "pywalfox"]

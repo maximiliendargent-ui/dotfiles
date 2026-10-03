@@ -10,4 +10,7 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("xhost +SI:localuser:root")
     -- Vue d'ensemble des espaces de travail (coin haut gauche) : ~/.config/quickshell/overview
     hl.exec_cmd("qs -c overview")
+    -- btop et cava ouverts à la connexion, sur le même espace (flottants, placés par windowrules.lua)
+    hl.exec_cmd("uwsm app -- ghostty --class=dev.btop -e btop")
+    hl.exec_cmd("uwsm app -- ghostty --class=dev.cava -e cava")
 end)
