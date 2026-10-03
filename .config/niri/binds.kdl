@@ -29,6 +29,7 @@ binds {
     Mod+Shift+D         hotkey-overlay-title="Applications: Docker (LazyDocker)" { spawn-sh "uwsm app -- ghostty -e lazydocker"; }
     Mod+Ctrl+T          hotkey-overlay-title="Applications: Moniteur système (btop)" { spawn-sh "uwsm app -- ghostty -e btop"; }
     Ctrl+Shift+Escape   hotkey-overlay-title="Applications: Moniteur système (btop)" { spawn-sh "uwsm app -- ghostty -e btop"; }
+    Mod+Alt+M           hotkey-overlay-title="Applications: Visualiseur audio (cava)" { spawn-sh "uwsm app -- ghostty --class=dev.cava -e cava"; }
     Mod+Ctrl+Q          hotkey-overlay-title="Applications: Calculatrice" { spawn-sh "uwsm app -- gnome-calculator"; }
     XF86Calculator      { spawn-sh "uwsm app -- gnome-calculator"; }
 

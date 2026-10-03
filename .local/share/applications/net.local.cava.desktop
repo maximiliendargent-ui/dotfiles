@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=ghostty --class=dev.cava -e cava
+Name=Visualiseur audio (cava)
+NoDisplay=true
+StartupNotify=false
+Type=Application
+X-KDE-GlobalAccel-CommandShortcut=true

@@ -10,4 +10,7 @@ done
 sleep 0.5
 wall=$(noctalia msg wallpaper-get 2>/dev/null)
 [ -f "$wall" ] && plasma-apply-wallpaperimage "$wall" >/dev/null 2>&1
+# btop et cava ouverts à la connexion, comme sous Hyprland et niri
+ghostty --class=dev.btop -e btop &
+ghostty --class=dev.cava -e cava &
 wait

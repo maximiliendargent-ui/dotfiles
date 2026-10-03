@@ -75,30 +75,15 @@ spawn-at-startup "noctalia"
 // Nouveau fond d'écran à chaque connexion : réessaie jusqu'à ce que Noctalia réponde (10 s max)
 spawn-sh-at-startup "for i in $(seq 50); do noctalia msg wallpaper-random >/dev/null 2>&1 && break; sleep 0.2; done"
 spawn-sh-at-startup "xhost +SI:localuser:root"
+// btop et cava ouverts à la connexion, en tuiles
+spawn-sh-at-startup "uwsm app -- ghostty --class=dev.btop -e btop"
+spawn-sh-at-startup "uwsm app -- ghostty --class=dev.cava -e cava"
 
 // ---------------------------------------------------------------------------
 // Règles de fenêtres (équivalent de hypr/config/windowrules.lua)
 // ---------------------------------------------------------------------------
 
-// Opacité : 0.85 inactive, 0.95 active, avec flou derrière.
-window-rule {
-    opacity 0.85
-    background-effect {
-        blur true
-    }
-}
-window-rule {
-    match is-active=true
-    opacity 0.95
-}
-// Opaques : navigateurs, terminaux (ils gèrent leur propre transparence), vidéo.
-window-rule {
-    match app-id="^(firefox|zen)$"
-    match app-id="^(kitty|com\\.mitchellh\\.ghostty|ghostty|[Kk]onsole|Alacritty|gnome-terminal|xfce[0-9]?-terminal)$"
-    match app-id="^(mpv|org\\.kde\\.haruna|.*plex.*|org\\.kde\\.gwenview|.*vlc.*)$"
-    match app-id="^(code|Code|discord)$"
-    opacity 1.0
-}
+// Fenêtres opaques et sans flou, comme dans hypr/config/decorations.lua (opacités à 1, blur désactivé).
 
 // Ombre douce, réservée aux fenêtres flottantes.
 window-rule {
@@ -192,15 +177,6 @@ window-rule {
     open-floating true
     default-column-width { fixed 1152; }
     default-window-height { fixed 756; }
-}
-
-// Noctalia : flou derrière les panneaux et les notifications. Pas la barre : masquée, sa surface
-// reste là, transparente, et niri flouterait toute la bande (pas d'équivalent d'ignore_alpha).
-layer-rule {
-    match namespace="^noctalia-(notification|dock|panel|attached-panel|osd|window-switcher)$"
-    background-effect {
-        blur true
-    }
 }
 
 include "binds.kdl"

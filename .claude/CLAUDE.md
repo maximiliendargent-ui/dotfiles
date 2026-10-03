@@ -67,7 +67,7 @@ avant de modifier quelque chose.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
   d'écran (fichier généré `noctalia_colors.lua`).
 - btop et cava : terminaux Ghostty en tuiles (classes `dev.btop` et `dev.cava`), ouverts à la connexion
-  par `autostart.lua`.
+  par `autostart.lua`, par `config.kdl` sous niri et par `kde-noctalia-start` sous KDE.
 - L'espace `gaming` est réservé aux jeux (règles dans `windowrules.lua`) : il ne doit pas être `default`
   dans `workspaces.lua`, sinon tout y démarre.
 
