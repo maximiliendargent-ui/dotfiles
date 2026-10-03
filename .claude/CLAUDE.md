@@ -38,7 +38,8 @@ avant de modifier quelque chose.
 - `KillUserProcesses=yes` (`/etc/systemd/logind.conf.d/kill-user-processes.conf`).
 - KDE fait aussi le ménage au démarrage : `~/.config/plasma-workspace/env/cleanup-graphical-session.sh`.
 - KDE reprend le look et les raccourcis d'Hyprland, avec Noctalia comme shell :
-  `~/.local/bin/kde-noctalia-start` (autostart `noctalia-kde.desktop`), `~/.config/kwinrulesrc` (sans bordure),
+  `~/.local/bin/kde-noctalia-start` (autostart `noctalia-kde.desktop`), `~/.config/kwinrulesrc` (sans bordure,
+  sauf Ghostty qui garde sa barre de titre sur KDE),
   `~/.config/kwinrc` (9 bureaux), `~/.config/kglobalshortcutsrc` + lanceurs
   `~/.local/share/applications/net.local.*.desktop`.
 - KWallet est le gestionnaire de secrets : déverrouillé via `pam_kwallet5` dans `/etc/pam.d/greetd`

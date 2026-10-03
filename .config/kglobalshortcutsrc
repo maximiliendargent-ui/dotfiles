@@ -273,11 +273,11 @@ _launch=Meta+W\tMeta+Shift+Return
 [services][net.local.btop.desktop]
 _launch=Ctrl+Shift+Esc\tMeta+Ctrl+T
 
-[services][net.local.cava.desktop]
-_launch=Meta+Alt+M
-
 [services][net.local.calculator.desktop]
 _launch=Meta+Ctrl+Q
+
+[services][net.local.cava.desktop]
+_launch=Meta+Alt+M
 
 [services][net.local.claude.desktop]
 _launch=Meta+Shift+A
@@ -338,3 +338,7 @@ _launch=Meta+Shift+W\tMeta+Ctrl+Space
 
 [services][org.kde.plasma-systemmonitor.desktop]
 _launch=none
+
+[services][org.kde.spectacle.desktop]
+CurrentMonitorScreenShot=none
+OpenWithoutScreenshot=none
