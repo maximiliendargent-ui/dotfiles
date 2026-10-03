@@ -94,7 +94,7 @@ download_dir = "/home/maximilien/Pictures/Wallpapers"
 update_mode = "background"
 
 [plugins]
-enabled = [ "noctalia/bongocat", "noctalia/wallhaven", "yuuto/arch-updater" ]
+enabled = [ "noctalia/wallhaven", "yuuto/arch-updater" ]
 
 [shell]
 corner_radius_scale = 0.0
@@ -107,13 +107,13 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkgkkp.png"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkgkkp.png"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-285e6x.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-pkgkkp.png"
 
 [widget.cat]
 audio_spectrum = true

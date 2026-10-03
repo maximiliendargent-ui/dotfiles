@@ -52,8 +52,10 @@ ShellRoot {
         show()
     }
 
-    function goTo(ws) {
-        Quickshell.execDetached(["hyprctl", "eval", "hl.dispatch(hl.dsp.focus({ workspace = " + ws + " }))"])
+    // Avec une adresse : focus sur cette fenêtre (toplevel.activate() est ignoré tant que la vue a le clavier)
+    function goTo(ws, addr) {
+        const target = addr ? "{ window = \"address:" + addr + "\" }" : "{ workspace = " + ws + " }"
+        Quickshell.execDetached(["hyprctl", "eval", "hl.dispatch(hl.dsp.focus(" + target + "))"])
         open = false
     }
 
@@ -67,7 +69,8 @@ ShellRoot {
             const m = t.monitor
             out.push({
                 x: o.at[0] - (m ? m.x : 0), y: o.at[1] - (m ? m.y : 0), w: o.size[0], h: o.size[1],
-                title: t.title, cls: o.class || "", floating: !!o.floating, toplevel: t.wayland
+                title: t.title, cls: o.class || "", floating: !!o.floating, toplevel: t.wayland,
+                address: o.address
             })
         }
         return out.sort((a, b) => a.floating - b.floating)
@@ -238,14 +241,7 @@ ShellRoot {
 
                                 MouseArea {
                                     anchors.fill: parent
-                                    onClicked: {
-                                        if (tile.modelData.toplevel) {
-                                            tile.modelData.toplevel.activate()
-                                            root.open = false
-                                        } else {
-                                            root.goTo(cell.ws)
-                                        }
-                                    }
+                                    onClicked: root.goTo(cell.ws, tile.modelData.address)
                                 }
                             }
                         }
