@@ -158,7 +158,9 @@ ShellRoot {
             const counts = Object.assign({}, usage)
             counts[id] = (counts[id] || 0) + 1
             usageFile.setText(JSON.stringify(counts))
-            app(id + ".desktop")
+            // UWSM refuse les identifiants avec espaces ou apostrophes (raccourcis de jeux Steam)
+            if (/^[A-Za-z0-9_.-]+$/.test(id)) app(id + ".desktop")
+            else app(...e.command)
         }
 
         // Une seule catégorie par appli : la première qui correspond, dans cet ordre
