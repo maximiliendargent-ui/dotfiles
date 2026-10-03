@@ -68,10 +68,8 @@ hl.window_rule({
 })
 
 -- Opacity Overrides
-local terminals = "^(kitty|ghostty|[Kk]onsole|Alacritty|gnome-terminal|xfce[0-9]?-terminal)$"
+local terminals = "^(kitty|com\\.mitchellh\\.ghostty|dev\\.(btop|cava)|[Kk]onsole|Alacritty|gnome-terminal|xfce[0-9]?-terminal)$"
 
-hl.window_rule({ match = { class = "^(firefox|zen)$" }, opacity = "1.0 override" })
-hl.window_rule({ match = { class = "^(code|Code|discord)$" }, opacity = "1.0 override" }) -- texte dense : toujours opaque
 hl.window_rule({ name = "ombre-flottantes-seulement", match = { float = false }, no_shadow = true })
 hl.window_rule({ match = { class = terminals }, opacity = "1.0 override" }) -- Override opacity in favor of terminal settings for opacity. If your terminal doesn't support transparency, you can remove this rule.
 hl.window_rule({ match = { class = "^(mpv|org.kde.haruna|.*plex.*|org\\.kde\\.gwenview|.*vlc.*)$" }, opacity = "1.0 override" })
@@ -129,10 +127,5 @@ hl.layer_rule({
   blur_popups = true,
 })
 hl.window_rule({ match = { class = "^(dev.keybinds)$" }, float = true, size = { "monitor_w*0.55", "monitor_h*0.65" } })
--- Visualiseur audio cava (Super + Alt + M) : petit terminal flottant en bas à droite
-hl.window_rule({ match = { class = "^(dev.cava)$" }, float = true, size = { "monitor_w*0.30", "monitor_h*0.25" }, move = { "monitor_w*0.70 - 10", "monitor_h*0.75 - 10" } })
--- Moniteur système btop (Super + Ctrl + T) : terminal flottant à droite, juste au-dessus de cava
-hl.window_rule({ match = { class = "^(dev.btop)$" }, float = true, size = { "monitor_w*0.45", "monitor_h*0.60" }, move = { "monitor_w*0.55 - 10", "monitor_h*0.15 - 20" } })
-
 -- Fenêtre Manager (paquets et plugins) : ~/.config/quickshell/manager
 hl.window_rule({ match = { class = "^(org\\.quickshell)$", title = "^(Manager)$" }, float = true, center = true, size = { "monitor_w*0.60", "monitor_h*0.70" } })

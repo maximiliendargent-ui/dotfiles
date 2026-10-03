@@ -1,6 +1,7 @@
 // Vue d'ensemble des espaces de travail pour Hyprland, comme le coin actif de niri :
 // pousser la souris dans le coin haut gauche affiche les 9 espaces avec un aperçu de leurs fenêtres.
 // Clic sur un espace ou une fenêtre pour y aller ; Échap, clic à côté ou retour dans le coin pour fermer.
+// Glisser une fenêtre sur un autre espace l'y envoie ; glisser le numéro (ou le fond) d'un espace sur un autre les échange.
 // Couleurs : celles du menu (menu/colors.json, généré par Noctalia à partir du fond d'écran).
 // Lancement : au démarrage d'Hyprland (autostart.lua, qs -c overview), reste en arrière-plan.
 // Depuis un raccourci ou un script : qs -c overview ipc call overview toggle
@@ -33,6 +34,8 @@ ShellRoot {
     property bool open: false
     property bool armed: false  // la souris a quitté le coin depuis l'ouverture : y revenir ferme
     onOpenChanged: armed = false
+    property int dropWs: 0      // espace survolé pendant un glisser-déposer
+    property int rev: 0         // incrémenté pour reconstruire les aperçus après un déplacement
 
     // Hors d'Hyprland (essais) : fenêtres lues dans le fichier JSON désigné par OVERVIEW_MOCK
     readonly property bool onHyprland: !!Quickshell.env("HYPRLAND_INSTANCE_SIGNATURE")
@@ -57,6 +60,27 @@ ShellRoot {
         const target = addr ? "{ window = \"address:" + addr + "\" }" : "{ workspace = " + ws + " }"
         Quickshell.execDetached(["hyprctl", "eval", "hl.dispatch(hl.dsp.focus(" + target + "))"])
         open = false
+    }
+
+    // Glisser-déposer : envoie ces fenêtres sur un espace, sans quitter la vue
+    function moveLua(wins, ws) {
+        return wins.map(w => "hl.dispatch(hl.dsp.window.move({ workspace = " + ws
+            + ", window = \"address:" + w.address + "\", follow = false }))").join(" ")
+    }
+    function drop(lua) {
+        dropWs = 0
+        if (lua) Quickshell.execDetached(["hyprctl", "eval", lua])
+        refresh.restart()
+    }
+
+    // Laisse à Hyprland le temps de déplacer, puis relit les positions et reconstruit les aperçus
+    Timer {
+        id: refresh
+        interval: 200
+        onTriggered: {
+            if (root.onHyprland) Hyprland.refreshToplevels()
+            root.rev++
+        }
     }
 
     // Fenêtres d'un espace, en coordonnées de l'écran ; les flottantes au-dessus
@@ -162,6 +186,15 @@ ShellRoot {
             MouseArea { anchors.fill: parent; onClicked: root.open = false }
 
             Grid {
+                id: grid
+
+                // Numéro de l'espace sous un point d'un élément (0 : aucun)
+                function wsAt(item, x, y) {
+                    const p = item.mapToItem(grid, x, y)
+                    const cellAt = grid.childAt(p.x, p.y)
+                    return cellAt && cellAt.ws ? cellAt.ws : 0
+                }
+
                 anchors.centerIn: parent
                 columns: root.columns
                 spacing: root.gap
@@ -179,20 +212,38 @@ ShellRoot {
                         width: Math.round(win.width * win.cellScale)
                         height: Math.round(win.height * win.cellScale)
                         color: root.c.surface_container
-                        border.width: 2
-                        border.color: current ? root.c.primary
+                        property bool dragging: false  // une de ses fenêtres est en cours de glissement
+
+                        border.width: root.dropWs === ws ? 4 : 2
+                        border.color: current || root.dropWs === ws ? root.c.primary
                             : cellMouse.containsMouse ? root.c.outline : root.c.outline_variant
-                        clip: true
+                        clip: !dragging
+                        z: dragging ? 1 : 0
+
+                        // Fond et numéro de l'espace. Clic : y aller ; relâché sur un autre espace : échanger leurs fenêtres
+                        function dragOver(area, mouse) {
+                            if (!area.pressed) return
+                            const to = grid.wsAt(area, mouse.x, mouse.y)
+                            root.dropWs = to === ws ? 0 : to
+                        }
+                        function dragEnd(area, mouse) {
+                            const to = grid.wsAt(area, mouse.x, mouse.y)
+                            if (to === ws) root.goTo(ws)
+                            else if (to) root.drop(root.moveLua(root.windowsOn(ws), to)
+                                + " " + root.moveLua(root.windowsOn(to), ws))
+                            else root.dropWs = 0
+                        }
 
                         MouseArea {
                             id: cellMouse
                             anchors.fill: parent
                             hoverEnabled: true
-                            onClicked: root.goTo(cell.ws)
+                            onPositionChanged: mouse => cell.dragOver(cellMouse, mouse)
+                            onReleased: mouse => cell.dragEnd(cellMouse, mouse)
                         }
 
                         Repeater {
-                            model: root.open ? root.windowsOn(cell.ws) : []
+                            model: root.open ? (root.rev, root.windowsOn(cell.ws)) : []
 
                             Rectangle {
                                 id: tile
@@ -206,6 +257,7 @@ ShellRoot {
                                 color: root.c.surface_container_high
                                 border.width: 1
                                 border.color: root.c.outline_variant
+                                z: tileMouse.pressed ? 1 : 0
 
                                 // Aperçu en direct ; tant qu'il n'y a pas d'image : icône et titre
                                 ScreencopyView {
@@ -239,18 +291,44 @@ ShellRoot {
                                     }
                                 }
 
+                                // Clic : aller à la fenêtre ; glissée sur un autre espace : l'y envoyer
                                 MouseArea {
+                                    id: tileMouse
                                     anchors.fill: parent
-                                    onClicked: root.goTo(cell.ws, tile.modelData.address)
+                                    property point grab  // point saisi, pour que l'aperçu suive la souris
+
+                                    onPressed: mouse => grab = Qt.point(mouse.x, mouse.y)
+                                    onPositionChanged: mouse => {
+                                        const dx = mouse.x - grab.x, dy = mouse.y - grab.y
+                                        if (!cell.dragging && Math.abs(dx) + Math.abs(dy) < 8) return
+                                        cell.dragging = true
+                                        tile.x += dx
+                                        tile.y += dy
+                                        const ws = grid.wsAt(tileMouse, grab.x, grab.y)
+                                        root.dropWs = ws === cell.ws ? 0 : ws
+                                    }
+                                    onReleased: mouse => {
+                                        const ws = grid.wsAt(tileMouse, mouse.x, mouse.y)
+                                        if (ws === cell.ws && !cell.dragging) return root.goTo(cell.ws, tile.modelData.address)
+                                        cell.dragging = false
+                                        root.drop(ws && ws !== cell.ws ? root.moveLua([tile.modelData], ws) : "")
+                                    }
                                 }
                             }
                         }
 
-                        // Numéro de l'espace
+                        // Numéro de l'espace : poignée pour échanger deux espaces (le fond est souvent couvert)
                         Rectangle {
                             x: 2; y: 2
                             width: 26; height: 22
                             color: cell.current ? root.c.primary : root.c.surface_container_high
+                            MouseArea {
+                                id: badgeMouse
+                                anchors.fill: parent
+                                cursorShape: Qt.OpenHandCursor
+                                onPositionChanged: mouse => cell.dragOver(badgeMouse, mouse)
+                                onReleased: mouse => cell.dragEnd(badgeMouse, mouse)
+                            }
                             Text {
                                 anchors.centerIn: parent
                                 text: cell.ws

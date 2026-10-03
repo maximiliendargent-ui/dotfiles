@@ -66,8 +66,10 @@ avant de modifier quelque chose.
   une modification demande de se déconnecter/reconnecter.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
   d'écran (fichier généré `noctalia_colors.lua`).
-- btop et cava : terminaux Ghostty flottants (classes `dev.btop` et `dev.cava`, règles dans
-  `windowrules.lua`), ouverts à la connexion par `autostart.lua`.
+- btop et cava : terminaux Ghostty en tuiles (classes `dev.btop` et `dev.cava`), ouverts à la connexion
+  par `autostart.lua`.
+- L'espace `gaming` est réservé aux jeux (règles dans `windowrules.lua`) : il ne doit pas être `default`
+  dans `workspaces.lua`, sinon tout y démarre.
 
 ## niri (configuration en **KDL**)
 
@@ -121,7 +123,8 @@ avant de modifier quelque chose.
   (snapshots via `snap-pac`). Applis triées par usage : compteur du menu
   (`~/.local/state/quickshell-menu/usage.json`) + celui de Noctalia (`usage_counts.json`).
 - Vue d'ensemble des espaces de travail en **Quickshell** (Hyprland) : `~/.config/quickshell/overview/shell.qml`,
-  lancée par `autostart.lua` (`qs -c overview`), coin actif en haut à gauche, couleurs du menu. Bascule :
+  lancée par `autostart.lua` (`qs -c overview`), coin actif en haut à gauche, couleurs du menu ; glisser une
+  fenêtre sur un autre espace l'y envoie, glisser le numéro d'un espace sur un autre les échange. Bascule :
   `qs -c overview ipc call overview toggle`. Sous KDE, même coin via KWin (`[Effect-overview]` dans `kwinrc`) ;
   sous niri, coin natif.
 - Fenêtre **Manager** en Quickshell (paquets officiels + AUR, plugins Noctalia) :
