@@ -26,7 +26,8 @@ avant de modifier quelque chose.
 ## Sessions
 
 - Écran de connexion : **greetd + Noctalia Greeter** (config : `/etc/greetd/config.toml`,
-  `/var/lib/noctalia-greeter/greeter.toml`, clavier `be` et Verr. Num. activés).
+  `/var/lib/noctalia-greeter/greeter.toml`, clavier `be` et Verr. Num. activés, logo masqué par
+  `hide_logo = true` sous `[appearance]`).
 - Session principale : **« Hyprland (Noctalia) »**, via UWSM
   (`/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop`, qui nettoie `graphical-session.target`
   avant de démarrer). **KDE Plasma** est une session secondaire (jeux / secours).
@@ -57,6 +58,8 @@ avant de modifier quelque chose.
   pas détaillés). Exemple connu qui marche : `hl.dsp.window.resize({ x = 50, y = 0, relative = true })`.
   Pour un dispatcher dont les paramètres sont incertains, l'envelopper dans une fonction
   (`function() hl.dispatch(...) end`) pour ne pas bloquer le chargement de la config.
+- Filtres d'écran : shaders dans `~/.config/hypr/shaders/` (`gris.frag`, `retro.frag`), bascule par
+  Super + Ctrl + S ; un rechargement de la config (changement de fond d'écran) les désactive.
 - **`binds.lua`** : raccourcis inspirés d'Omarchy, chacun écrit en toutes lettres
   (`hl.bind("SUPER + T", ..., { description = "Section: texte" })`). Le format `"Section: texte"` est
   obligatoire : mon aide (Super + K) les range par section. Chiffres et touches Moins/Égal liés par code
@@ -91,9 +94,14 @@ avant de modifier quelque chose.
   `caffeine-toggle`, `settings-toggle`, `session lock`, `screenshot-region`, `greeter-sync`.
 - Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe).
   Modèles actifs : `builtin_ids` (ghostty, btop, cava, gtk3, gtk4, kcolorscheme, qt), `community_ids`
-  (vscode, zen-browser, pywalfox) et deux modèles perso : `hyprland_borders` (bordures, groupes et barre
-  d'onglets ; `~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`)
-  et `niri_borders` (`templates/niri-borders.kdl` → `~/.config/niri/noctalia.kdl`).
+  (vscode, zen-browser, pywalfox, discord, papirus-icons) et quatre modèles perso (`hyprland_borders`,
+  `niri_borders`, `menu_colors`, `startpage_colors`) : `hyprland_borders` (bordures, groupes et barre
+  d'onglets ; `~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`),
+  `niri_borders` (`templates/niri-borders.kdl` → `~/.config/niri/noctalia.kdl`) et `startpage_colors`
+  (`templates/startpage-colors.css` → `~/.config/startpage/colors.css`).
+- Le modèle `papirus-icons` copie Papirus dans `~/.local/share/icons` et colore les dossiers avec la
+  teinte Papirus la plus proche du fond d'écran ; `discord` écrit les thèmes de Vesktop
+  (`~/.config/vesktop/themes/`).
 - Barre : moniteurs `sysmon` (`cpu`, `ram`, `gpu`, `gpu-temp`) définis dans `config.toml`, placés dans
   `[bar.default]` de `settings.toml`.
 - Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
@@ -138,11 +146,18 @@ avant de modifier quelque chose.
 
 - Terminal **Ghostty** (`~/.config/ghostty/config`), shell fish (`~/.config/fish/config.fish`),
   prompt **Starship** (`~/.config/starship.toml`, couleurs ANSI pour suivre Ghostty), accueil
-  **fastfetch** (`~/.config/fastfetch/config.jsonc`, couleurs ANSI aussi).
+  **fastfetch** (`~/.config/fastfetch/config.jsonc`, couleurs ANSI aussi) : `fish_greeting` dans
+  `config.fish` y affiche le fond d'écran courant en vignette (Ghostty/kitty seulement).
 - Ghostty : `performable:ctrl+v=paste_from_clipboard` → Ctrl + V colle le texte ; sans texte (image), la
   touche passe à l'appli (Claude Code colle alors l'image). Ne pas retirer `performable:`.
-- Navigateurs : Firefox (Pywalfox) et Zen ; éditeur VS Code officiel (`code`) ; fichiers : Dolphin.
+- Navigateurs : Firefox (Pywalfox) et Zen ; éditeur VS Code officiel (`code`) ; fichiers : Dolphin ;
+  Discord : Vesktop (thème Noctalia).
+- Page d'accueil et nouveaux onglets de Firefox et Zen : `~/.config/startpage/index.html` (accueil
+  déclaré dans le `user.js` de chaque profil ; nouveaux onglets par `autoconfig.js` + `newtab.cfg`,
+  sources dans `~/.config/startpage/newtab/`, copiés dans `/usr/lib/firefox` et `/opt/zen-browser-bin`,
+  à recopier si une mise à jour les retire).
 - `EDITOR=code-wait` (dans `config.fish`) : Ctrl + G dans Claude Code ouvre le prompt dans VS Code.
+- Icônes : **Papirus-Dark** (`kdeglobals`, `qt6ct.conf`, gsettings), dossiers colorés par Noctalia.
 - Thème Qt : **qt6ct-kde**, schéma de couleurs KDE `Noctalia`. Les applis GTK 4 ne rechargent leurs
   couleurs qu'au démarrage (limite de GTK).
 - Curseur choisi avec `nwg-look`.
@@ -165,10 +180,11 @@ avant de modifier quelque chose.
 - Après une modification : `dots add -u` (fichiers déjà suivis), `dots add <nouveau fichier>`,
   `dots commit -m "..."`, `dots push`.
 - Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`, `.config/niri/noctalia.kdl`,
-  `.config/quickshell/menu/colors.json`.
+  `.config/quickshell/menu/colors.json`, `.config/startpage/colors.css`.
 - Les fichiers système (`/etc/greetd`, `/etc/pam.d/greetd`, `/etc/systemd/logind.conf.d`,
   `/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop` et `niri-uwsm-clean.desktop`,
-  `/var/lib/noctalia-greeter`) ne sont **pas** dans ce dépôt.
+  `/var/lib/noctalia-greeter`, les copies de `autoconfig.js` et `newtab.cfg` dans `/usr/lib/firefox` et
+  `/opt/zen-browser-bin`) ne sont **pas** dans ce dépôt.
 
 ## Maintenance de ce fichier
 

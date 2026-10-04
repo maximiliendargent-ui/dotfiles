@@ -190,6 +190,14 @@ hl.bind("SUPER + SHIFT + BackSpace", function()
     gaps_off = not gaps_off
     hl.config({ general = { gaps_in = gaps_off and 0 or 5, gaps_out = gaps_off and 0 or 10 } })
 end, { description = "Style: Masquer / afficher les espacements" })
+-- Filtres d'écran (~/.config/hypr/shaders) : aucun → gris → rétro → aucun
+local filtres = { "", "gris", "retro" }
+local filtre = 1
+hl.bind("SUPER + CTRL + S", function()
+    filtre = filtre % #filtres + 1
+    local nom = filtres[filtre]
+    hl.config({ decoration = { screen_shader = nom == "" and "" or os.getenv("HOME") .. "/.config/hypr/shaders/" .. nom .. ".frag" } })
+end, { description = "Style: Filtre d'écran (gris / rétro / aucun)" })
 
 -----------------------
 ---- NOTIFICATIONS ----

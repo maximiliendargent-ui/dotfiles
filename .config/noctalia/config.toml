@@ -13,7 +13,7 @@ enable_builtin_templates = true
 builtin_ids = ["ghostty", "btop", "cava", "gtk3", "gtk4", "kcolorscheme", "qt"]
 
 enable_community_templates = true
-community_ids = ["vscode", "zen-browser", "pywalfox"]
+community_ids = ["vscode", "zen-browser", "pywalfox", "discord", "papirus-icons"]
 
 [shell.screenshot]
 directory = "/home/maximilien/Pictures/Screenshots"
@@ -62,3 +62,8 @@ stat = "ram_pct"
 [theme.templates.user.menu_colors]
 input_path  = "$XDG_CONFIG_HOME/noctalia/templates/menu-colors.json"
 output_path = "$XDG_CONFIG_HOME/quickshell/menu/colors.json"
+
+# Couleurs et fond de la page d'accueil des navigateurs (~/.config/startpage/index.html)
+[theme.templates.user.startpage_colors]
+input_path  = "$XDG_CONFIG_HOME/noctalia/templates/startpage-colors.css"
+output_path = "$XDG_CONFIG_HOME/startpage/colors.css"

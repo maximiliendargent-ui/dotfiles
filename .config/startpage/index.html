@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accueil</title>
+<!-- Page d'accueil de Firefox et Zen. Les couleurs et le fond viennent de colors.css,
+     généré par Noctalia (modèle startpage_colors) à chaque changement de fond d'écran. -->
+<style>
+  /* Valeurs de secours si colors.css n'existe pas encore */
+  :root {
+    --surface: #111318; --surface-container: #1d2024; --on-surface: #e2e2e9;
+    --on-surface-variant: #c4c6d0; --primary: #a8c8ff; --on-primary: #06305f;
+    --outline: #8e9099; --wallpaper: none;
+  }
+</style>
+<link rel="stylesheet" href="colors.css">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    min-height: 100vh; display: grid; place-items: center; padding: 16px;
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+    color: var(--on-surface);
+    background: var(--surface) var(--wallpaper) center / cover fixed;
+  }
+  /* Voile de la couleur de surface, pour que le texte reste lisible sur le fond */
+  body::before {
+    content: ""; position: fixed; inset: 0;
+    background: var(--surface); opacity: 0.72;
+  }
+  main { position: relative; width: min(640px, 100%); text-align: center; }
+  #heure { display: block; font-size: clamp(64px, 14vw, 128px); font-weight: 700; color: var(--primary); line-height: 1; }
+  #date { margin: 12px 0 32px; color: var(--on-surface-variant); }
+  #date::first-letter { text-transform: uppercase; }
+  input {
+    width: 100%; padding: 14px 16px; font: inherit; color: var(--on-surface);
+    background: var(--surface-container); border: 2px solid var(--outline); border-radius: 0; outline: none;
+  }
+  input:focus { border-color: var(--primary); }
+  input::placeholder { color: var(--on-surface-variant); }
+  nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+  a {
+    padding: 8px 14px; color: var(--on-surface); text-decoration: none;
+    background: var(--surface-container); border: 2px solid transparent;
+  }
+  a:hover, a:focus-visible { border-color: var(--primary); color: var(--primary); outline: none; }
+</style>
+
+<main>
+  <time id="heure"></time>
+  <p id="date"></p>
+  <form action="https://www.google.com/search">
+    <input name="q" placeholder="Rechercher…" autocomplete="off" autofocus aria-label="Rechercher sur le web">
+  </form>
+  <nav id="liens" aria-label="Raccourcis"></nav>
+</main>
+
+<script>
+  // Raccourcis affichés sous la recherche : [nom, adresse]
+  const LIENS = [
+    ["YouTube", "https://www.youtube.com"],
+    ["GitHub", "https://github.com"],
+    ["Gmail", "https://mail.google.com"],
+    ["Drive", "https://drive.google.com"],
+    ["Claude", "https://claude.ai"],
+    ["Wallhaven", "https://wallhaven.cc"],
+  ];
+  const nav = document.getElementById("liens");
+  for (const [nom, url] of LIENS) {
+    const a = document.createElement("a");
+    a.textContent = nom;
+    a.href = url;
+    nav.append(a);
+  }
+
+  const heure = document.getElementById("heure");
+  const date = document.getElementById("date");
+  function tic() {
+    const d = new Date();
+    heure.textContent = d.toLocaleTimeString("fr-BE", { hour: "2-digit", minute: "2-digit" });
+    date.textContent = d.toLocaleDateString("fr-BE", { weekday: "long", day: "numeric", month: "long" });
+  }
+  tic();
+  setInterval(tic, 1000);
+</script>
+</html>

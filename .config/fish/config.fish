@@ -7,9 +7,14 @@ set -gx EDITOR code-wait
 set -gx BAT_THEME ansi
 set -gx FZF_DEFAULT_OPTS "--color=16"
 
-# overwrite greeting
-# potentially disabling fastfetch
-#function fish_greeting
-#    # smth smth
-#end
+# Accueil : fastfetch avec le fond d'écran courant en vignette (protocole graphique kitty).
+# Hors Ghostty/kitty ou sans Noctalia, on garde le logo ASCII de config.jsonc.
+function fish_greeting
+    set -l fond (noctalia msg wallpaper-get 2>/dev/null)
+    if contains -- "$TERM" xterm-ghostty xterm-kitty; and test -f "$fond"
+        fastfetch --logo-type kitty --logo $fond --logo-width 36
+    else
+        fastfetch
+    end
+end
 starship init fish | source
