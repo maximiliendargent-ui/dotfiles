@@ -161,6 +161,9 @@ avant de modifier quelque chose.
   couleurs qu'au démarrage (limite de GTK).
 - Curseur choisi avec `nwg-look`.
 - Démarrage automatique commun à tous les bureaux : `~/.config/autostart/` (Steam, fenêtre ouverte à la connexion).
+- Skyrim SE modé avec Mod Organizer 2, installé par `mo2-lint` (`/usr/local/bin/mo2-lint`, hors paquets)
+  dans `~/Games/mo2-lint/mo2-skyrim_se-steam` ; dans Steam, le jeu utilise l'outil « MO2 Skyrim Special
+  Edition » (basé sur Proton 11.0) et se lance depuis MO2 par SKSE.
 - Google Drive : montage rclone du distant `gdrive:` sur `~/GoogleDrive`
   (`~/.config/systemd/user/rclone-gdrive.service`, cache VFS complet, 5 Go max ;
   client_id OAuth personnel, créé dans la console Google Cloud). Ne pas utiliser `kio-gdrive`.

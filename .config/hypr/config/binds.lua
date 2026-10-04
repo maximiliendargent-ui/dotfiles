@@ -32,6 +32,7 @@ hl.bind("SUPER + E",               hl.dsp.exec_cmd("uwsm app -- dolphin"), { des
 hl.bind("SUPER + SHIFT + F",       hl.dsp.exec_cmd("uwsm app -- dolphin"), { description = "Applications: Fichiers" })
 hl.bind("SUPER + SHIFT + N",       hl.dsp.exec_cmd("uwsm app -- ghostty -e nvim"), { description = "Applications: Neovim" })
 hl.bind("SUPER + D",               hl.dsp.exec_cmd("uwsm app -- vesktop"), { description = "Applications: Discord (Vesktop)" })
+hl.bind("SUPER + S",               hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/steam-open"), { description = "Applications: Steam" })
 hl.bind("SUPER + SHIFT + D",       hl.dsp.exec_cmd("uwsm app -- ghostty -e lazydocker"), { description = "Applications: Docker (LazyDocker)" })
 hl.bind("SUPER + CTRL + T",        hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.btop -e btop"), { description = "Applications: Moniteur système (btop)" })
 hl.bind("SUPER + ALT + M",         hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.cava -e cava"), { description = "Applications: Visualiseur audio (cava)" })
@@ -157,7 +158,7 @@ hl.bind("SUPER + CTRL + Tab",   hl.dsp.focus({ workspace = "previous" }), { desc
 hl.bind("SUPER + mouse_down",   hl.dsp.focus({ workspace = "e+1" }),      { description = "Espaces de travail: Espace suivant (molette)" })
 hl.bind("SUPER + mouse_up",     hl.dsp.focus({ workspace = "e-1" }),      { description = "Espaces de travail: Espace précédent (molette)" })
 
-hl.bind("SUPER + S",                  hl.dsp.workspace.toggle_special(),               { description = "Espaces de travail: Afficher / cacher le scratchpad" })
+hl.bind("SUPER + X",                  hl.dsp.workspace.toggle_special(),               { description = "Espaces de travail: Afficher / cacher le scratchpad" })
 hl.bind("SUPER + ALT + S",            hl.dsp.window.move({ workspace = "special" }),   { description = "Espaces de travail: Envoyer la fenêtre au scratchpad" })
 hl.bind("CTRL + SUPER + SHIFT + Down", hl.dsp.window.move({ workspace = "e+0" }),      { description = "Espaces de travail: Sortir la fenêtre du scratchpad" })
 
