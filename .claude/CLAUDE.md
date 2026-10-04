@@ -146,8 +146,7 @@ avant de modifier quelque chose.
 
 - Terminal **Ghostty** (`~/.config/ghostty/config`), shell fish (`~/.config/fish/config.fish`),
   prompt **Starship** (`~/.config/starship.toml`, couleurs ANSI pour suivre Ghostty), accueil
-  **fastfetch** (`~/.config/fastfetch/config.jsonc`, couleurs ANSI aussi) : `fish_greeting` dans
-  `config.fish` y affiche le fond d'écran courant en vignette (Ghostty/kitty seulement).
+  **fastfetch** (`~/.config/fastfetch/config.jsonc`, couleurs ANSI aussi).
 - Ghostty : `performable:ctrl+v=paste_from_clipboard` → Ctrl + V colle le texte ; sans texte (image), la
   touche passe à l'appli (Claude Code colle alors l'image). Ne pas retirer `performable:`.
 - Navigateurs : Firefox (Pywalfox) et Zen ; éditeur VS Code officiel (`code`) ; fichiers : Dolphin ;
