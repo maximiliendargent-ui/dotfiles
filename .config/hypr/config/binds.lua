@@ -42,7 +42,7 @@ hl.bind("XF86Calculator",          hl.dsp.exec_cmd("uwsm app -- gnome-calculator
 ------------
 ---- IA ----
 ------------
-hl.bind("SUPER + SHIFT + A", hl.dsp.exec_cmd("uwsm app -- google-chrome-stable --app=https://claude.ai"), { description = "IA: Claude" })
+hl.bind("SUPER + SHIFT + A", hl.dsp.exec_cmd("uwsm app -- firefox --new-window https://claude.ai"), { description = "IA: Claude" })
 
 ------------------
 ---- FENÊTRES ----

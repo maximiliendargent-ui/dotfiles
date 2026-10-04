@@ -34,7 +34,7 @@ binds {
     XF86Calculator      { spawn-sh "uwsm app -- gnome-calculator"; }
 
     // ---- IA ----
-    Mod+Shift+A         hotkey-overlay-title="IA: Claude" { spawn-sh "uwsm app -- google-chrome-stable --app=https://claude.ai"; }
+    Mod+Shift+A         hotkey-overlay-title="IA: Claude" { spawn-sh "uwsm app -- firefox --new-window https://claude.ai"; }
     Mod+Ctrl+Shift+A    hotkey-overlay-title="IA: Agent Claude Code" { spawn-sh "uwsm app -- ghostty --class=dev.ai --working-directory=$HOME/.config -e claude"; }
 
     // ---- FENÊTRES ----

@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=google-chrome-stable --app=https://claude.ai
+Exec=firefox --new-window https://claude.ai
 Name=Claude
 NoDisplay=true
 StartupNotify=false
