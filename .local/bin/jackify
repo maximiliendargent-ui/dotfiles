@@ -1,0 +1,4 @@
+#!/bin/sh
+# Lance Jackify depuis sa version extraite (~/Applications/Jackify-app) : sur ce système, le montage
+# de Jackify.AppImage est trop lent pour être utilisable.
+exec setsid -f "$HOME/Applications/Jackify-app/AppRun" "$@" >/dev/null 2>&1

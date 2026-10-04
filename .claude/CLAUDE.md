@@ -21,7 +21,8 @@ avant de modifier quelque chose.
 - CPU Intel i5-11400F, **GPU NVIDIA RTX 2060 SUPER (8 Go)**, pilote NVIDIA open 615, 16 Go de RAM.
 - Écran `HDMI-A-1` en **1920x1080 à 165 Hz**.
 - Clavier **AZERTY belge** (`be`).
-- Connexion Wi-Fi : préférer le réseau `WiFi-5.0-E39E` (le répéteur `_EXT` est lent).
+- Connexion Wi-Fi : préférer le réseau `WiFi-5.0-E39E` (le répéteur `_EXT` est lent) ; bascule par
+  `nmcli connection up WiFi-5.0-E39E`. La ligne Internet plafonne vers 40 Mbit/s (4 à 4,5 Mo/s).
 
 ## Sessions
 
@@ -121,6 +122,9 @@ avant de modifier quelque chose.
 - Bouton **Claude** dans la barre Noctalia (`[widget.claude]` dans `config.toml`, icône
   `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty, dans le dossier `~/.config`
   (pas `~`, pour lequel Claude Code redemande la confiance à chaque lancement).
+- `~/.local/bin/jackify` : lance Jackify (installateur de modpacks Wabbajack) depuis sa version extraite
+  `~/Applications/Jackify-app` ; `Jackify.AppImage` est trop lente à se monter ici, et l'entrée de menu
+  créée par Jackify est refusée par UWSM. Journaux : `~/Jackify/logs/`.
 - `~/.local/bin/steam-open` : ouvre la fenêtre de Steam (`steam://open/main`) ; `steam` seul ne fait rien
   quand Steam tourne déjà. Utilisé par `~/.local/share/applications/steam.desktop`.
 - `~/.local/bin/reboot-windows` : redémarre une seule fois sous Windows (`efibootmgr --bootnext` via
@@ -161,9 +165,15 @@ avant de modifier quelque chose.
   couleurs qu'au démarrage (limite de GTK).
 - Curseur choisi avec `nwg-look`.
 - Démarrage automatique commun à tous les bureaux : `~/.config/autostart/` (Steam, fenêtre ouverte à la connexion).
-- Skyrim SE modé avec Mod Organizer 2, installé par `mo2-lint` (`/usr/local/bin/mo2-lint`, hors paquets)
-  dans `~/Games/mo2-lint/mo2-skyrim_se-steam` ; dans Steam, le jeu utilise l'outil « MO2 Skyrim Special
-  Edition » (basé sur Proton 11.0) et se lance depuis MO2 par SKSE.
+- Skyrim SE (Anniversary Edition, 1.7.104) : jeu en **anglais** et sous Proton 11.0 dans Steam (exigés par
+  les modpacks), 74 contenus Creation Club téléchargés par le menu Creations (compte Bethesda.net).
+  Modpack **Tuxborn** (Wabbajack) installé par Jackify dans `~/Games/Tuxborn`, archives dans
+  `~/Games/Modlist_Downloads` (supprimables une fois le pack validé) ; il a son propre Mod Organizer 2 et
+  son entrée « Tuxborn » dans Steam. Profil visé : « Tuxborn MCO - High-Desktop ». Ne jamais cliquer sur
+  « Unlock » dans MO2 pendant que le jeu se lance.
+- Ancien essai : Mod Organizer 2 installé par `mo2-lint` (`/usr/local/bin/mo2-lint`, hors paquets) dans
+  `~/Games/mo2-lint/mo2-skyrim_se-steam`, remplacé par Tuxborn (outil Steam « MO2 Skyrim Special Edition »
+  toujours présent, plus sélectionné).
 - Google Drive : montage rclone du distant `gdrive:` sur `~/GoogleDrive`
   (`~/.config/systemd/user/rclone-gdrive.service`, cache VFS complet, 5 Go max ;
   client_id OAuth personnel, créé dans la console Google Cloud). Ne pas utiliser `kio-gdrive`.
