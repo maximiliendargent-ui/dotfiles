@@ -31,6 +31,7 @@ hl.bind("SUPER + C",               hl.dsp.exec_cmd("uwsm app -- code"), { descri
 hl.bind("SUPER + E",               hl.dsp.exec_cmd("uwsm app -- dolphin"), { description = "Applications: Fichiers" })
 hl.bind("SUPER + SHIFT + F",       hl.dsp.exec_cmd("uwsm app -- dolphin"), { description = "Applications: Fichiers" })
 hl.bind("SUPER + SHIFT + N",       hl.dsp.exec_cmd("uwsm app -- ghostty -e nvim"), { description = "Applications: Neovim" })
+hl.bind("SUPER + D",               hl.dsp.exec_cmd("uwsm app -- vesktop"), { description = "Applications: Discord (Vesktop)" })
 hl.bind("SUPER + SHIFT + D",       hl.dsp.exec_cmd("uwsm app -- ghostty -e lazydocker"), { description = "Applications: Docker (LazyDocker)" })
 hl.bind("SUPER + CTRL + T",        hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.btop -e btop"), { description = "Applications: Moniteur système (btop)" })
 hl.bind("SUPER + ALT + M",         hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.cava -e cava"), { description = "Applications: Visualiseur audio (cava)" })
