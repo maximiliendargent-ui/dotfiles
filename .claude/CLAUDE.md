@@ -121,6 +121,9 @@ avant de modifier quelque chose.
 - Bouton **Claude** dans la barre Noctalia (`[widget.claude]` dans `config.toml`, icône
   `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty, dans le dossier `~/.config`
   (pas `~`, pour lequel Claude Code redemande la confiance à chaque lancement).
+- `~/.local/bin/fastfetch-perso <fond>` : prépare cette vignette (personnage par les étiquettes
+  Wallhaven, portrait AniList, cache `~/.cache/fastfetch-perso/` ; image perso possible dans
+  `~/.config/fastfetch/persos/<nom>.png`, puis vider le cache).
 - `~/.local/bin/steam-open` : ouvre la fenêtre de Steam (`steam://open/main`) ; `steam` seul ne fait rien
   quand Steam tourne déjà. Utilisé par `~/.local/share/applications/steam.desktop`.
 - `~/.local/bin/reboot-windows` : redémarre une seule fois sous Windows (`efibootmgr --bootnext` via
@@ -146,7 +149,8 @@ avant de modifier quelque chose.
 
 - Terminal **Ghostty** (`~/.config/ghostty/config`), shell fish (`~/.config/fish/config.fish`),
   prompt **Starship** (`~/.config/starship.toml`, couleurs ANSI pour suivre Ghostty), accueil
-  **fastfetch** (`~/.config/fastfetch/config.jsonc`, couleurs ANSI aussi).
+  **fastfetch** (`~/.config/fastfetch/config.jsonc`, couleurs ANSI aussi) : `fish_greeting` (dans
+  `config.fish`) y affiche la vignette du personnage du fond d'écran, sinon le logo de `config.jsonc`.
 - Ghostty : `performable:ctrl+v=paste_from_clipboard` → Ctrl + V colle le texte ; sans texte (image), la
   touche passe à l'appli (Claude Code colle alors l'image). Ne pas retirer `performable:`.
 - Navigateurs : Firefox (Pywalfox) et Zen ; éditeur VS Code officiel (`code`) ; fichiers : Dolphin ;

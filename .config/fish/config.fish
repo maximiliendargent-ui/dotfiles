@@ -7,9 +7,21 @@ set -gx EDITOR code-wait
 set -gx BAT_THEME ansi
 set -gx FZF_DEFAULT_OPTS "--color=16"
 
-# overwrite greeting
-# potentially disabling fastfetch
-#function fish_greeting
-#    # smth smth
-#end
+# Accueil : fastfetch avec la vignette du personnage du fond d'écran (préparée et mise en cache par
+# ~/.local/bin/fastfetch-perso). Sans vignette (fond sans personnage, pas encore préparée, terminal
+# sans images), logo de config.jsonc.
+function fish_greeting
+    set -l fond (noctalia msg wallpaper-get 2>/dev/null)
+    set -l vignette ~/.cache/fastfetch-perso/(path basename -- "$fond").png
+    if contains -- "$TERM" xterm-ghostty xterm-kitty; and test -s "$vignette"
+        fastfetch --logo-type kitty --logo $vignette --logo-height 16
+    else
+        fastfetch
+        # Premier terminal après un nouveau fond : la vignette se prépare en arrière-plan pour les suivants
+        if test -f "$fond"; and not test -e "$vignette"; and not test -L "$vignette"
+            ~/.local/bin/fastfetch-perso $fond &>/dev/null &
+            disown
+        end
+    end
+end
 starship init fish | source
