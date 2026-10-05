@@ -169,8 +169,9 @@ avant de modifier quelque chose.
 - Démarrage automatique commun à tous les bureaux : `~/.config/autostart/` (Steam, fenêtre ouverte à la connexion).
 - Skyrim SE (Anniversary Edition, 1.7.104) : jeu en **anglais** et sous Proton 11.0 dans Steam (exigés par
   les modpacks), 74 contenus Creation Club téléchargés par le menu Creations (compte Bethesda.net).
-  Modpack **Tuxborn** (Wabbajack) installé par Jackify dans `~/Games/Tuxborn`, archives dans
-  `~/Games/Modlist_Downloads` (supprimables une fois le pack validé) ; il a son propre Mod Organizer 2 et
+  Modpack **Tuxborn** (Wabbajack) installé par Jackify dans `~/Games/Tuxborn` (archives de téléchargement
+  supprimées : une mise à jour du pack les retéléchargera ; le fichier du pack reste dans
+  `~/Jackify/downloaded_mod_lists/`) ; il a son propre Mod Organizer 2 et
   son entrée **« Tuxborn GE »** dans Steam, sous **GE-Proton10-14** (installé à la main dans
   `compatibilitytools.d` ; Proton 11 casse le système de fichiers virtuel de MO2). Profil : **« Tuxborn
   MCO - Medium-Handheld »** (le profil High sature les 16 Go de RAM et `systemd-oomd` tue le jeu). Fermer
