@@ -152,7 +152,8 @@ avant de modifier quelque chose.
 - Ghostty : `performable:ctrl+v=paste_from_clipboard` → Ctrl + V colle le texte ; sans texte (image), la
   touche passe à l'appli (Claude Code colle alors l'image). Ne pas retirer `performable:`.
 - Navigateurs : Firefox (Pywalfox, navigateur par défaut) et Zen ; éditeur VS Code officiel (`code`) ;
-  Discord : Vesktop (thème Noctalia).
+  Discord : Vesktop (thème Noctalia) ; Vesktop et le Discord officiel quittent vraiment à la fermeture
+  de la fenêtre (réduction en arrière-plan désactivée dans leur `settings.json`).
 - Fichiers : **yazi** dans Ghostty (`ghostty --class=dev.yazi -e yazi`, fenêtre flottante, Super + E),
   thème dans `~/.config/yazi/` (généré par Noctalia) ; `net.local.yazi.desktop` ouvre les dossiers
   (`inode/directory`). Dolphin reste installé (« Afficher dans le dossier » des applis l'appelle encore).
@@ -170,8 +171,10 @@ avant de modifier quelque chose.
   les modpacks), 74 contenus Creation Club téléchargés par le menu Creations (compte Bethesda.net).
   Modpack **Tuxborn** (Wabbajack) installé par Jackify dans `~/Games/Tuxborn`, archives dans
   `~/Games/Modlist_Downloads` (supprimables une fois le pack validé) ; il a son propre Mod Organizer 2 et
-  son entrée « Tuxborn » dans Steam. Profil visé : « Tuxborn MCO - High-Desktop ». Ne jamais cliquer sur
-  « Unlock » dans MO2 pendant que le jeu se lance.
+  son entrée **« Tuxborn GE »** dans Steam, sous **GE-Proton10-14** (installé à la main dans
+  `compatibilitytools.d` ; Proton 11 casse le système de fichiers virtuel de MO2). Profil : **« Tuxborn
+  MCO - Medium-Handheld »** (le profil High sature les 16 Go de RAM et `systemd-oomd` tue le jeu). Fermer
+  Firefox et Discord avant de jouer. Ne jamais cliquer sur « Unlock » dans MO2 pendant que le jeu se lance.
 - Ancien essai : Mod Organizer 2 installé par `mo2-lint` (`/usr/local/bin/mo2-lint`, hors paquets) dans
   `~/Games/mo2-lint/mo2-skyrim_se-steam`, remplacé par Tuxborn (outil Steam « MO2 Skyrim Special Edition »
   toujours présent, plus sélectionné).
