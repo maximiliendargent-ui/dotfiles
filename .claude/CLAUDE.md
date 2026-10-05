@@ -59,8 +59,6 @@ avant de modifier quelque chose.
   pas détaillés). Exemple connu qui marche : `hl.dsp.window.resize({ x = 50, y = 0, relative = true })`.
   Pour un dispatcher dont les paramètres sont incertains, l'envelopper dans une fonction
   (`function() hl.dispatch(...) end`) pour ne pas bloquer le chargement de la config.
-- Filtres d'écran : shaders dans `~/.config/hypr/shaders/` (`gris.frag`, `retro.frag`), bascule par
-  Super + Ctrl + S ; un rechargement de la config (changement de fond d'écran) les désactive.
 - **`binds.lua`** : raccourcis inspirés d'Omarchy, chacun écrit en toutes lettres
   (`hl.bind("SUPER + T", ..., { description = "Section: texte" })`). Le format `"Section: texte"` est
   obligatoire : mon aide (Super + K) les range par section. Chiffres et touches Moins/Égal liés par code

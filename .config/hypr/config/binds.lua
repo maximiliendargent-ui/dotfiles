@@ -129,6 +129,7 @@ hl.bind("SUPER + code:16", hl.dsp.focus({ workspace = 7 }),  { description = "Es
 hl.bind("SUPER + code:17", hl.dsp.focus({ workspace = 8 }),  { description = "Espaces de travail: Aller à l'espace 8" })
 hl.bind("SUPER + code:18", hl.dsp.focus({ workspace = 9 }),  { description = "Espaces de travail: Aller à l'espace 9" })
 hl.bind("SUPER + code:19", hl.dsp.focus({ workspace = 10 }), { description = "Espaces de travail: Aller à l'espace 10" })
+hl.bind("SUPER + code:49", hl.dsp.focus({ workspace = "name:gaming" }), { description = "Espaces de travail: Aller à l'espace gaming (touche ²)" })
 
 hl.bind("SUPER + SHIFT + code:10", hl.dsp.window.move({ workspace = 1 }),  { description = "Espaces de travail: Envoyer la fenêtre à l'espace 1" })
 hl.bind("SUPER + SHIFT + code:11", hl.dsp.window.move({ workspace = 2 }),  { description = "Espaces de travail: Envoyer la fenêtre à l'espace 2" })
@@ -192,14 +193,6 @@ hl.bind("SUPER + SHIFT + BackSpace", function()
     gaps_off = not gaps_off
     hl.config({ general = { gaps_in = gaps_off and 0 or 5, gaps_out = gaps_off and 0 or 10 } })
 end, { description = "Style: Masquer / afficher les espacements" })
--- Filtres d'écran (~/.config/hypr/shaders) : aucun → gris → rétro → aucun
-local filtres = { "", "gris", "retro" }
-local filtre = 1
-hl.bind("SUPER + CTRL + S", function()
-    filtre = filtre % #filtres + 1
-    local nom = filtres[filtre]
-    hl.config({ decoration = { screen_shader = nom == "" and "" or os.getenv("HOME") .. "/.config/hypr/shaders/" .. nom .. ".frag" } })
-end, { description = "Style: Filtre d'écran (gris / rétro / aucun)" })
 
 -----------------------
 ---- NOTIFICATIONS ----
