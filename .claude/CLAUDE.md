@@ -176,8 +176,9 @@ avant de modifier quelque chose.
   `compatibilitytools.d` ; Proton 11 casse le système de fichiers virtuel de MO2). Profil : **« Tuxborn
   MCO - Medium-Handheld »** (le profil High sature les 16 Go de RAM et `systemd-oomd` tue le jeu). Fermer
   Firefox et Discord avant de jouer. Ne jamais cliquer sur « Unlock » dans MO2 pendant que le jeu se lance.
-- Ancien essai désinstallé (`mo2-lint uninstall`) : Mod Organizer 2 seul pour Skyrim, remplacé par
-  Tuxborn. L'outil `mo2-lint` (`/usr/local/bin/mo2-lint`, hors paquets) est encore présent.
+- Performances de Tuxborn : les freins sont le processeur (100 °C en charge, il se bride) et les 16 Go de
+  RAM, pas le nombre de mods ; DLSS par la touche Fin en jeu (menu Community Shaders → Upscaling). Scripts
+  d'analyse des mods du pack (dépendances, tailles) : `~/.local/share/tuxborn-analyse/`.
 - Google Drive : montage rclone du distant `gdrive:` sur `~/GoogleDrive`
   (`~/.config/systemd/user/rclone-gdrive.service`, cache VFS complet, 5 Go max ;
   client_id OAuth personnel, créé dans la console Google Cloud). Ne pas utiliser `kio-gdrive`.
