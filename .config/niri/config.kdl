@@ -144,6 +144,13 @@ window-rule {
     default-column-width { fixed 1344; }
     default-window-height { fixed 756; }
 }
+// yazi (gestionnaire de fichiers, Super + E) : fenêtre flottante, comme Dolphin avant lui
+window-rule {
+    match app-id="^dev\\.yazi$"
+    open-floating true
+    default-column-width { fixed 1344; }
+    default-window-height { fixed 756; }
+}
 window-rule {
     match app-id="^org\\.kde\\.dolphin$"
     exclude title="^(Moving.*|Create New.*|Extract.*|Compress.*|Copying.*|Progress.*|Configure.*|Properties.*|Choose\\sApplication.*)$"

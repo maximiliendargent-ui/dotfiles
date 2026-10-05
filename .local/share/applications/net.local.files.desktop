@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=dolphin
+Exec=ghostty --class=dev.yazi -e yazi
 Name=Fichiers
 NoDisplay=true
 StartupNotify=false

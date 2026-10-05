@@ -127,5 +127,7 @@ hl.layer_rule({
   blur_popups = true,
 })
 hl.window_rule({ match = { class = "^(dev.keybinds)$" }, float = true, size = { "monitor_w*0.55", "monitor_h*0.65" } })
+-- yazi (gestionnaire de fichiers, Super + E) : fenêtre flottante, comme Dolphin avant lui
+hl.window_rule({ match = { class = "^(dev.yazi)$" }, float = true, size = { "monitor_w*0.70", "monitor_h*0.70" } })
 -- Fenêtre Manager (paquets et plugins) : ~/.config/quickshell/manager
 hl.window_rule({ match = { class = "^(org\\.quickshell)$", title = "^(Manager)$" }, float = true, center = true, size = { "monitor_w*0.60", "monitor_h*0.70" } })

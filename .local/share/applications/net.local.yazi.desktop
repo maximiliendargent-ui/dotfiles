@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Yazi
+Comment=Gestionnaire de fichiers (yazi dans Ghostty)
+Exec=ghostty --class=dev.yazi -e yazi %f
+Icon=system-file-manager
+Terminal=false
+MimeType=inode/directory;
+Categories=System;FileManager;
