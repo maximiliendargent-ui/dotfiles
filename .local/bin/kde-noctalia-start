@@ -10,8 +10,4 @@ done
 sleep 0.5
 wall=$(noctalia msg wallpaper-get 2>/dev/null)
 [ -f "$wall" ] && plasma-apply-wallpaperimage "$wall" >/dev/null 2>&1
-# btop et cava ouverts à la connexion, comme sous Hyprland et niri
-# Pas de tuiles sous KDE : taille explicite, btop exige au moins 80x24
-ghostty --class=dev.btop --window-width=110 --window-height=32 -e btop &
-ghostty --class=dev.cava -e cava &
 wait

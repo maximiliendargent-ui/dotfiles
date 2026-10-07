@@ -75,9 +75,6 @@ spawn-at-startup "noctalia"
 // Nouveau fond d'écran à chaque connexion : réessaie jusqu'à ce que Noctalia réponde (10 s max)
 spawn-sh-at-startup "for i in $(seq 50); do noctalia msg wallpaper-random >/dev/null 2>&1 && break; sleep 0.2; done"
 spawn-sh-at-startup "xhost +SI:localuser:root"
-// btop et cava ouverts à la connexion, en tuiles
-spawn-sh-at-startup "uwsm app -- ghostty --class=dev.btop -e btop"
-spawn-sh-at-startup "uwsm app -- ghostty --class=dev.cava -e cava"
 
 // ---------------------------------------------------------------------------
 // Règles de fenêtres (équivalent de hypr/config/windowrules.lua)

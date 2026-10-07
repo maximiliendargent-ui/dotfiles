@@ -23,6 +23,10 @@ avant de modifier quelque chose.
 - Clavier **AZERTY belge** (`be`).
 - Connexion Wi-Fi : préférer le réseau `WiFi-5.0-E39E` (le répéteur `_EXT` est lent) ; bascule par
   `nmcli connection up WiFi-5.0-E39E`. La ligne Internet plafonne vers 40 Mbit/s (4 à 4,5 Mo/s).
+  Économie d'énergie Wi-Fi désactivée sur ce profil (`802-11-wireless.powersave 2`), à cause de la
+  gigue en vocal.
+- Profil d'alimentation : `balanced` via `power-profiles-daemon` (`powerprofilesctl set balanced`), pour
+  limiter la chauffe du CPU (ventirad trop juste : 89 °C en charge légère).
 
 ## Sessions
 
@@ -69,8 +73,8 @@ avant de modifier quelque chose.
   une modification demande de se déconnecter/reconnecter.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
   d'écran (fichier généré `noctalia_colors.lua`).
-- btop et cava : terminaux Ghostty en tuiles (classes `dev.btop` et `dev.cava`), ouverts à la connexion
-  par `autostart.lua`, par `config.kdl` sous niri et par `kde-noctalia-start` sous KDE.
+- btop et cava : terminaux Ghostty en tuiles (classes `dev.btop` et `dev.cava`), à lancer à la main
+  (plus de démarrage automatique depuis le 2026-10-07, pour limiter la chauffe du CPU).
 - L'espace `gaming` est réservé aux jeux (règles dans `windowrules.lua`) : il ne doit pas être `default`
   dans `workspaces.lua`, sinon tout y démarre.
 
@@ -121,8 +125,10 @@ avant de modifier quelque chose.
   `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty, dans le dossier `~/.config`
   (pas `~`, pour lequel Claude Code redemande la confiance à chaque lancement).
 - `~/.local/bin/jackify` : lance Jackify (installateur de modpacks Wabbajack) depuis sa version extraite
-  `~/Applications/Jackify-app` ; `Jackify.AppImage` est trop lente à se monter ici, et l'entrée de menu
-  créée par Jackify est refusée par UWSM. Journaux : `~/Jackify/logs/`.
+  `~/Applications/Jackify-app` (ne pas renommer ce dossier) ; `Jackify.AppImage` est trop lente à se
+  monter ici, et l'entrée de menu créée par Jackify est refusée par UWSM. Les liens `nxm://` de Nexus
+  passent par `net.local.nxm.desktop` → `jackify` (l'entrée de Jackify plante, faute de PySide6 dans le
+  Python du système). Journaux : `~/Jackify/logs/`.
 - `~/.local/bin/steam-open` : ouvre la fenêtre de Steam (`steam://open/main`) ; `steam` seul ne fait rien
   quand Steam tourne déjà. Utilisé par `~/.local/share/applications/steam.desktop`.
 - `~/.local/bin/reboot-windows` : redémarre une seule fois sous Windows (`efibootmgr --bootnext` via
@@ -167,18 +173,19 @@ avant de modifier quelque chose.
   couleurs qu'au démarrage (limite de GTK).
 - Curseur choisi avec `nwg-look`.
 - Démarrage automatique commun à tous les bureaux : `~/.config/autostart/` (Steam, fenêtre ouverte à la connexion).
-- Skyrim SE (Anniversary Edition, 1.7.104) : jeu en **anglais** et sous Proton 11.0 dans Steam (exigés par
-  les modpacks), 74 contenus Creation Club téléchargés par le menu Creations (compte Bethesda.net).
-  Modpack **Tuxborn** (Wabbajack) installé par Jackify dans `~/Games/Tuxborn` (archives de téléchargement
-  supprimées : une mise à jour du pack les retéléchargera ; le fichier du pack reste dans
-  `~/Jackify/downloaded_mod_lists/`) ; il a son propre Mod Organizer 2 et
-  son entrée **« Tuxborn GE »** dans Steam, sous **GE-Proton10-14** (installé à la main dans
-  `compatibilitytools.d` ; Proton 11 casse le système de fichiers virtuel de MO2). Profil : **« Tuxborn
-  MCO - Medium-Handheld »** (le profil High sature les 16 Go de RAM et `systemd-oomd` tue le jeu). Fermer
-  Firefox et Discord avant de jouer. Ne jamais cliquer sur « Unlock » dans MO2 pendant que le jeu se lance.
-- Performances de Tuxborn : les freins sont le processeur (100 °C en charge, il se bride) et les 16 Go de
-  RAM, pas le nombre de mods ; DLSS par la touche Fin en jeu (menu Community Shaders → Upscaling). Scripts
-  d'analyse des mods du pack (dépendances, tailles) : `~/.local/share/tuxborn-analyse/`.
+- Skyrim SE (Anniversary Edition, 1.7.104) : jeu en **anglais**, sous Proton 11.0 dans Steam, 74 contenus
+  Creation Club (menu Creations, compte Bethesda.net). **Modpack perso** en construction (Tuxborn essayé
+  puis supprimé le 2026-10-06) : Mod Organizer 2 portable dans `~/Games/Skyrim-Modpack`, entrée Steam
+  **« Skyrim Modpack »** créée par Jackify, sous **GE-Proton10-14** (installé à la main dans
+  `compatibilitytools.d` ; Proton 11 casse le système de fichiers virtuel de MO2), jeu lancé par SKSE
+  depuis MO2. Les mods se téléchargent à la main sur Nexus (« Mod manager download », compte gratuit) et
+  s'installent par les scripts de `~/.local/share/skyrim-modpack-outils/` (`installe_*.py`, MO2 fermé ;
+  recherche Nexus et liste de référence Gate to Sovngarde au même endroit).
+- Limites de la machine pour le pack : 16 Go de RAM (un pack trop lourd fait tuer le jeu par
+  `systemd-oomd`) et processeur à 100 °C en charge ; fermer Firefox et Discord avant de jouer ; DLSS par la
+  touche Fin en jeu (Community Shaders → Upscaling). Ne jamais lancer deux Skyrim à la fois, ni couper le
+  jeu pendant qu'il télécharge des contenus Creation Club ; télécharger ceux-ci depuis le Skyrim d'origine,
+  pas depuis MO2 (sinon ils atterrissent dans `overwrite`).
 - Google Drive : montage rclone du distant `gdrive:` sur `~/GoogleDrive`
   (`~/.config/systemd/user/rclone-gdrive.service`, cache VFS complet, 5 Go max ;
   client_id OAuth personnel, créé dans la console Google Cloud). Ne pas utiliser `kio-gdrive`.
