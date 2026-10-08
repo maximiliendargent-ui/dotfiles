@@ -161,9 +161,11 @@ avant de modifier quelque chose.
 - Navigateurs : Firefox (Pywalfox, navigateur par défaut) et Zen ; éditeur VS Code officiel (`code`) ;
   Discord : Vesktop (thème Noctalia) ; Vesktop et le Discord officiel quittent vraiment à la fermeture
   de la fenêtre (réduction en arrière-plan désactivée dans leur `settings.json`).
-- Fichiers : **yazi** dans Ghostty (`ghostty --class=dev.yazi -e yazi`, fenêtre flottante, Super + E),
-  thème dans `~/.config/yazi/` (généré par Noctalia) ; `net.local.yazi.desktop` ouvre les dossiers
-  (`inode/directory`). Dolphin reste installé (« Afficher dans le dossier » des applis l'appelle encore).
+- Fichiers : **yazi** dans Ghostty, lancé par `~/.local/bin/yazi-open` (classe `dev.yazi`, fenêtre
+  flottante, Super + E ; rend Ctrl + V, Ctrl + Maj + N et Ctrl + Tab à yazi, raccourcis dans
+  `~/.config/yazi/keymap.toml`), thème dans `~/.config/yazi/` (généré par Noctalia) ;
+  `net.local.yazi.desktop` ouvre les dossiers (`inode/directory`) ; l'entrée « Yazi File Manager » du
+  paquet est masquée par `~/.local/share/applications/yazi.desktop`. Dolphin reste installé (« Afficher dans le dossier » des applis l'appelle encore).
 - Page d'accueil et nouveaux onglets de Firefox et Zen : `~/.config/startpage/index.html` (accueil
   déclaré dans le `user.js` de chaque profil ; nouveaux onglets par `autoconfig.js` + `newtab.cfg`,
   sources dans `~/.config/startpage/newtab/`, copiés dans `/usr/lib/firefox` et `/opt/zen-browser-bin`,
