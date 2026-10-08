@@ -1,7 +1,7 @@
 -- Hyprland default apps
 
 TERMINAL     = "ghostty"
-FILE_MANAGER = "ghostty --class=dev.yazi -e yazi"
+FILE_MANAGER = os.getenv("HOME") .. "/.local/bin/yazi-open"
 BROWSER      = "firefox"
 EDITOR       = "code"
 CALCULATOR   = "gnome-calculator"
