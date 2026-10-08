@@ -3,6 +3,7 @@
 hl.config({
     input = {
         kb_layout = "be",
+        kb_options = "caps:shiftlock",
         numlock_by_default = true,
         -- sensitivity = -0.25,
         accel_profile = "flat",

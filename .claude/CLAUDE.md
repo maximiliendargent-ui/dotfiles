@@ -69,6 +69,7 @@ avant de modifier quelque chose.
   physique à cause de l'AZERTY : 1..9 → `code:10`..`code:18`, 0 → `code:19`, Moins → `code:20`,
   Égal → `code:21`. Ne pas changer Super + E, T, Z, W, C, F.
 - Les applis sont lancées avec le préfixe `uwsm app -- `.
+- Clavier : `kb_options = "caps:shiftlock"` dans `inputs.lua` (Verr. Maj agit sur toutes les touches, comme sous Windows).
 - Environnement de session : `~/.config/uwsm/env` (variables NVIDIA, `QT_QPA_PLATFORMTHEME=qt6ct`) ;
   une modification demande de se déconnecter/reconnecter.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
