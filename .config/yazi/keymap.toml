@@ -1,0 +1,34 @@
+# Raccourcis de l'Explorateur Windows, ajoutés par-dessus ceux de yazi (qui restent tous valables).
+# Ctrl + V, Ctrl + Maj + N et Ctrl + Tab n'arrivent ici que parce que ~/.local/bin/yazi-open
+# les retire de Ghostty.
+
+[mgr]
+prepend_keymap = [
+	# Presse-papiers
+	{ on = "<C-c>", run = "yank",       desc = "Copier" },
+	{ on = "<C-x>", run = "yank --cut", desc = "Couper" },
+	{ on = "<C-v>", run = "paste",      desc = "Coller" },
+	{ on = "<C-z>", run = "noop" },  # pas d'annulation dans yazi : évite au moins de le suspendre
+
+	# Fichiers
+	{ on = "<Delete>",   run = "remove",                     desc = "Mettre à la corbeille" },
+	{ on = "<S-Delete>", run = "remove --permanently",       desc = "Supprimer définitivement" },
+	{ on = "<F2>",       run = "rename --cursor=before_ext", desc = "Renommer" },
+	{ on = "<C-N>",      run = "create --dir",               desc = "Nouveau dossier" },
+	{ on = "<A-Enter>",  run = "spot",                       desc = "Propriétés" },
+
+	# Navigation
+	{ on = "<Backspace>", run = "leave",            desc = "Dossier parent" },
+	{ on = "<A-Up>",      run = "leave",            desc = "Dossier parent" },
+	{ on = "<A-Left>",    run = "back",             desc = "Précédent" },
+	{ on = "<A-Right>",   run = "forward",          desc = "Suivant" },
+	{ on = "<C-l>",       run = "cd --interactive", desc = "Barre d'adresse" },
+	{ on = "<C-f>",       run = "search --via=fd",  desc = "Rechercher" },
+	{ on = "<F5>",        run = "refresh",          desc = "Actualiser" },
+	{ on = [ "g", "r" ],  run = "cd ~/GoogleDrive", desc = "Google Drive" },
+
+	# Onglets
+	{ on = "<C-t>",   run = "tab_create --current",    desc = "Nouvel onglet" },
+	{ on = "<C-w>",   run = "close",                   desc = "Fermer l'onglet" },
+	{ on = "<C-Tab>", run = "tab_switch 1 --relative", desc = "Onglet suivant" },
+]

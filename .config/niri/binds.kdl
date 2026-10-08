@@ -23,8 +23,8 @@ binds {
     Mod+Shift+Return    hotkey-overlay-title="Applications: Navigateur" { spawn-sh "uwsm app -- firefox"; }
     Mod+Shift+Alt+B     hotkey-overlay-title="Applications: Navigation privée" { spawn-sh "uwsm app -- firefox --private-window"; }
     Mod+C               hotkey-overlay-title="Applications: Éditeur de code" { spawn-sh "uwsm app -- code"; }
-    Mod+E               hotkey-overlay-title="Applications: Fichiers" { spawn-sh "uwsm app -- ghostty --class=dev.yazi -e yazi"; }
-    Mod+Shift+F         hotkey-overlay-title="Applications: Fichiers" { spawn-sh "uwsm app -- ghostty --class=dev.yazi -e yazi"; }
+    Mod+E               hotkey-overlay-title="Applications: Fichiers" { spawn-sh "uwsm app -- ~/.local/bin/yazi-open"; }
+    Mod+Shift+F         hotkey-overlay-title="Applications: Fichiers" { spawn-sh "uwsm app -- ~/.local/bin/yazi-open"; }
     Mod+Shift+N         hotkey-overlay-title="Applications: Neovim" { spawn-sh "uwsm app -- ghostty -e nvim"; }
     Mod+S               hotkey-overlay-title="Applications: Steam" { spawn-sh "~/.local/bin/steam-open"; }
     Mod+Shift+D         hotkey-overlay-title="Applications: Docker (LazyDocker)" { spawn-sh "uwsm app -- ghostty -e lazydocker"; }

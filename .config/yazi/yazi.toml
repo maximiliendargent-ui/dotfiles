@@ -1,0 +1,20 @@
+# Comportement façon Explorateur Windows. Les couleurs restent celles de theme.toml (Noctalia).
+
+[mgr]
+sort_by  = "natural"  # fichier2 avant fichier10
+linemode = "details"  # défini dans init.lua
+
+# Entrée ouvre le texte dans l'appli par défaut (xdg-open) plutôt que dans $EDITOR au terminal.
+[open]
+prepend_rules = [
+	{ mime = "folder/*",                              use = [ "enter", "open", "reveal" ] },
+	{ mime = "text/*",                                use = [ "open", "edit", "reveal" ] },
+	{ mime = "inode/empty",                           use = [ "open", "edit", "reveal" ] },
+	{ mime = "application/{json,ndjson,javascript}",  use = [ "open", "edit", "reveal" ] },
+]
+
+# Ouvrir un dossier (Entrée, double-clic) y entre, au lieu de l'envoyer à l'éditeur.
+[opener]
+enter = [
+	{ run = "ya emit cd %s1", desc = "Entrer" },
+]

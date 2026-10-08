@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Ouvre yazi dans Ghostty (classe dev.yazi, ou celle de YAZI_CLASS), avec ses raccourcis façon Explorateur Windows.
+# Ghostty garde d'habitude Ctrl + V, Ctrl + Maj + N et Ctrl + Tab pour lui : on les lui retire
+# dans cette fenêtre pour qu'ils arrivent à yazi (~/.config/yazi/keymap.toml).
+# Coller du texte (champ Renommer, etc.) reste possible avec Ctrl + Maj + V.
+
+exec ghostty --class="${YAZI_CLASS:-dev.yazi}" \
+    --keybind=ctrl+v=unbind \
+    --keybind=ctrl+shift+n=unbind \
+    --keybind=ctrl+tab=unbind \
+    -e yazi "$@"
