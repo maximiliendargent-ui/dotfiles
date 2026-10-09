@@ -25,13 +25,21 @@ hl.window_rule({
     match = {
         class         = gamingApps,
         title         = "^(.+)$",
-        initial_title = "negative:^(.*\\\\home\\\\.*)$",
+        initial_title = "negative:^(.*\\\\home\\\\.*|.*Mod Organizer.*)$",
     },
     content          = "game",
     decorate         = false,
     fullscreen_state = 2,
     size             = { "monitor_w", "monitor_h" },
     sync_fullscreen  = true,
+})
+-- Mod Organizer 2 n'est pas un jeu : traité comme tel (plein écran déclaré mais fenêtre en tuile), Wine et
+-- Hyprland se renvoient la taille en boucle (~7000 requêtes X11/s, 1,4 cœur, CPU à 100 °C). En flottant, plus rien.
+hl.window_rule({
+    match = { class = "^(steam_app.*)$", initial_title = "^(.*Mod Organizer.*)$" },
+    float  = true,
+    center = true,
+    size   = { "monitor_w*0.7", "monitor_h*0.85" },
 })
 hl.window_rule({
     match = {

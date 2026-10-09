@@ -78,6 +78,8 @@ avant de modifier quelque chose.
   (plus de démarrage automatique depuis le 2026-10-07, pour limiter la chauffe du CPU).
 - L'espace `gaming` est réservé aux jeux (règles dans `windowrules.lua`) : il ne doit pas être `default`
   dans `workspaces.lua`, sinon tout y démarre.
+- Mod Organizer 2 a sa propre règle dans `windowrules.lua` (flottant, exclu de la règle des jeux) : traité
+  comme un jeu, il boucle avec Hyprland sur la taille de fenêtre et sature le CPU (100 °C jeu fermé).
 
 ## niri (configuration en **KDL**)
 
