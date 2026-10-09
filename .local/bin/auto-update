@@ -1,20 +1,23 @@
 #!/usr/bin/env bash
-# Mise à jour automatique à l'ouverture de session (autostart auto-update.desktop).
-# S'il y a des mises à jour, demande au plugin Noctalia arch-updater de les
-# installer en arrière-plan (mot de passe par Polkit, journal et rollback dans son panneau).
+# Propose les mises à jour à l'ouverture de session (autostart auto-update.desktop).
+# S'il y en a, affiche une notification avec un bouton « Mettre à jour » ; un clic
+# demande au plugin Noctalia arch-updater de les installer en arrière-plan
+# (mot de passe par Polkit, journal et rollback dans son panneau).
 
 # Laisse la session, Noctalia et le Wi-Fi démarrer.
 sleep 20
 
 # checkupdates : 0 = mises à jour, 2 = rien, 1 = échec (réseau pas encore prêt).
 for _ in {1..30}; do
-    checkupdates >/dev/null 2>&1
-    rc=$?
-    [[ $rc -ne 1 ]] && break
+    repo=$(checkupdates 2>/dev/null)
+    [[ $? -ne 1 ]] && break
     sleep 10
 done
 
-# ponytail: une mise à jour Flatpak seule ne déclenche rien, elle part avec la suivante.
-[[ $rc -eq 0 ]] || paru -Qua 2>/dev/null | grep -q . || exit 0
+n=$({ [[ -n $repo ]] && echo "$repo"; paru -Qua; flatpak remote-ls --updates --columns=application; } 2>/dev/null | grep -c .)
+[[ $n -gt 0 ]] || exit 0
 
-exec noctalia msg plugin yuuto/arch-updater:service all update_background
+# -t 0 : la notification reste jusqu'à ce qu'on y réponde ou qu'on la ferme.
+choix=$(notify-send -a "Mises à jour" -i system-software-update -t 0 \
+    -A update="Mettre à jour" "Mises à jour disponibles" "$n paquet(s) à mettre à jour.")
+[[ $choix == update ]] && exec noctalia msg plugin yuuto/arch-updater:service all update_background

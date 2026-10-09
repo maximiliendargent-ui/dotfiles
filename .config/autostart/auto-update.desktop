@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=Mise à jour automatique
-Comment=Installe les mises à jour à l'ouverture de session
+Name=Proposition de mise à jour
+Comment=Propose les mises à jour à l'ouverture de session
 Exec=/home/maximilien/.local/bin/auto-update
 Icon=system-software-update
 Terminal=false

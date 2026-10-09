@@ -137,8 +137,8 @@ avant de modifier quelque chose.
 - `~/.local/bin/reboot-windows` : redémarre une seule fois sous Windows (`efibootmgr --bootnext` via
   `pkexec`, le démarrage suivant revient à Limine). Entrée Windows du menu Quickshell.
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
-- `~/.local/bin/auto-update` : mise à jour automatique à l'ouverture de session (autostart
-  `auto-update.desktop`) ; s'il y a des mises à jour pacman ou AUR, déclenche
+- `~/.local/bin/auto-update` : à l'ouverture de session (autostart `auto-update.desktop`), s'il y a des
+  mises à jour (pacman, AUR, Flatpak), notification avec bouton « Mettre à jour » qui déclenche
   `noctalia msg plugin yuuto/arch-updater:service all update_background` (mot de passe par Polkit).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
   (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). L'entrée
