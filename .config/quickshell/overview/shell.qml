@@ -2,6 +2,8 @@
 // pousser la souris dans le coin haut gauche affiche les 9 espaces avec un aperçu de leurs fenêtres.
 // Clic sur un espace ou une fenêtre pour y aller ; Échap, clic à côté ou retour dans le coin pour fermer.
 // Glisser une fenêtre sur un autre espace l'y envoie ; glisser le numéro (ou le fond) d'un espace sur un autre les échange.
+// Pousser la souris au milieu du bord droit ouvre le menu de session de Noctalia (éteindre, redémarrer…),
+// au milieu du bord gauche son centre de contrôle.
 // Couleurs : celles du menu (menu/colors.json, généré par Noctalia à partir du fond d'écran).
 // Lancement : au démarrage d'Hyprland (autostart.lua, qs -c overview), reste en arrière-plan.
 // Depuis un raccourci ou un script : qs -c overview ipc call overview toggle
@@ -53,6 +55,13 @@ ShellRoot {
     function cornerHit() {
         if (onHyprland && Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.hasFullscreen) return
         show()
+    }
+
+    // Bords actifs : ouvrent un panneau de Noctalia, refermé quand la souris en sort
+    // (noctalia-panel-hover ; même exception pour le plein écran)
+    function edgeHit(panel) {
+        if (onHyprland && Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.hasFullscreen) return
+        Quickshell.execDetached([home + "/.local/bin/noctalia-panel-hover", panel])
     }
 
     // Avec une adresse : focus sur cette fenêtre (toplevel.activate() est ignoré tant que la vue a le clavier)
@@ -146,6 +155,44 @@ ShellRoot {
             anchors.fill: parent
             hoverEnabled: true
             onEntered: root.cornerHit()
+        }
+    }
+
+    // ---- Bord actif : 1 pixel de large au milieu du bord droit, ouvre le menu de session ----
+
+    PanelWindow {
+        visible: !root.open
+        anchors { right: true }
+        implicitWidth: 1
+        implicitHeight: 400
+        color: "transparent"
+        exclusionMode: ExclusionMode.Ignore
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.namespace: "session-edge"
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: root.edgeHit("session")
+        }
+    }
+
+    // ---- Bord actif : 1 pixel de haut au milieu du bord haut, ouvre le centre de contrôle ----
+
+    PanelWindow {
+        visible: !root.open
+        anchors { top: true }
+        implicitWidth: 400
+        implicitHeight: 1
+        color: "transparent"
+        exclusionMode: ExclusionMode.Ignore
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.namespace: "control-center-edge"
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            onEntered: root.edgeHit("control-center")
         }
     }
 

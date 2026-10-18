@@ -67,3 +67,25 @@ output_path = "$XDG_CONFIG_HOME/quickshell/menu/colors.json"
 [theme.templates.user.startpage_colors]
 input_path  = "$XDG_CONFIG_HOME/noctalia/templates/startpage-colors.css"
 output_path = "$XDG_CONFIG_HOME/startpage/colors.css"
+
+# Disposition façon Caelestia (style inchangé, barre gardée en haut) : lanceur en bas,
+# centre de contrôle en haut au centre, session en colonne à droite, OSD vertical à droite
+[shell.panel]
+launcher_placement = "floating"
+launcher_position = "bottom_center"
+clipboard_placement = "floating"
+clipboard_position = "bottom_center"
+wallpaper_placement = "floating"
+wallpaper_position = "bottom_center"
+control_center_placement = "floating"
+control_center_position = "top_center"
+session_placement = "floating"
+session_position = "center_right"
+
+[shell.session]
+grid = true
+grid_columns = 1
+
+[osd]
+position = "center_right"
+orientation = "vertical"

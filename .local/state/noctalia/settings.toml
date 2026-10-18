@@ -1,18 +1,21 @@
 config_version = 14
 
 [bar.default]
-center = [ "clock", "cat" ]
+background_opacity = 0.0
+capsule = true
+capsule_fill = "on_primary"
+capsule_radius = 0
+center = []
 color = "primary"
-end = [ "widget", "claude", "notifications", "network", "bluetooth", "volume", "control-center", "session" ]
+end = []
 font_weight = 700
 icon_color = "primary"
 margin_ends = 0
+position = "left"
 radius = 0
-reserve_space = false
+reserve_space = true
 shadow = false
-smart_auto_hide = true
-start = [ "workspaces", "wallhaven", "cpu", "ram", "gpu", "gpu-temp" ]
-thickness = 30
+start = [ "workspaces", "wallhaven", "widget", "claude" ]
 
 [dock]
 launcher_position = "start"
@@ -107,21 +110,19 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-lq2ezp.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-nmdk28.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-lq2ezp.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-nmdk28.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-lq2ezp.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-nmdk28.jpg"
 
-[widget.cat]
-audio_spectrum = true
-font_scale = 0.79000000000000004
-font_weight = 200
-scale = 2.5
-tappy_mode = true
-type = "noctalia/bongocat:cat"
+[widget.clock]
+enabled = false
+
+[widget.session]
+enabled = false
 
 [widget.tray]
 enabled = false
