@@ -89,3 +89,7 @@ grid_columns = 1
 [osd]
 position = "center_right"
 orientation = "vertical"
+
+# Pas d’OSD « Lecture en cours » à chaque nouvelle piste ou vidéo
+[osd.kinds]
+media = false
