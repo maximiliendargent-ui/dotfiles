@@ -13,7 +13,8 @@ hl.window_rule({
 })
 
 -- Gaming
-local gamingApps = "^(steam_app.*|gamescope)$"
+-- *.bin.x86(_64) : jeux Linux natifs FNA/MonoGame (Celeste…), sans classe steam_app
+local gamingApps = "^(steam_app.*|gamescope|.*\\.bin\\.x86(_64)?)$"
 local gamingWorkspace = "name:gaming"
 
 hl.window_rule({ match = { content = "game" }, workspace = gamingWorkspace })

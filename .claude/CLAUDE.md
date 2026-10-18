@@ -70,8 +70,8 @@ avant de modifier quelque chose.
   Égal → `code:21`. Ne pas changer Super + E, T, Z, W, C, F.
 - Les applis sont lancées avec le préfixe `uwsm app -- `.
 - Clavier : `kb_options = "caps:shiftlock"` dans `inputs.lua` (Verr. Maj agit sur toutes les touches, comme sous Windows).
-- Environnement de session : `~/.config/uwsm/env` (variables NVIDIA, `QT_QPA_PLATFORMTHEME=qt6ct`) ;
-  une modification demande de se déconnecter/reconnecter.
+- Environnement de session : `~/.config/uwsm/env` (variables NVIDIA, `QT_QPA_PLATFORMTHEME=qt6ct`) et
+  `env-hyprland` (sans `SDL_VIDEODRIVER` : le vieux SDL2 de certains jeux plante sur une liste) ; une modification demande de se déconnecter/reconnecter.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
   d'écran (fichier généré `noctalia_colors.lua`).
 - btop et cava : terminaux Ghostty en tuiles (classes `dev.btop` et `dev.cava`), à lancer à la main
@@ -108,7 +108,8 @@ avant de modifier quelque chose.
 - Le modèle `papirus-icons` copie Papirus dans `~/.local/share/icons` et colore les dossiers avec la
   teinte Papirus la plus proche du fond d'écran ; `discord` écrit les thèmes de Vesktop
   (`~/.config/vesktop/themes/`).
-- Barre **à gauche** (`position = "left"` dans `[bar.default]` de `settings.toml`). Panneaux flottants
+- Barre **à gauche** (`position = "left"`, masquage intelligent `smart_auto_hide`, sans place réservée
+  `reserve_space = false`, dans `[bar.default]` de `settings.toml`). Panneaux flottants
   façon Caelestia (`[shell.panel]` de `config.toml`) : lanceur en bas, centre de contrôle en haut au
   centre, session en haut à droite, OSD à droite. Moniteurs `sysmon` (`cpu`, `ram`, `gpu`, `gpu-temp`) définis dans
   `config.toml` mais retirés de la barre.

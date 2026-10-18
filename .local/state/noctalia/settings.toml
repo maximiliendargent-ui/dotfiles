@@ -1,21 +1,32 @@
-config_version = 14
+config_version = 15
 
 [bar.default]
 background_opacity = 0.0
 capsule = true
-capsule_fill = "on_primary"
+capsule_fill = "on_secondary"
 capsule_radius = 0
-center = []
+center = [ "workspaces", "clock", "wallhaven", "claude", "widget" ]
 color = "primary"
+compositor_blur = false
 end = []
-font_weight = 700
+font_weight = 800
 icon_color = "primary"
 margin_ends = 0
 position = "left"
 radius = 0
-reserve_space = true
+reserve_space = false
 shadow = false
-start = [ "workspaces", "wallhaven", "widget", "claude" ]
+smart_auto_hide = true
+start = []
+
+[control_center]
+hidden_tabs = [ "power", "notifications" ]
+
+    [[control_center.shortcuts]]
+    type = "nightlight"
+
+    [[control_center.shortcuts]]
+    type = "power_profile"
 
 [dock]
 launcher_position = "start"
@@ -91,14 +102,14 @@ widget_order = [ "lockscreen-login-box@WAYLAND-1", "lockscreen-login-box@HDMI-A-
 video_directory = "/home/maximilien/Videos/Wallpapers"
 
 [plugin_settings."noctalia/wallhaven"]
-download_dir = "/home/maximilien/Pictures/Wallpapers"
 browser_placement = "floating"
 browser_position = "top_center"
+download_dir = "/home/maximilien/Pictures/Wallpapers"
 
 [plugin_settings."yuuto/arch-updater"]
-update_mode = "background"
 panel_placement = "floating"
 panel_position = "top_center"
+update_mode = "background"
 
 [plugins]
 enabled = [ "noctalia/wallhaven", "yuuto/arch-updater" ]
@@ -114,16 +125,13 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-nmdk28.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-nmdk28.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-nmdk28.jpg"
-
-[widget.clock]
-enabled = false
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
 
 [widget.session]
 enabled = false
