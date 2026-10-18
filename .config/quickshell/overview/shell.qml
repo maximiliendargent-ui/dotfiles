@@ -2,8 +2,8 @@
 // pousser la souris dans le coin haut gauche affiche les 9 espaces avec un aperçu de leurs fenêtres.
 // Clic sur un espace ou une fenêtre pour y aller ; Échap, clic à côté ou retour dans le coin pour fermer.
 // Glisser une fenêtre sur un autre espace l'y envoie ; glisser le numéro (ou le fond) d'un espace sur un autre les échange.
-// Pousser la souris au milieu du bord droit ouvre le menu de session de Noctalia (éteindre, redémarrer…),
-// au milieu du bord gauche son centre de contrôle.
+// Pousser la souris dans le coin haut droit ouvre le menu de session de Noctalia (éteindre, redémarrer…),
+// au milieu du bord haut son centre de contrôle.
 // Couleurs : celles du menu (menu/colors.json, généré par Noctalia à partir du fond d'écran).
 // Lancement : au démarrage d'Hyprland (autostart.lua, qs -c overview), reste en arrière-plan.
 // Depuis un raccourci ou un script : qs -c overview ipc call overview toggle
@@ -158,13 +158,13 @@ ShellRoot {
         }
     }
 
-    // ---- Bord actif : 1 pixel de large au milieu du bord droit, ouvre le menu de session ----
+    // ---- Coin actif : 1 pixel en haut à droite, ouvre le menu de session ----
 
     PanelWindow {
         visible: !root.open
-        anchors { right: true }
+        anchors { top: true; right: true }
         implicitWidth: 1
-        implicitHeight: 400
+        implicitHeight: 1
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
         WlrLayershell.layer: WlrLayer.Overlay

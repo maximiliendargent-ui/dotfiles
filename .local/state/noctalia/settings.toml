@@ -92,9 +92,13 @@ video_directory = "/home/maximilien/Videos/Wallpapers"
 
 [plugin_settings."noctalia/wallhaven"]
 download_dir = "/home/maximilien/Pictures/Wallpapers"
+browser_placement = "floating"
+browser_position = "top_center"
 
 [plugin_settings."yuuto/arch-updater"]
 update_mode = "background"
+panel_placement = "floating"
+panel_position = "top_center"
 
 [plugins]
 enabled = [ "noctalia/wallhaven", "yuuto/arch-updater" ]
