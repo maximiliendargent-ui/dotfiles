@@ -108,8 +108,10 @@ avant de modifier quelque chose.
 - Le modèle `papirus-icons` copie Papirus dans `~/.local/share/icons` et colore les dossiers avec la
   teinte Papirus la plus proche du fond d'écran ; `discord` écrit les thèmes de Vesktop
   (`~/.config/vesktop/themes/`).
-- Barre : moniteurs `sysmon` (`cpu`, `ram`, `gpu`, `gpu-temp`) définis dans `config.toml`, placés dans
-  `[bar.default]` de `settings.toml`.
+- Barre **à gauche** (`position = "left"` dans `[bar.default]` de `settings.toml`). Panneaux flottants
+  façon Caelestia (`[shell.panel]` de `config.toml`) : lanceur en bas, centre de contrôle en haut au
+  centre, session et OSD à droite. Moniteurs `sysmon` (`cpu`, `ram`, `gpu`, `gpu-temp`) définis dans
+  `config.toml` mais retirés de la barre.
 - Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
 - Agent Polkit de Noctalia activé (`polkit_agent = true`).
@@ -146,7 +148,8 @@ avant de modifier quelque chose.
   (snapshots via `snap-pac`). Applis triées par usage : compteur du menu
   (`~/.local/state/quickshell-menu/usage.json`) + celui de Noctalia (`usage_counts.json`).
 - Vue d'ensemble des espaces de travail en **Quickshell** (Hyprland) : `~/.config/quickshell/overview/shell.qml`,
-  lancée par `autostart.lua` (`qs -c overview`), coin actif en haut à gauche, couleurs du menu ; glisser une
+  lancée par `autostart.lua` (`qs -c overview`), coin actif en haut à gauche, couleurs du menu ; bords actifs : milieu du haut → centre de contrôle,
+  milieu de la droite → session (via `~/.local/bin/noctalia-panel-hover`, refermé quand la souris sort) ; glisser une
   fenêtre sur un autre espace l'y envoie, glisser le numéro d'un espace sur un autre les échange. Bascule :
   `qs -c overview ipc call overview toggle`. Sous KDE, même coin via KWin (`[Effect-overview]` dans `kwinrc`) ;
   sous niri, coin natif.
