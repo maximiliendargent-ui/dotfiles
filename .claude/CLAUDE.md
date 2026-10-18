@@ -110,14 +110,16 @@ avant de modifier quelque chose.
   (`~/.config/vesktop/themes/`).
 - Barre **à gauche** (`position = "left"` dans `[bar.default]` de `settings.toml`). Panneaux flottants
   façon Caelestia (`[shell.panel]` de `config.toml`) : lanceur en bas, centre de contrôle en haut au
-  centre, session et OSD à droite. Moniteurs `sysmon` (`cpu`, `ram`, `gpu`, `gpu-temp`) définis dans
+  centre, session en haut à droite, OSD à droite. Moniteurs `sysmon` (`cpu`, `ram`, `gpu`, `gpu-temp`) définis dans
   `config.toml` mais retirés de la barre.
 - Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
 - Agent Polkit de Noctalia activé (`polkit_agent = true`).
 - Plugins activés (gérés dans la fenêtre Manager, enregistrés dans `settings.toml`) :
   `noctalia/wallhaven`, `yuuto/arch-updater` (compteur de mises à jour dans la barre, mise à jour en
-  arrière-plan sans confirmation, mot de passe par Polkit).
+  arrière-plan sans confirmation, mot de passe par Polkit). Leurs panneaux sont flottants en haut au centre
+  (`<panneau>_placement = "floating"` et `_position = "top_center"` dans `[plugin_settings."…"]`) : attachés, ils
+  prendraient la transparence de la barre.
 
 ## Mes outils perso
 
@@ -149,7 +151,7 @@ avant de modifier quelque chose.
   (`~/.local/state/quickshell-menu/usage.json`) + celui de Noctalia (`usage_counts.json`).
 - Vue d'ensemble des espaces de travail en **Quickshell** (Hyprland) : `~/.config/quickshell/overview/shell.qml`,
   lancée par `autostart.lua` (`qs -c overview`), coin actif en haut à gauche, couleurs du menu ; bords actifs : milieu du haut → centre de contrôle,
-  milieu de la droite → session (via `~/.local/bin/noctalia-panel-hover`, refermé quand la souris sort) ; glisser une
+  coin haut droit → session (via `~/.local/bin/noctalia-panel-hover`, refermé quand la souris sort) ; glisser une
   fenêtre sur un autre espace l'y envoie, glisser le numéro d'un espace sur un autre les échange. Bascule :
   `qs -c overview ipc call overview toggle`. Sous KDE, même coin via KWin (`[Effect-overview]` dans `kwinrc`) ;
   sous niri, coin natif.
