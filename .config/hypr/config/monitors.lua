@@ -1,5 +1,5 @@
 -- Monitor wiki https://wiki.hypr.land/Configuring/Basics/Monitors/
--- Example: output can be found with hyprctl monitors. Edit variables.lua for the monitor outputs instead of here directly
+-- Nom de la sortie : hyprctl monitors. HDMI-A-1 est aussi écrit dans workspaces.lua et windowrules.lua (grep -rn HDMI-A-1)
 -- hl.monitor({
 --     output    = "HDMI-A-1",
 --     mode      = "1920x1080@60",

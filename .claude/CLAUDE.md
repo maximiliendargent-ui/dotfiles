@@ -55,7 +55,7 @@ avant de modifier quelque chose.
 ## Hyprland (configuration en **Lua**, pas en hyprlang)
 
 - Entrée : `~/.config/hypr/hyprland.lua`, qui charge `~/.config/hypr/config/*.lua` :
-  `animations`, `autostart`, `colors`, `decorations`, `variables` (moniteurs), `environment`, `inputs`, `binds`, `misc`, `monitors`,
+  `animations`, `autostart`, `colors`, `decorations`, `environment`, `inputs`, `binds`, `misc`, `monitors`,
   `windowrules`, `workspaces`, puis `noctalia_colors` (via `pcall`).
 - Hyprland **recharge automatiquement** la config à l'enregistrement. Une erreur de syntaxe Lua empêche
   le rechargement et s'affiche en haut de l'écran : vérifie après chaque modification.
