@@ -10,7 +10,6 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("xhost +SI:localuser:root")
     -- Vue d'ensemble des espaces de travail (coin haut gauche) : ~/.config/quickshell/overview
     hl.exec_cmd("qs -c overview")
-    -- Configs du bureau dans VS Code sur l'espace 2 (~/.config/bureau.code-workspace).
-    -- VS Code se détache de son lanceur, donc pas de règle d'exec : on attend sa fenêtre (30 s max) et on la déplace.
-    hl.exec_cmd([[sh -c 'uwsm app -- code ~/.config/bureau.code-workspace; for i in $(seq 150); do a=$(hyprctl clients -j | jq -r ".[]|select(.class==\"com.microsoft.VSCode\")|.address" | head -1); [ -n "$a" ] && { hyprctl dispatch "hl.dsp.window.move({ workspace = 2, window = \"address:$a\", follow = false })"; break; }; sleep 0.2; done']])
+    -- Configs du bureau dans VS Code sur l'espace 2 : ~/.local/bin/open-bureau
+    hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/open-bureau")
 end)
