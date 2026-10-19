@@ -10,6 +10,6 @@ hl.on("hyprland.start", function ()
     hl.exec_cmd("xhost +SI:localuser:root")
     -- Vue d'ensemble des espaces de travail (coin haut gauche) : ~/.config/quickshell/overview
     hl.exec_cmd("qs -c overview")
-    -- Configs du bureau dans VS Code sur l'espace 2 : ~/.local/bin/open-bureau
+    -- Dossier ~/.config dans VS Code sur l'espace 2 : ~/.local/bin/open-bureau
     hl.exec_cmd(os.getenv("HOME") .. "/.local/bin/open-bureau")
 end)

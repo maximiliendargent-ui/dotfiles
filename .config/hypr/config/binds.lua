@@ -5,7 +5,7 @@
 -- Moins => code:20, Égal => code:21.
 
 -- État interne de quelques bascules
-local gaps_off = false
+local gaps_off = true
 
 -----------------
 ---- LANCEUR ----

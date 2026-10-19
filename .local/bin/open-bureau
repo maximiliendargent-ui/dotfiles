@@ -1,13 +1,13 @@
 #!/bin/sh
-# Ouvre les configs du bureau dans VS Code, sur l'espace 2 (lancé par autostart.lua).
+# Ouvre le dossier ~/.config dans VS Code, sur l'espace 2 (lancé par autostart.lua).
 # VS Code se détache de son lanceur : une règle d'exec ne le suit pas, et son titre
 # initial est « Visual Studio Code » (pas de règle sur le titre). On attend donc que sa
-# fenêtre prenne le titre « bureau (Workspace) », puis on la déplace.
+# fenêtre prenne le titre « .config », puis on la déplace.
 
-uwsm app -- code ~/.config/bureau.code-workspace
+uwsm app -- code ~/.config
 
 for i in $(seq 150); do  # 30 s max
-    addr=$(hyprctl clients -j | jq -r '.[] | select(.class == "com.microsoft.VSCode" and (.title | contains("bureau (Workspace)"))) | .address' | head -1)
+    addr=$(hyprctl clients -j | jq -r '.[] | select(.class == "com.microsoft.VSCode" and (.title | contains(".config"))) | .address' | head -1)
     if [ -n "$addr" ]; then
         hyprctl dispatch "hl.dsp.window.move({ workspace = 2, window = \"address:$addr\", follow = false })"
         exit
