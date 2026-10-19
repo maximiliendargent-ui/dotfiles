@@ -1,0 +1,30 @@
+// Configs du bureau, ouvertes dans VS Code sur l'espace 2 à la connexion (autostart.lua).
+// Ajouter un dossier : une entrée { "name": ..., "path": ... } dans "folders".
+{
+	"folders": [
+		{ "name": "Hyprland", "path": "hypr" },
+		{ "name": "niri", "path": "niri" },
+		{ "name": "Noctalia (barre, panneaux, couleurs)", "path": "noctalia" },
+		{ "name": "Quickshell (menu, vue d'ensemble, Manager, fonds)", "path": "quickshell" },
+		{ "name": "Session (variables d'environnement)", "path": "uwsm" },
+		{ "name": "Scripts perso", "path": "../.local/bin" },
+		{ "name": "Ghostty", "path": "ghostty" },
+		{ "name": "fish", "path": "fish" },
+		{ "name": "yazi", "path": "yazi" },
+		{ "name": "Page d'accueil", "path": "startpage" },
+		{ "name": "fastfetch", "path": "fastfetch" }
+	],
+	"settings": {
+		"files.exclude": {
+			"**/*.bak": true,
+			"**/graphify-out": true
+		},
+		// Fichiers générés par Noctalia : réécrits à chaque changement de fond d'écran
+		"files.readonlyInclude": {
+			"**/hypr/config/noctalia_colors.lua": true,
+			"**/niri/noctalia.kdl": true,
+			"**/quickshell/menu/colors.json": true,
+			"**/startpage/colors.css": true
+		}
+	}
+}

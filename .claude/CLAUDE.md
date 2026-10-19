@@ -55,7 +55,7 @@ avant de modifier quelque chose.
 ## Hyprland (configuration en **Lua**, pas en hyprlang)
 
 - Entrée : `~/.config/hypr/hyprland.lua`, qui charge `~/.config/hypr/config/*.lua` :
-  `animations`, `autostart`, `colors`, `decorations`, `variables`, `inputs`, `binds`, `misc`, `monitors`,
+  `animations`, `autostart`, `colors`, `decorations`, `variables` (moniteurs), `environment`, `inputs`, `binds`, `misc`, `monitors`,
   `windowrules`, `workspaces`, puis `noctalia_colors` (via `pcall`).
 - Hyprland **recharge automatiquement** la config à l'enregistrement. Une erreur de syntaxe Lua empêche
   le rechargement et s'affiche en haut de l'écran : vérifie après chaque modification.
@@ -124,6 +124,8 @@ avant de modifier quelque chose.
 
 ## Mes outils perso
 
+- `~/.config/bureau.code-workspace` : configs du bureau dans VS Code (fichiers générés en lecture seule), ouvert
+  sur l'espace 2 à la connexion par `autostart.lua`.
 - `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j` (Hyprland seulement).
 - `~/.local/share/keybind-editor/kbe` : éditeur de raccourcis (Super + Shift + K, Hyprland seulement).
 - Carrousel de fonds d'écran en **Quickshell 0.3.1** (QML) : `~/.config/quickshell/wallpicker/shell.qml`,
