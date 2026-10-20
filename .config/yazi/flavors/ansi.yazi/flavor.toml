@@ -1,0 +1,917 @@
+# : Manager [[[
+
+[mgr]
+cwd = { fg = "white" }
+
+# Find
+find_keyword = { fg = "red", bold = true, italic = true, underline = true }
+find_position = { fg = "red", bold = true, italic = true }
+
+# Marker
+marker_copied = { fg = "blue", bg = "blue" }
+marker_cut = { fg = "blue", bg = "blue" }
+marker_marked = { fg = "red", bg = "red" }
+marker_selected = { fg = "blue", bg = "blue" }
+
+# Count
+count_copied = { fg = "black", bg = "blue" }
+count_cut = { fg = "black", bg = "blue" }
+count_selected = { fg = "black", bg = "blue" }
+
+# Border
+border_style  = { fg = "green" }
+
+# : ]]]
+
+
+# : Status [[[
+
+[status]
+overall = { fg = "green" }
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+# Progress
+progress_label = { bold = true }
+progress_normal = { fg = "green", bg = "reset" }
+progress_error = { fg = "red", bg = "reset" }
+
+# Permissions
+perm_type = { fg = "yellow" }
+perm_write = { fg = "blue" }
+perm_exec = { fg = "red" }
+perm_read = { fg = "blue" }
+perm_sep = { fg = "darkgray" }
+
+# : ]]]
+
+
+# : Mode [[[
+
+[mode]
+
+normal_main = { bg = "green", fg = "black", bold = true }
+normal_alt  = { bg = "black", fg = "gray" }
+
+select_main = { bg = "yellow", fg = "black", bold = true }
+select_alt  = { bg = "black", fg = "gray" }
+
+unset_main = { bg = "blue", fg = "black", bold = true }
+unset_alt  = { bg = "black", fg = "gray" }
+
+# : ]]]
+
+
+# : Input [[[
+
+[input]
+border = { fg = "green" }
+title = {}
+value = { fg = "white" }
+selected = { reversed = true }
+
+# : ]]]
+
+
+# : Tabs [[[
+
+[tabs]
+active = { fg = "black", bold = true, bg = "green" }
+inactive = { fg = "yellow", bg = "reset" }
+sep_inner = { open = "", close = "" }
+
+# : ]]]
+
+
+# : Completion [[[
+
+[cmp]
+border = { fg = "green", bg = "black" }
+
+# : ]]]
+
+
+# : Tasks [[[
+
+[tasks]
+border = { fg = "green" }
+title = {}
+hovered = { fg = "blue", underline = true }
+
+# : ]]]
+
+
+# : Which [[[
+
+[which]
+cols = 3
+mask = { bg = "reset" }
+cand = { fg = "green" }
+rest = { fg = "black" }
+desc = { fg = "white" }
+separator = " ▶ "
+separator_style = { fg = "white" }
+
+# : ]]]
+
+# : Spotter [[[
+
+[spot]
+border   = { fg = "green" }
+title    = { fg = "green" }
+tbl_col  = { fg = "white" }
+tbl_cell = { fg = "white", bg = "reset" }
+
+# : ]]]
+
+
+# : Help [[[
+
+[help]
+on = { fg = "white" }
+run = { fg = "white" }
+hovered = { reversed = true, bold = true }
+footer = { fg = "black", bg = "yellow" }
+
+# : ]]]
+
+
+# : Notify [[[
+
+[notify]
+title_info = { fg = "blue" }
+title_warn = { fg = "green" }
+title_error = { fg = "red" }
+
+# : ]]]
+
+
+# : File-specific styles [[[
+
+[filetype]
+
+rules = [
+    # Images
+    { mime = "image/*", fg = "green" },
+
+    # Media
+    { mime = "{audio,video}/*", fg = "blue" },
+
+    # Archives
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "yellow" },
+
+    # Documents
+    { mime = "application/{pdf,doc,rtf}", fg = "blue" },
+
+    # Special files
+    { mime = "*", is = "orphan", fg = "lightred", bg = "red" },
+    { mime = "application/*exec*", fg = "red" },
+
+    # Fallback
+    { url = "*", fg = "white" },
+    { url = "*/", fg = "green" },
+]
+
+# : ]]]
+
+# : Icons {{{
+
+[icon]
+globs = []
+dirs  = [
+	{ name = ".config", text = "", fg = "green" },
+	{ name = ".git", text = "", fg = "green" },
+	{ name = ".github", text = "", fg = "green" },
+	{ name = ".npm", text = "", fg = "green" },
+	{ name = "Desktop", text = "", fg = "green" },
+	{ name = "Development", text = "", fg = "green" },
+	{ name = "Documents", text = "", fg = "green" },
+	{ name = "Downloads", text = "", fg = "green" },
+	{ name = "Library", text = "", fg = "green" },
+	{ name = "Movies", text = "", fg = "green" },
+	{ name = "Music", text = "", fg = "green" },
+	{ name = "Pictures", text = "", fg = "green" },
+	{ name = "Public", text = "", fg = "green" },
+	{ name = "Videos", text = "", fg = "green" },
+]
+files = [
+	{ name = ".babelrc", text = "", fg = "green" },
+	{ name = ".bash_profile", text = "", fg = "green" },
+	{ name = ".bashrc", text = "", fg = "green" },
+	{ name = ".clang-format", text = "", fg = "green" },
+	{ name = ".clang-tidy", text = "", fg = "green" },
+	{ name = ".codespellrc", text = "󰓆", fg = "green" },
+	{ name = ".condarc", text = "", fg = "green" },
+	{ name = ".dockerignore", text = "󰡨", fg = "green" },
+	{ name = ".ds_store", text = "", fg = "green" },
+	{ name = ".editorconfig", text = "", fg = "green" },
+	{ name = ".env", text = "", fg = "green" },
+	{ name = ".eslintignore", text = "", fg = "green" },
+	{ name = ".eslintrc", text = "", fg = "green" },
+	{ name = ".git-blame-ignore-revs", text = "", fg = "green" },
+	{ name = ".gitattributes", text = "", fg = "green" },
+	{ name = ".gitconfig", text = "", fg = "green" },
+	{ name = ".gitignore", text = "", fg = "green" },
+	{ name = ".gitlab-ci.yml", text = "", fg = "green" },
+	{ name = ".gitmodules", text = "", fg = "green" },
+	{ name = ".gtkrc-2.0", text = "", fg = "green" },
+	{ name = ".gvimrc", text = "", fg = "green" },
+	{ name = ".justfile", text = "", fg = "green" },
+	{ name = ".luacheckrc", text = "", fg = "green" },
+	{ name = ".luaurc", text = "", fg = "green" },
+	{ name = ".mailmap", text = "󰊢", fg = "green" },
+	{ name = ".nanorc", text = "", fg = "green" },
+	{ name = ".npmignore", text = "", fg = "green" },
+	{ name = ".npmrc", text = "", fg = "green" },
+	{ name = ".nuxtrc", text = "󱄆", fg = "green" },
+	{ name = ".nvmrc", text = "", fg = "green" },
+	{ name = ".pnpmfile.cjs", text = "", fg = "green" },
+	{ name = ".pre-commit-config.yaml", text = "󰛢", fg = "green" },
+	{ name = ".prettierignore", text = "", fg = "green" },
+	{ name = ".prettierrc", text = "", fg = "green" },
+	{ name = ".prettierrc.cjs", text = "", fg = "green" },
+	{ name = ".prettierrc.js", text = "", fg = "green" },
+	{ name = ".prettierrc.json", text = "", fg = "green" },
+	{ name = ".prettierrc.json5", text = "", fg = "green" },
+	{ name = ".prettierrc.mjs", text = "", fg = "green" },
+	{ name = ".prettierrc.toml", text = "", fg = "green" },
+	{ name = ".prettierrc.yaml", text = "", fg = "green" },
+	{ name = ".prettierrc.yml", text = "", fg = "green" },
+	{ name = ".pylintrc", text = "", fg = "green" },
+	{ name = ".settings.json", text = "", fg = "green" },
+	{ name = ".SRCINFO", text = "󰣇", fg = "green" },
+	{ name = ".vimrc", text = "", fg = "green" },
+	{ name = ".Xauthority", text = "", fg = "green" },
+	{ name = ".xinitrc", text = "", fg = "green" },
+	{ name = ".Xresources", text = "", fg = "green" },
+	{ name = ".xsession", text = "", fg = "green" },
+	{ name = ".zprofile", text = "", fg = "green" },
+	{ name = ".zshenv", text = "", fg = "green" },
+	{ name = ".zshrc", text = "", fg = "green" },
+	{ name = "_gvimrc", text = "", fg = "green" },
+	{ name = "_vimrc", text = "", fg = "green" },
+	{ name = "AUTHORS", text = "", fg = "green" },
+	{ name = "AUTHORS.txt", text = "", fg = "green" },
+	{ name = "brewfile", text = "", fg = "green" },
+	{ name = "bspwmrc", text = "", fg = "green" },
+	{ name = "build", text = "", fg = "green" },
+	{ name = "build.gradle", text = "", fg = "green" },
+	{ name = "build.zig.zon", text = "", fg = "green" },
+	{ name = "bun.lock", text = "", fg = "green" },
+	{ name = "bun.lockb", text = "", fg = "green" },
+	{ name = "cantorrc", text = "", fg = "green" },
+	{ name = "checkhealth", text = "󰓙", fg = "green" },
+	{ name = "cmakelists.txt", text = "", fg = "green" },
+	{ name = "code_of_conduct", text = "", fg = "green" },
+	{ name = "code_of_conduct.md", text = "", fg = "green" },
+	{ name = "commit_editmsg", text = "", fg = "green" },
+	{ name = "commitlint.config.js", text = "󰜘", fg = "green" },
+	{ name = "commitlint.config.ts", text = "󰜘", fg = "green" },
+	{ name = "compose.yaml", text = "󰡨", fg = "green" },
+	{ name = "compose.yml", text = "󰡨", fg = "green" },
+	{ name = "config", text = "", fg = "green" },
+	{ name = "containerfile", text = "󰡨", fg = "green" },
+	{ name = "copying", text = "", fg = "green" },
+	{ name = "copying.lesser", text = "", fg = "green" },
+	{ name = "Directory.Build.props", text = "", fg = "green" },
+	{ name = "Directory.Build.targets", text = "", fg = "green" },
+	{ name = "Directory.Packages.props", text = "", fg = "green" },
+	{ name = "docker-compose.yaml", text = "󰡨", fg = "green" },
+	{ name = "docker-compose.yml", text = "󰡨", fg = "green" },
+	{ name = "dockerfile", text = "󰡨", fg = "green" },
+	{ name = "eslint.config.cjs", text = "", fg = "green" },
+	{ name = "eslint.config.js", text = "", fg = "green" },
+	{ name = "eslint.config.mjs", text = "", fg = "green" },
+	{ name = "eslint.config.ts", text = "", fg = "green" },
+	{ name = "ext_typoscript_setup.txt", text = "", fg = "green" },
+	{ name = "favicon.ico", text = "", fg = "green" },
+	{ name = "fp-info-cache", text = "", fg = "green" },
+	{ name = "fp-lib-table", text = "", fg = "green" },
+	{ name = "FreeCAD.conf", text = "", fg = "green" },
+	{ name = "Gemfile", text = "", fg = "green" },
+	{ name = "gnumakefile", text = "", fg = "green" },
+	{ name = "go.mod", text = "", fg = "green" },
+	{ name = "go.sum", text = "", fg = "green" },
+	{ name = "go.work", text = "", fg = "green" },
+	{ name = "gradle-wrapper.properties", text = "", fg = "green" },
+	{ name = "gradle.properties", text = "", fg = "green" },
+	{ name = "gradlew", text = "", fg = "green" },
+	{ name = "groovy", text = "", fg = "green" },
+	{ name = "gruntfile.babel.js", text = "", fg = "green" },
+	{ name = "gruntfile.coffee", text = "", fg = "green" },
+	{ name = "gruntfile.js", text = "", fg = "green" },
+	{ name = "gruntfile.ts", text = "", fg = "green" },
+	{ name = "gtkrc", text = "", fg = "green" },
+	{ name = "gulpfile.babel.js", text = "", fg = "green" },
+	{ name = "gulpfile.coffee", text = "", fg = "green" },
+	{ name = "gulpfile.js", text = "", fg = "green" },
+	{ name = "gulpfile.ts", text = "", fg = "green" },
+	{ name = "hypridle.conf", text = "", fg = "green" },
+	{ name = "hyprland.conf", text = "", fg = "green" },
+	{ name = "hyprlandd.conf", text = "", fg = "green" },
+	{ name = "hyprlock.conf", text = "", fg = "green" },
+	{ name = "hyprpaper.conf", text = "", fg = "green" },
+	{ name = "hyprsunset.conf", text = "", fg = "green" },
+	{ name = "i18n.config.js", text = "󰗊", fg = "green" },
+	{ name = "i18n.config.ts", text = "󰗊", fg = "green" },
+	{ name = "i3blocks.conf", text = "", fg = "green" },
+	{ name = "i3status.conf", text = "", fg = "green" },
+	{ name = "index.theme", text = "", fg = "green" },
+	{ name = "ionic.config.json", text = "", fg = "green" },
+	{ name = "Jenkinsfile", text = "", fg = "green" },
+	{ name = "justfile", text = "", fg = "green" },
+	{ name = "kalgebrarc", text = "", fg = "green" },
+	{ name = "kdeglobals", text = "", fg = "green" },
+	{ name = "kdenlive-layoutsrc", text = "", fg = "green" },
+	{ name = "kdenliverc", text = "", fg = "green" },
+	{ name = "kritadisplayrc", text = "", fg = "green" },
+	{ name = "kritarc", text = "", fg = "green" },
+	{ name = "license", text = "", fg = "green" },
+	{ name = "license.md", text = "", fg = "green" },
+	{ name = "lxde-rc.xml", text = "", fg = "green" },
+	{ name = "lxqt.conf", text = "", fg = "green" },
+	{ name = "makefile", text = "", fg = "green" },
+	{ name = "mix.lock", text = "", fg = "green" },
+	{ name = "mpv.conf", text = "", fg = "green" },
+	{ name = "next.config.cjs", text = "", fg = "green" },
+	{ name = "next.config.js", text = "", fg = "green" },
+	{ name = "next.config.ts", text = "", fg = "green" },
+	{ name = "node_modules", text = "", fg = "green" },
+	{ name = "nuxt.config.cjs", text = "󱄆", fg = "green" },
+	{ name = "nuxt.config.js", text = "󱄆", fg = "green" },
+	{ name = "nuxt.config.mjs", text = "󱄆", fg = "green" },
+	{ name = "nuxt.config.ts", text = "󱄆", fg = "green" },
+	{ name = "package-lock.json", text = "", fg = "green" },
+	{ name = "package.json", text = "", fg = "green" },
+	{ name = "PKGBUILD", text = "", fg = "green" },
+	{ name = "platformio.ini", text = "", fg = "green" },
+	{ name = "playwright.config.cjs", text = "", fg = "green" },
+	{ name = "playwright.config.cts", text = "", fg = "green" },
+	{ name = "playwright.config.js", text = "", fg = "green" },
+	{ name = "playwright.config.mjs", text = "", fg = "green" },
+	{ name = "playwright.config.mts", text = "", fg = "green" },
+	{ name = "playwright.config.ts", text = "", fg = "green" },
+	{ name = "pnpm-lock.yaml", text = "", fg = "green" },
+	{ name = "pnpm-workspace.yaml", text = "", fg = "green" },
+	{ name = "pom.xml", text = "", fg = "green" },
+	{ name = "prettier.config.cjs", text = "", fg = "green" },
+	{ name = "prettier.config.js", text = "", fg = "green" },
+	{ name = "prettier.config.mjs", text = "", fg = "green" },
+	{ name = "prettier.config.ts", text = "", fg = "green" },
+	{ name = "prisma.config.mts", text = "", fg = "green" },
+	{ name = "prisma.config.ts", text = "", fg = "green" },
+	{ name = "procfile", text = "", fg = "green" },
+	{ name = "PrusaSlicer.ini", text = "", fg = "green" },
+	{ name = "PrusaSlicerGcodeViewer.ini", text = "", fg = "green" },
+	{ name = "py.typed", text = "", fg = "green" },
+	{ name = "QtProject.conf", text = "", fg = "green" },
+	{ name = "rakefile", text = "", fg = "green" },
+	{ name = "readme", text = "󰂺", fg = "green" },
+	{ name = "readme.md", text = "󰂺", fg = "green" },
+	{ name = "rmd", text = "", fg = "green" },
+	{ name = "robots.txt", text = "󰚩", fg = "green" },
+	{ name = "security", text = "󰒃", fg = "green" },
+	{ name = "security.md", text = "󰒃", fg = "green" },
+	{ name = "settings.gradle", text = "", fg = "green" },
+	{ name = "svelte.config.js", text = "", fg = "green" },
+	{ name = "sxhkdrc", text = "", fg = "green" },
+	{ name = "sym-lib-table", text = "", fg = "green" },
+	{ name = "tailwind.config.js", text = "󱏿", fg = "green" },
+	{ name = "tailwind.config.mjs", text = "󱏿", fg = "green" },
+	{ name = "tailwind.config.ts", text = "󱏿", fg = "green" },
+	{ name = "tmux.conf", text = "", fg = "green" },
+	{ name = "tmux.conf.local", text = "", fg = "green" },
+	{ name = "tsconfig.json", text = "", fg = "green" },
+	{ name = "unlicense", text = "", fg = "green" },
+	{ name = "vagrantfile", text = "", fg = "green" },
+	{ name = "vercel.json", text = "", fg = "green" },
+	{ name = "vite.config.cjs", text = "", fg = "green" },
+	{ name = "vite.config.cts", text = "", fg = "green" },
+	{ name = "vite.config.js", text = "", fg = "green" },
+	{ name = "vite.config.mjs", text = "", fg = "green" },
+	{ name = "vite.config.mts", text = "", fg = "green" },
+	{ name = "vite.config.ts", text = "", fg = "green" },
+	{ name = "vitest.config.cjs", text = "", fg = "green" },
+	{ name = "vitest.config.cts", text = "", fg = "green" },
+	{ name = "vitest.config.js", text = "", fg = "green" },
+	{ name = "vitest.config.mjs", text = "", fg = "green" },
+	{ name = "vitest.config.mts", text = "", fg = "green" },
+	{ name = "vitest.config.ts", text = "", fg = "green" },
+	{ name = "vlcrc", text = "󰕼", fg = "green" },
+	{ name = "webpack", text = "󰜫", fg = "green" },
+	{ name = "weston.ini", text = "", fg = "green" },
+	{ name = "workspace", text = "", fg = "green" },
+	{ name = "wrangler.jsonc", text = "", fg = "green" },
+	{ name = "wrangler.toml", text = "", fg = "green" },
+	{ name = "xdph.conf", text = "", fg = "green" },
+	{ name = "xmobarrc", text = "", fg = "green" },
+	{ name = "xmobarrc.hs", text = "", fg = "green" },
+	{ name = "xmonad.hs", text = "", fg = "green" },
+	{ name = "xorg.conf", text = "", fg = "green" },
+	{ name = "xsettingsd.conf", text = "", fg = "green" },
+]
+exts = [
+	{ name = "3gp", text = "", fg = "green" },
+	{ name = "3mf", text = "󰆧", fg = "green" },
+	{ name = "7z", text = "", fg = "green" },
+	{ name = "a", text = "", fg = "green" },
+	{ name = "aac", text = "", fg = "green" },
+	{ name = "ada", text = "", fg = "green" },
+	{ name = "adb", text = "", fg = "green" },
+	{ name = "ads", text = "", fg = "green" },
+	{ name = "ai", text = "", fg = "green" },
+	{ name = "aif", text = "", fg = "green" },
+	{ name = "aiff", text = "", fg = "green" },
+	{ name = "android", text = "", fg = "green" },
+	{ name = "ape", text = "", fg = "green" },
+	{ name = "apk", text = "", fg = "green" },
+	{ name = "apl", text = "", fg = "green" },
+	{ name = "app", text = "", fg = "green" },
+	{ name = "applescript", text = "", fg = "green" },
+	{ name = "asc", text = "󰦝", fg = "green" },
+	{ name = "asm", text = "", fg = "green" },
+	{ name = "ass", text = "󰨖", fg = "green" },
+	{ name = "astro", text = "", fg = "green" },
+	{ name = "avif", text = "", fg = "green" },
+	{ name = "awk", text = "", fg = "green" },
+	{ name = "azcli", text = "", fg = "green" },
+	{ name = "bak", text = "󰁯", fg = "green" },
+	{ name = "bash", text = "", fg = "green" },
+	{ name = "bat", text = "", fg = "green" },
+	{ name = "bazel", text = "", fg = "green" },
+	{ name = "bib", text = "󱉟", fg = "green" },
+	{ name = "bicep", text = "", fg = "green" },
+	{ name = "bicepparam", text = "", fg = "green" },
+	{ name = "bin", text = "", fg = "green" },
+	{ name = "blade.php", text = "", fg = "green" },
+	{ name = "blend", text = "󰂫", fg = "green" },
+	{ name = "blp", text = "󰺾", fg = "green" },
+	{ name = "bmp", text = "", fg = "green" },
+	{ name = "bqn", text = "", fg = "green" },
+	{ name = "brep", text = "󰻫", fg = "green" },
+	{ name = "bz", text = "", fg = "green" },
+	{ name = "bz2", text = "", fg = "green" },
+	{ name = "bz3", text = "", fg = "green" },
+	{ name = "bzl", text = "", fg = "green" },
+	{ name = "c", text = "", fg = "green" },
+	{ name = "c++", text = "", fg = "green" },
+	{ name = "cache", text = "", fg = "green" },
+	{ name = "cast", text = "", fg = "green" },
+	{ name = "cbl", text = "", fg = "green" },
+	{ name = "cc", text = "", fg = "green" },
+	{ name = "ccm", text = "", fg = "green" },
+	{ name = "cfc", text = "", fg = "green" },
+	{ name = "cfg", text = "", fg = "green" },
+	{ name = "cfm", text = "", fg = "green" },
+	{ name = "cjs", text = "", fg = "green" },
+	{ name = "clj", text = "", fg = "green" },
+	{ name = "cljc", text = "", fg = "green" },
+	{ name = "cljd", text = "", fg = "green" },
+	{ name = "cljs", text = "", fg = "green" },
+	{ name = "cmake", text = "", fg = "green" },
+	{ name = "cob", text = "", fg = "green" },
+	{ name = "cobol", text = "", fg = "green" },
+	{ name = "coffee", text = "", fg = "green" },
+	{ name = "conda", text = "", fg = "green" },
+	{ name = "conf", text = "", fg = "green" },
+	{ name = "config.ru", text = "", fg = "green" },
+	{ name = "cow", text = "󰆚", fg = "green" },
+	{ name = "cp", text = "", fg = "green" },
+	{ name = "cpp", text = "", fg = "green" },
+	{ name = "cppm", text = "", fg = "green" },
+	{ name = "cpy", text = "", fg = "green" },
+	{ name = "cr", text = "", fg = "green" },
+	{ name = "crdownload", text = "", fg = "green" },
+	{ name = "cs", text = "󰌛", fg = "green" },
+	{ name = "csh", text = "", fg = "green" },
+	{ name = "cshtml", text = "󱦗", fg = "green" },
+	{ name = "cson", text = "", fg = "green" },
+	{ name = "csproj", text = "󰪮", fg = "green" },
+	{ name = "css", text = "", fg = "green" },
+	{ name = "csv", text = "", fg = "green" },
+	{ name = "cts", text = "", fg = "green" },
+	{ name = "cu", text = "", fg = "green" },
+	{ name = "cue", text = "󰲹", fg = "green" },
+	{ name = "cuh", text = "", fg = "green" },
+	{ name = "cxx", text = "", fg = "green" },
+	{ name = "cxxm", text = "", fg = "green" },
+	{ name = "d", text = "", fg = "green" },
+	{ name = "d.ts", text = "", fg = "green" },
+	{ name = "dart", text = "", fg = "green" },
+	{ name = "db", text = "", fg = "green" },
+	{ name = "dconf", text = "", fg = "green" },
+	{ name = "desktop", text = "", fg = "green" },
+	{ name = "diff", text = "", fg = "green" },
+	{ name = "dll", text = "", fg = "green" },
+	{ name = "doc", text = "󰈬", fg = "green" },
+	{ name = "Dockerfile", text = "󰡨", fg = "green" },
+	{ name = "dockerignore", text = "󰡨", fg = "green" },
+	{ name = "docx", text = "󰈬", fg = "green" },
+	{ name = "dot", text = "󱁉", fg = "green" },
+	{ name = "download", text = "", fg = "green" },
+	{ name = "drl", text = "", fg = "green" },
+	{ name = "dropbox", text = "", fg = "green" },
+	{ name = "dump", text = "", fg = "green" },
+	{ name = "dwg", text = "󰻫", fg = "green" },
+	{ name = "dxf", text = "󰻫", fg = "green" },
+	{ name = "ebook", text = "", fg = "green" },
+	{ name = "ebuild", text = "", fg = "green" },
+	{ name = "edn", text = "", fg = "green" },
+	{ name = "eex", text = "", fg = "green" },
+	{ name = "ejs", text = "", fg = "green" },
+	{ name = "el", text = "", fg = "green" },
+	{ name = "elc", text = "", fg = "green" },
+	{ name = "elf", text = "", fg = "green" },
+	{ name = "elm", text = "", fg = "green" },
+	{ name = "eln", text = "", fg = "green" },
+	{ name = "env", text = "", fg = "green" },
+	{ name = "eot", text = "", fg = "green" },
+	{ name = "epp", text = "", fg = "green" },
+	{ name = "epub", text = "", fg = "green" },
+	{ name = "erb", text = "", fg = "green" },
+	{ name = "erl", text = "", fg = "green" },
+	{ name = "ex", text = "", fg = "green" },
+	{ name = "exe", text = "", fg = "green" },
+	{ name = "exs", text = "", fg = "green" },
+	{ name = "f#", text = "", fg = "green" },
+	{ name = "f3d", text = "󰻫", fg = "green" },
+	{ name = "f90", text = "󱈚", fg = "green" },
+	{ name = "fbx", text = "󰆧", fg = "green" },
+	{ name = "fcbak", text = "", fg = "green" },
+	{ name = "fcmacro", text = "", fg = "green" },
+	{ name = "fcmat", text = "", fg = "green" },
+	{ name = "fcparam", text = "", fg = "green" },
+	{ name = "fcscript", text = "", fg = "green" },
+	{ name = "fcstd", text = "", fg = "green" },
+	{ name = "fcstd1", text = "", fg = "green" },
+	{ name = "fctb", text = "", fg = "green" },
+	{ name = "fctl", text = "", fg = "green" },
+	{ name = "fdmdownload", text = "", fg = "green" },
+	{ name = "feature", text = "", fg = "green" },
+	{ name = "fish", text = "", fg = "green" },
+	{ name = "flac", text = "", fg = "green" },
+	{ name = "flc", text = "", fg = "green" },
+	{ name = "flf", text = "", fg = "green" },
+	{ name = "fnl", text = "", fg = "green" },
+	{ name = "fodg", text = "", fg = "green" },
+	{ name = "fodp", text = "", fg = "green" },
+	{ name = "fods", text = "", fg = "green" },
+	{ name = "fodt", text = "", fg = "green" },
+	{ name = "frag", text = "", fg = "green" },
+	{ name = "fs", text = "", fg = "green" },
+	{ name = "fsi", text = "", fg = "green" },
+	{ name = "fsscript", text = "", fg = "green" },
+	{ name = "fsx", text = "", fg = "green" },
+	{ name = "gcode", text = "󰐫", fg = "green" },
+	{ name = "gd", text = "", fg = "green" },
+	{ name = "gemspec", text = "", fg = "green" },
+	{ name = "geom", text = "", fg = "green" },
+	{ name = "gif", text = "", fg = "green" },
+	{ name = "git", text = "", fg = "green" },
+	{ name = "glb", text = "", fg = "green" },
+	{ name = "gleam", text = "", fg = "green" },
+	{ name = "glsl", text = "", fg = "green" },
+	{ name = "gnumakefile", text = "", fg = "green" },
+	{ name = "go", text = "", fg = "green" },
+	{ name = "godot", text = "", fg = "green" },
+	{ name = "gpr", text = "", fg = "green" },
+	{ name = "gql", text = "", fg = "green" },
+	{ name = "gradle", text = "", fg = "green" },
+	{ name = "graphql", text = "", fg = "green" },
+	{ name = "gresource", text = "", fg = "green" },
+	{ name = "gv", text = "󱁉", fg = "green" },
+	{ name = "gz", text = "", fg = "green" },
+	{ name = "h", text = "", fg = "green" },
+	{ name = "haml", text = "", fg = "green" },
+	{ name = "hbs", text = "", fg = "green" },
+	{ name = "heex", text = "", fg = "green" },
+	{ name = "hex", text = "", fg = "green" },
+	{ name = "hh", text = "", fg = "green" },
+	{ name = "hpp", text = "", fg = "green" },
+	{ name = "hrl", text = "", fg = "green" },
+	{ name = "hs", text = "", fg = "green" },
+	{ name = "htm", text = "", fg = "green" },
+	{ name = "html", text = "", fg = "green" },
+	{ name = "http", text = "", fg = "green" },
+	{ name = "huff", text = "󰡘", fg = "green" },
+	{ name = "hurl", text = "", fg = "green" },
+	{ name = "hx", text = "", fg = "green" },
+	{ name = "hxx", text = "", fg = "green" },
+	{ name = "ical", text = "", fg = "green" },
+	{ name = "icalendar", text = "", fg = "green" },
+	{ name = "ico", text = "", fg = "green" },
+	{ name = "ics", text = "", fg = "green" },
+	{ name = "ifb", text = "", fg = "green" },
+	{ name = "ifc", text = "󰻫", fg = "green" },
+	{ name = "ige", text = "󰻫", fg = "green" },
+	{ name = "iges", text = "󰻫", fg = "green" },
+	{ name = "igs", text = "󰻫", fg = "green" },
+	{ name = "image", text = "", fg = "green" },
+	{ name = "img", text = "", fg = "green" },
+	{ name = "import", text = "", fg = "green" },
+	{ name = "info", text = "", fg = "green" },
+	{ name = "ini", text = "", fg = "green" },
+	{ name = "ino", text = "", fg = "green" },
+	{ name = "ipynb", text = "", fg = "green" },
+	{ name = "iso", text = "", fg = "green" },
+	{ name = "ixx", text = "", fg = "green" },
+	{ name = "jar", text = "", fg = "green" },
+	{ name = "java", text = "", fg = "green" },
+	{ name = "jl", text = "", fg = "green" },
+	{ name = "jpeg", text = "", fg = "green" },
+	{ name = "jpg", text = "", fg = "green" },
+	{ name = "js", text = "", fg = "green" },
+	{ name = "json", text = "", fg = "green" },
+	{ name = "json5", text = "", fg = "green" },
+	{ name = "jsonc", text = "", fg = "green" },
+	{ name = "jsx", text = "", fg = "green" },
+	{ name = "jwmrc", text = "", fg = "green" },
+	{ name = "jxl", text = "", fg = "green" },
+	{ name = "kbx", text = "󰯄", fg = "green" },
+	{ name = "kdb", text = "", fg = "green" },
+	{ name = "kdbx", text = "", fg = "green" },
+	{ name = "kdenlive", text = "", fg = "green" },
+	{ name = "kdenlivetitle", text = "", fg = "green" },
+	{ name = "kicad_dru", text = "", fg = "green" },
+	{ name = "kicad_mod", text = "", fg = "green" },
+	{ name = "kicad_pcb", text = "", fg = "green" },
+	{ name = "kicad_prl", text = "", fg = "green" },
+	{ name = "kicad_pro", text = "", fg = "green" },
+	{ name = "kicad_sch", text = "", fg = "green" },
+	{ name = "kicad_sym", text = "", fg = "green" },
+	{ name = "kicad_wks", text = "", fg = "green" },
+	{ name = "ko", text = "", fg = "green" },
+	{ name = "kpp", text = "", fg = "green" },
+	{ name = "kra", text = "", fg = "green" },
+	{ name = "krz", text = "", fg = "green" },
+	{ name = "ksh", text = "", fg = "green" },
+	{ name = "kt", text = "", fg = "green" },
+	{ name = "kts", text = "", fg = "green" },
+	{ name = "lck", text = "", fg = "green" },
+	{ name = "leex", text = "", fg = "green" },
+	{ name = "less", text = "", fg = "green" },
+	{ name = "lff", text = "", fg = "green" },
+	{ name = "lhs", text = "", fg = "green" },
+	{ name = "lib", text = "", fg = "green" },
+	{ name = "license", text = "", fg = "green" },
+	{ name = "liquid", text = "", fg = "green" },
+	{ name = "lock", text = "", fg = "green" },
+	{ name = "log", text = "󰌱", fg = "green" },
+	{ name = "lrc", text = "󰨖", fg = "green" },
+	{ name = "lua", text = "", fg = "green" },
+	{ name = "luac", text = "", fg = "green" },
+	{ name = "luau", text = "", fg = "green" },
+	{ name = "m", text = "", fg = "green" },
+	{ name = "m3u", text = "󰲹", fg = "green" },
+	{ name = "m3u8", text = "󰲹", fg = "green" },
+	{ name = "m4a", text = "", fg = "green" },
+	{ name = "m4v", text = "", fg = "green" },
+	{ name = "magnet", text = "", fg = "green" },
+	{ name = "makefile", text = "", fg = "green" },
+	{ name = "markdown", text = "", fg = "green" },
+	{ name = "material", text = "", fg = "green" },
+	{ name = "md", text = "", fg = "green" },
+	{ name = "md5", text = "󰕥", fg = "green" },
+	{ name = "mdx", text = "", fg = "green" },
+	{ name = "mint", text = "󰌪", fg = "green" },
+	{ name = "mjs", text = "", fg = "green" },
+	{ name = "mk", text = "", fg = "green" },
+	{ name = "mkv", text = "", fg = "green" },
+	{ name = "ml", text = "", fg = "green" },
+	{ name = "mli", text = "", fg = "green" },
+	{ name = "mm", text = "", fg = "green" },
+	{ name = "mo", text = "", fg = "green" },
+	{ name = "mobi", text = "", fg = "green" },
+	{ name = "mojo", text = "", fg = "green" },
+	{ name = "mov", text = "", fg = "green" },
+	{ name = "mp3", text = "", fg = "green" },
+	{ name = "mp4", text = "", fg = "green" },
+	{ name = "mpp", text = "", fg = "green" },
+	{ name = "msf", text = "", fg = "green" },
+	{ name = "mts", text = "", fg = "green" },
+	{ name = "mustache", text = "", fg = "green" },
+	{ name = "nfo", text = "", fg = "green" },
+	{ name = "nim", text = "", fg = "green" },
+	{ name = "nix", text = "", fg = "green" },
+	{ name = "norg", text = "", fg = "green" },
+	{ name = "nswag", text = "", fg = "green" },
+	{ name = "nu", text = "", fg = "green" },
+	{ name = "o", text = "", fg = "green" },
+	{ name = "obj", text = "󰆧", fg = "green" },
+	{ name = "odf", text = "", fg = "green" },
+	{ name = "odg", text = "", fg = "green" },
+	{ name = "odin", text = "󰟢", fg = "green" },
+	{ name = "odp", text = "", fg = "green" },
+	{ name = "ods", text = "", fg = "green" },
+	{ name = "odt", text = "", fg = "green" },
+	{ name = "oga", text = "", fg = "green" },
+	{ name = "ogg", text = "", fg = "green" },
+	{ name = "ogv", text = "", fg = "green" },
+	{ name = "ogx", text = "", fg = "green" },
+	{ name = "opus", text = "", fg = "green" },
+	{ name = "org", text = "", fg = "green" },
+	{ name = "otf", text = "", fg = "green" },
+	{ name = "out", text = "", fg = "green" },
+	{ name = "part", text = "", fg = "green" },
+	{ name = "patch", text = "", fg = "green" },
+	{ name = "pck", text = "", fg = "green" },
+	{ name = "pcm", text = "", fg = "green" },
+	{ name = "pdf", text = "", fg = "green" },
+	{ name = "php", text = "", fg = "green" },
+	{ name = "pl", text = "", fg = "green" },
+	{ name = "pls", text = "󰲹", fg = "green" },
+	{ name = "ply", text = "󰆧", fg = "green" },
+	{ name = "pm", text = "", fg = "green" },
+	{ name = "png", text = "", fg = "green" },
+	{ name = "po", text = "", fg = "green" },
+	{ name = "pot", text = "", fg = "green" },
+	{ name = "pp", text = "", fg = "green" },
+	{ name = "ppt", text = "󰈧", fg = "green" },
+	{ name = "pptx", text = "󰈧", fg = "green" },
+	{ name = "prisma", text = "", fg = "green" },
+	{ name = "pro", text = "", fg = "green" },
+	{ name = "ps1", text = "󰨊", fg = "green" },
+	{ name = "psb", text = "", fg = "green" },
+	{ name = "psd", text = "", fg = "green" },
+	{ name = "psd1", text = "󰨊", fg = "green" },
+	{ name = "psm1", text = "󰨊", fg = "green" },
+	{ name = "pub", text = "󰷖", fg = "green" },
+	{ name = "pxd", text = "", fg = "green" },
+	{ name = "pxi", text = "", fg = "green" },
+	{ name = "py", text = "", fg = "green" },
+	{ name = "pyc", text = "", fg = "green" },
+	{ name = "pyd", text = "", fg = "green" },
+	{ name = "pyi", text = "", fg = "green" },
+	{ name = "pyo", text = "", fg = "green" },
+	{ name = "pyw", text = "", fg = "green" },
+	{ name = "pyx", text = "", fg = "green" },
+	{ name = "qm", text = "", fg = "green" },
+	{ name = "qml", text = "", fg = "green" },
+	{ name = "qrc", text = "", fg = "green" },
+	{ name = "qss", text = "", fg = "green" },
+	{ name = "query", text = "", fg = "green" },
+	{ name = "R", text = "󰟔", fg = "green" },
+	{ name = "r", text = "󰟔", fg = "green" },
+	{ name = "rake", text = "", fg = "green" },
+	{ name = "rar", text = "", fg = "green" },
+	{ name = "rasi", text = "", fg = "green" },
+	{ name = "razor", text = "󱦘", fg = "green" },
+	{ name = "rb", text = "", fg = "green" },
+	{ name = "res", text = "", fg = "green" },
+	{ name = "resi", text = "", fg = "green" },
+	{ name = "rlib", text = "", fg = "green" },
+	{ name = "rmd", text = "", fg = "green" },
+	{ name = "rproj", text = "󰗆", fg = "green" },
+	{ name = "rs", text = "", fg = "green" },
+	{ name = "rss", text = "", fg = "green" },
+	{ name = "s", text = "", fg = "green" },
+	{ name = "sass", text = "", fg = "green" },
+	{ name = "sbt", text = "", fg = "green" },
+	{ name = "sc", text = "", fg = "green" },
+	{ name = "scad", text = "", fg = "green" },
+	{ name = "scala", text = "", fg = "green" },
+	{ name = "scm", text = "󰘧", fg = "green" },
+	{ name = "scss", text = "", fg = "green" },
+	{ name = "sh", text = "", fg = "green" },
+	{ name = "sha1", text = "󰕥", fg = "green" },
+	{ name = "sha224", text = "󰕥", fg = "green" },
+	{ name = "sha256", text = "󰕥", fg = "green" },
+	{ name = "sha384", text = "󰕥", fg = "green" },
+	{ name = "sha512", text = "󰕥", fg = "green" },
+	{ name = "sig", text = "󰘧", fg = "green" },
+	{ name = "signature", text = "󰘧", fg = "green" },
+	{ name = "skp", text = "󰻫", fg = "green" },
+	{ name = "sldasm", text = "󰻫", fg = "green" },
+	{ name = "sldprt", text = "󰻫", fg = "green" },
+	{ name = "slim", text = "", fg = "green" },
+	{ name = "sln", text = "", fg = "green" },
+	{ name = "slnx", text = "", fg = "green" },
+	{ name = "slvs", text = "󰻫", fg = "green" },
+	{ name = "sml", text = "󰘧", fg = "green" },
+	{ name = "so", text = "", fg = "green" },
+	{ name = "sol", text = "", fg = "green" },
+	{ name = "spec.js", text = "", fg = "green" },
+	{ name = "spec.jsx", text = "", fg = "green" },
+	{ name = "spec.ts", text = "", fg = "green" },
+	{ name = "spec.tsx", text = "", fg = "green" },
+	{ name = "spx", text = "", fg = "green" },
+	{ name = "sql", text = "", fg = "green" },
+	{ name = "sqlite", text = "", fg = "green" },
+	{ name = "sqlite3", text = "", fg = "green" },
+	{ name = "srt", text = "󰨖", fg = "green" },
+	{ name = "ssa", text = "󰨖", fg = "green" },
+	{ name = "ste", text = "󰻫", fg = "green" },
+	{ name = "step", text = "󰻫", fg = "green" },
+	{ name = "stl", text = "󰆧", fg = "green" },
+	{ name = "stories.js", text = "", fg = "green" },
+	{ name = "stories.jsx", text = "", fg = "green" },
+	{ name = "stories.mjs", text = "", fg = "green" },
+	{ name = "stories.svelte", text = "", fg = "green" },
+	{ name = "stories.ts", text = "", fg = "green" },
+	{ name = "stories.tsx", text = "", fg = "green" },
+	{ name = "stories.vue", text = "", fg = "green" },
+	{ name = "stp", text = "󰻫", fg = "green" },
+	{ name = "strings", text = "", fg = "green" },
+	{ name = "styl", text = "", fg = "green" },
+	{ name = "sub", text = "󰨖", fg = "green" },
+	{ name = "sublime", text = "", fg = "green" },
+	{ name = "suo", text = "", fg = "green" },
+	{ name = "sv", text = "󰍛", fg = "green" },
+	{ name = "svelte", text = "", fg = "green" },
+	{ name = "svg", text = "󰜡", fg = "green" },
+	{ name = "svgz", text = "󰜡", fg = "green" },
+	{ name = "svh", text = "󰍛", fg = "green" },
+	{ name = "swift", text = "", fg = "green" },
+	{ name = "t", text = "", fg = "green" },
+	{ name = "tbc", text = "󰛓", fg = "green" },
+	{ name = "tcl", text = "󰛓", fg = "green" },
+	{ name = "templ", text = "", fg = "green" },
+	{ name = "terminal", text = "", fg = "green" },
+	{ name = "test.js", text = "", fg = "green" },
+	{ name = "test.jsx", text = "", fg = "green" },
+	{ name = "test.ts", text = "", fg = "green" },
+	{ name = "test.tsx", text = "", fg = "green" },
+	{ name = "tex", text = "", fg = "green" },
+	{ name = "tf", text = "", fg = "green" },
+	{ name = "tfvars", text = "", fg = "green" },
+	{ name = "tgz", text = "", fg = "green" },
+	{ name = "tmpl", text = "", fg = "green" },
+	{ name = "tmux", text = "", fg = "green" },
+	{ name = "toml", text = "", fg = "green" },
+	{ name = "torrent", text = "", fg = "green" },
+	{ name = "tres", text = "", fg = "green" },
+	{ name = "ts", text = "", fg = "green" },
+	{ name = "tscn", text = "", fg = "green" },
+	{ name = "tsconfig", text = "", fg = "green" },
+	{ name = "tsx", text = "", fg = "green" },
+	{ name = "ttf", text = "", fg = "green" },
+	{ name = "twig", text = "", fg = "green" },
+	{ name = "txt", text = "󰈙", fg = "green" },
+	{ name = "txz", text = "", fg = "green" },
+	{ name = "typ", text = "", fg = "green" },
+	{ name = "typoscript", text = "", fg = "green" },
+	{ name = "ui", text = "", fg = "green" },
+	{ name = "v", text = "󰍛", fg = "green" },
+	{ name = "vala", text = "", fg = "green" },
+	{ name = "vert", text = "", fg = "green" },
+	{ name = "vh", text = "󰍛", fg = "green" },
+	{ name = "vhd", text = "󰍛", fg = "green" },
+	{ name = "vhdl", text = "󰍛", fg = "green" },
+	{ name = "vi", text = "", fg = "green" },
+	{ name = "vim", text = "", fg = "green" },
+	{ name = "vsh", text = "", fg = "green" },
+	{ name = "vsix", text = "", fg = "green" },
+	{ name = "vue", text = "", fg = "green" },
+	{ name = "wasm", text = "", fg = "green" },
+	{ name = "wav", text = "", fg = "green" },
+	{ name = "webm", text = "", fg = "green" },
+	{ name = "webmanifest", text = "", fg = "green" },
+	{ name = "webp", text = "", fg = "green" },
+	{ name = "webpack", text = "󰜫", fg = "green" },
+	{ name = "wma", text = "", fg = "green" },
+	{ name = "wmv", text = "", fg = "green" },
+	{ name = "woff", text = "", fg = "green" },
+	{ name = "woff2", text = "", fg = "green" },
+	{ name = "wrl", text = "󰆧", fg = "green" },
+	{ name = "wrz", text = "󰆧", fg = "green" },
+	{ name = "wv", text = "", fg = "green" },
+	{ name = "wvc", text = "", fg = "green" },
+	{ name = "x", text = "", fg = "green" },
+	{ name = "xaml", text = "󰙳", fg = "green" },
+	{ name = "xcf", text = "", fg = "green" },
+	{ name = "xcplayground", text = "", fg = "green" },
+	{ name = "xcstrings", text = "", fg = "green" },
+	{ name = "xls", text = "󰈛", fg = "green" },
+	{ name = "xlsx", text = "󰈛", fg = "green" },
+	{ name = "xm", text = "", fg = "green" },
+	{ name = "xml", text = "󰗀", fg = "green" },
+	{ name = "xpi", text = "", fg = "green" },
+	{ name = "xslt", text = "󰗀", fg = "green" },
+	{ name = "xul", text = "", fg = "green" },
+	{ name = "xz", text = "", fg = "green" },
+	{ name = "yaml", text = "", fg = "green" },
+	{ name = "yml", text = "", fg = "green" },
+	{ name = "zig", text = "", fg = "green" },
+	{ name = "zip", text = "", fg = "green" },
+	{ name = "zsh", text = "", fg = "green" },
+	{ name = "zst", text = "", fg = "green" },
+	{ name = "🔥", text = "", fg = "green" },
+]
+conds = [
+	# Special files
+	{ if = "orphan", text = "", fg = "green" },
+	{ if = "link", text = "", fg = "green" },
+	{ if = "block", text = "", fg = "green" },
+	{ if = "char", text = "", fg = "green" },
+	{ if = "fifo", text = "", fg = "green" },
+	{ if = "sock", text = "", fg = "green" },
+	{ if = "sticky", text = "", fg = "green" },
+	{ if = "dummy", text = "", fg = "green" },
+
+	# Fallback
+	{ if = "dir", text = "", fg = "green" },
+	{ if = "exec", text = "", fg = "green" },
+	{ if = "!dir", text = "", fg = "green" },
+]
+
+# : }}}

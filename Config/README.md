@@ -54,7 +54,7 @@ ne voient aucune différence. Supprimer ce dossier ne casse rien.
 - `niri/noctalia.kdl`
 - `quickshell/menu/colors.json`
 - `page-accueil/colors.css`
-- `fichiers/theme.toml` et `fichiers/flavors/`
+- `fichiers/flavors/noctalia.yazi/` (inutilisé : yazi prend `flavors/ansi.yazi`, en couleurs ANSI qui suivent Ghostty en direct)
 
 Pour changer ces couleurs, modifier le **modèle** dans `noctalia/templates/`.
 

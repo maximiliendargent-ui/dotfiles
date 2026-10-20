@@ -179,7 +179,8 @@ avant de modifier quelque chose.
   de la fenêtre (réduction en arrière-plan désactivée dans leur `settings.json`).
 - Fichiers : **yazi** dans Ghostty, lancé par `~/.local/bin/yazi-open` (classe `dev.yazi`, fenêtre
   flottante, Super + E ; rend Ctrl + V, Ctrl + Maj + N et Ctrl + Tab à yazi, raccourcis dans
-  `~/.config/yazi/keymap.toml`), thème dans `~/.config/yazi/` (généré par Noctalia) ;
+  `~/.config/yazi/keymap.toml`), thème `flavors/ansi.yazi` (copie du thème Noctalia en couleurs ANSI : suit Ghostty en
+  direct, sans redémarrer yazi ; `flavors/noctalia.yazi` reste généré mais inutilisé) ;
   `net.local.yazi.desktop` ouvre les dossiers (`inode/directory`) et sert d'entrée de menu, en fenêtre
   normale (classe `dev.yazi.tuile` par `YAZI_CLASS`, hors de la règle flottante) ; l'entrée « Yazi File Manager » du
   paquet est masquée par `~/.local/share/applications/yazi.desktop`. Dolphin reste installé (« Afficher dans le dossier » des applis l'appelle encore).
