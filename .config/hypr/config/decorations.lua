@@ -24,7 +24,7 @@ hl.config({
         },
         groupbar = {
             -- Onglets pleins, carrés, dans la police de la barre (couleurs : noctalia_colors.lua)
-            font_family = "JetBrainsMono Nerd Font",
+            font_family = "Maple Mono NF",
             font_size = 10,
             height = 22,
             gradients = true,

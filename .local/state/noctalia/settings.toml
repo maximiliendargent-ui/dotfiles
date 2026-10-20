@@ -125,13 +125,13 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-2em38y.jpg"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-2em38y.jpg"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-ym73rd.jpg"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-2em38y.jpg"
 
 [widget.session]
 enabled = false

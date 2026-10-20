@@ -217,7 +217,7 @@ ShellRoot {
             text: folder.count > 0 ? folder.get(list.currentIndex, "fileName") : "Aucune image dans ~/Pictures/Wallpapers"
             color: "white"
             font.pixelSize: 16
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: "Maple Mono NF"
         }
 
         // Rappel des touches
@@ -229,7 +229,7 @@ ShellRoot {
             color: "white"
             opacity: 0.55
             font.pixelSize: 13
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: "Maple Mono NF"
         }
     }
 }

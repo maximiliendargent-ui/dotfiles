@@ -15,7 +15,7 @@ ShellRoot {
 
         // Réglages
         readonly property string home: Quickshell.env("HOME")
-        readonly property string fontName: "JetBrainsMono Nerd Font"
+        readonly property string fontName: "Maple Mono NF"
         readonly property int boxWidth: 420
         readonly property int rowH: 42
         readonly property int maxRows: 18

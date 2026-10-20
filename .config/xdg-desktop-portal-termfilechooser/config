@@ -1,0 +1,6 @@
+[filechooser]
+cmd=yazi-wrapper.sh
+default_dir=$HOME
+env=TERMCMD=ghostty --class=dev.yazi --background-opacity=1 --keybind=ctrl+v=unbind --keybind=ctrl+shift+n=unbind --keybind=ctrl+tab=unbind -e
+open_mode=suggested
+save_mode=last

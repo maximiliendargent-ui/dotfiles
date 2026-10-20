@@ -12,7 +12,7 @@ ShellRoot {
     component Label: Text {
         property var c
         color: c.on_surface
-        font.family: "JetBrainsMono Nerd Font"
+        font.family: "Maple Mono NF"
         font.pixelSize: 13
     }
 
@@ -27,7 +27,7 @@ ShellRoot {
             anchors.centerIn: parent
             text: parent.label
             color: parent.fg
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: "Maple Mono NF"
             font.pixelSize: 11
             font.bold: true
         }
@@ -49,7 +49,7 @@ ShellRoot {
             anchors.centerIn: parent
             text: btn.label
             color: btn.fg
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: "Maple Mono NF"
             font.pixelSize: 13
             font.bold: true
         }
@@ -77,7 +77,7 @@ ShellRoot {
             anchors { left: parent.left; leftMargin: 12; verticalCenter: parent.verticalCenter }
             text: ""
             color: field.c.on_surface_variant
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: "Maple Mono NF"
         }
         TextInput {
             id: input
@@ -85,7 +85,7 @@ ShellRoot {
             verticalAlignment: TextInput.AlignVCenter
             color: field.c.on_surface
             selectionColor: field.c.primary
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: "Maple Mono NF"
             font.pixelSize: 14
             clip: true
             Keys.onPressed: event => field.keyPressed(event)
@@ -114,7 +114,7 @@ ShellRoot {
             anchors.centerIn: parent
             text: tab.label
             color: tab.active ? tab.c.primary : tab.c.on_surface_variant
-            font.family: "JetBrainsMono Nerd Font"
+            font.family: "Maple Mono NF"
             font.pixelSize: 14
             font.bold: tab.active
         }
@@ -904,7 +904,7 @@ ShellRoot {
                                 visible: thumb.status !== Image.Ready
                                 text: ""
                                 color: win.c.on_surface_variant
-                                font.family: "JetBrainsMono Nerd Font"
+                                font.family: "Maple Mono NF"
                                 font.pixelSize: 36
                             }
                             Pill {
@@ -983,7 +983,7 @@ ShellRoot {
                                     anchors.centerIn: parent
                                     text: ""
                                     color: win.c.on_surface_variant
-                                    font.family: "JetBrainsMono Nerd Font"
+                                    font.family: "Maple Mono NF"
                                     font.pixelSize: 15
                                 }
                                 MouseArea {
@@ -1180,7 +1180,7 @@ ShellRoot {
                         wrapMode: Text.Wrap
                         color: win.c.on_surface
                         linkColor: win.c.primary
-                        font.family: "JetBrainsMono Nerd Font"
+                        font.family: "Maple Mono NF"
                         font.pixelSize: 13
                         onLinkActivated: link => Qt.openUrlExternally(link)
                         MouseArea {

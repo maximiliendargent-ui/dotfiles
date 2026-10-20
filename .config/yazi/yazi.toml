@@ -3,6 +3,7 @@
 [mgr]
 sort_by  = "natural"  # fichier2 avant fichier10
 linemode = "details"  # défini dans init.lua
+ratio    = [ 1, 4, 0 ] # volet de navigation, liste, pas d'aperçu (Alt + P l'affiche)
 
 # Entrée ouvre le texte dans l'appli par défaut (xdg-open) plutôt que dans $EDITOR au terminal.
 [open]

@@ -7,3 +7,4 @@ theme = noctalia
 keybind = ctrl+shift+c=copy_to_clipboard:plain
 keybind = performable:ctrl+v=paste_from_clipboard
 confirm-close-surface = false
+font-family = "Maple Mono NF"

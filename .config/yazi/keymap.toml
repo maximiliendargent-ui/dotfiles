@@ -31,4 +31,7 @@ prepend_keymap = [
 	{ on = "<C-t>",   run = "tab_create --current",    desc = "Nouvel onglet" },
 	{ on = "<C-w>",   run = "close",                   desc = "Fermer l'onglet" },
 	{ on = "<C-Tab>", run = "tab_switch 1 --relative", desc = "Onglet suivant" },
+
+	# Affichage
+	{ on = "<A-p>", run = "plugin preview-toggle", desc = "Volet de visualisation" },
 ]

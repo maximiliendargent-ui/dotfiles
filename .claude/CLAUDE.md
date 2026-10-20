@@ -69,7 +69,8 @@ avant de modifier quelque chose.
   physique à cause de l'AZERTY : 1..9 → `code:10`..`code:18`, 0 → `code:19`, Moins → `code:20`,
   Égal → `code:21`. Ne pas changer Super + E, T, Z, W, C, F.
 - Les applis sont lancées avec le préfixe `uwsm app -- `.
-- Clavier : `kb_options = "caps:shiftlock"` dans `inputs.lua` (Verr. Maj agit sur toutes les touches, comme sous Windows).
+- Clavier : **pas** de `caps:shiftlock` dans `inputs.lua` (Verr. Maj façon Windows) : appuyer sur Verr. Maj
+  pendant Deadlock fait planter le client Steam et fige le jeu (2026-10-20). Ne pas le remettre.
 - Environnement de session : `~/.config/uwsm/env` (variables NVIDIA, `QT_QPA_PLATFORMTHEME=qt6ct`) et
   `env-hyprland` (sans `SDL_VIDEODRIVER` : le vieux SDL2 de certains jeux plante sur une liste) ; une modification demande de se déconnecter/reconnecter.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
@@ -124,6 +125,8 @@ avant de modifier quelque chose.
 
 ## Mes outils perso
 
+- `~/Config/` : raccourcis (liens symboliques) vers tous les dossiers de config modifiables, avec un
+  `README.md` qui explique chacun. Mettre à jour ses liens et son README quand une config est ajoutée ou déplacée.
 - `~/.config/bureau.code-workspace` : configs du bureau dans VS Code (fichiers générés en lecture seule), ouvert
   sur l'espace 2 à la connexion par `autostart.lua`.
 - `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j` (Hyprland seulement).
@@ -180,6 +183,8 @@ avant de modifier quelque chose.
   `net.local.yazi.desktop` ouvre les dossiers (`inode/directory`) et sert d'entrée de menu, en fenêtre
   normale (classe `dev.yazi.tuile` par `YAZI_CLASS`, hors de la règle flottante) ; l'entrée « Yazi File Manager » du
   paquet est masquée par `~/.local/share/applications/yazi.desktop`. Dolphin reste installé (« Afficher dans le dossier » des applis l'appelle encore).
+  Le sélecteur de fichiers des applis (« Ouvrir… ») est yazi via `xdg-desktop-portal-termfilechooser`
+  (`~/.config/xdg-desktop-portal-termfilechooser/config`, même fenêtre Ghostty que `yazi-open`).
 - Page d'accueil et nouveaux onglets de Firefox et Zen : `~/.config/startpage/index.html` (accueil
   déclaré dans le `user.js` de chaque profil ; nouveaux onglets par `autoconfig.js` + `newtab.cfg`,
   sources dans `~/.config/startpage/newtab/`, copiés dans `/usr/lib/firefox` et `/opt/zen-browser-bin`,

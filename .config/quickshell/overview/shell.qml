@@ -20,7 +20,7 @@ ShellRoot {
 
     // Réglages
     readonly property string home: Quickshell.env("HOME")
-    readonly property string fontName: "JetBrainsMono Nerd Font"
+    readonly property string fontName: "Maple Mono NF"
     readonly property int count: 9      // espaces affichés
     readonly property int columns: 3
     readonly property int margin: 60    // autour de la grille
@@ -46,21 +46,31 @@ ShellRoot {
     readonly property int currentWs:
         onHyprland && Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id : 1
 
+    // Espace gaming : barre de Noctalia masquée (elle ne ressort plus au bord gauche), réaffichée en le quittant
+    readonly property bool onGaming:
+        onHyprland && !!Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.name === "gaming"
+    onOnGamingChanged: Quickshell.execDetached(["noctalia", "msg", onGaming ? "bar-hide" : "bar-show"])
+
     function show() {
         if (onHyprland) Hyprland.refreshToplevels()
         open = true
     }
 
-    // Le coin ne réagit pas par-dessus une fenêtre en plein écran (jeux, vidéos)
+    // Coin et bords inactifs par-dessus une fenêtre en plein écran (vidéos) et sur l'espace gaming
+    function hotZonesOff() {
+        const ws = onHyprland ? Hyprland.focusedWorkspace : null
+        return onGaming || (!!ws && ws.hasFullscreen)
+    }
+
     function cornerHit() {
-        if (onHyprland && Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.hasFullscreen) return
+        if (hotZonesOff()) return
         show()
     }
 
     // Bords actifs : ouvrent un panneau de Noctalia, refermé quand la souris en sort
-    // (noctalia-panel-hover ; même exception pour le plein écran)
+    // (noctalia-panel-hover ; mêmes exceptions que le coin)
     function edgeHit(panel) {
-        if (onHyprland && Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.hasFullscreen) return
+        if (hotZonesOff()) return
         Quickshell.execDetached([home + "/.local/bin/noctalia-panel-hover", panel])
     }
 
