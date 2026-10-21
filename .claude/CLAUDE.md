@@ -117,6 +117,10 @@ avant de modifier quelque chose.
 - Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
   seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
 - Agent Polkit de Noctalia activé (`polkit_agent = true`).
+- Écran de verrouillage : widgets de Noctalia (horloge dans la couleur principale, météo, musique au-dessus du
+  mot de passe, bureau flouté ; `[lockscreen_widgets]` et `[lockscreen]` de `settings.toml`, éditeur :
+  `noctalia msg lockscreen-widgets-edit`). Panneaux arrondis et en verre (`corner_radius_scale = 1.0`,
+  `transparency_mode = "glass"`), alors que la barre et les fenêtres restent carrées.
 - Plugins activés (gérés dans la fenêtre Manager, enregistrés dans `settings.toml`) :
   `noctalia/wallhaven`, `yuuto/arch-updater` (compteur de mises à jour dans la barre, mise à jour en
   arrière-plan sans confirmation, mot de passe par Polkit). Leurs panneaux sont flottants en haut au centre
@@ -151,7 +155,7 @@ avant de modifier quelque chose.
   mises à jour (pacman, AUR, Flatpak), notification avec bouton « Mettre à jour » qui déclenche
   `noctalia msg plugin yuuto/arch-updater:service all update_background` (mot de passe par Polkit).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
-  (Super seul). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). L'entrée
+  (Super seul, Super + Espace ; le lanceur de Noctalia ne sert plus qu'aux emojis). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). L'entrée
   Manager ouvre la fenêtre Manager (paquets et plugins). Update = `paru -Syu --noconfirm` + `flatpak update -y`
   (snapshots via `snap-pac`). Applis triées par usage : compteur du menu
   (`~/.local/state/quickshell-menu/usage.json`) + celui de Noctalia (`usage_counts.json`).

@@ -4,7 +4,6 @@ config_version = 15
 background_opacity = 0.0
 capsule = true
 capsule_fill = "on_secondary"
-capsule_radius = 0
 center = [ "workspaces", "clock", "wallhaven", "claude", "widget" ]
 color = "primary"
 compositor_blur = false
@@ -20,29 +19,53 @@ smart_auto_hide = true
 start = []
 
 [control_center]
-hidden_tabs = [ "power", "notifications" ]
+hidden_tabs = [ "monitor", "power", "notifications" ]
+show_session_button = false
 
     [[control_center.shortcuts]]
     type = "nightlight"
 
-    [[control_center.shortcuts]]
-    type = "power_profile"
-
 [dock]
+enabled = false
 launcher_position = "start"
 
 [location]
 auto_locate = true
 
+[lockscreen]
+blur_intensity = 0.69999999999999996
+blurred_desktop = true
+
 [lockscreen_widgets]
-enabled = false
+enabled = true
 schema_version = 2
-widget_order = [ "lockscreen-login-box@WAYLAND-1", "lockscreen-login-box@HDMI-A-1" ]
+widget_order = [
+    "lockscreen-login-box@WAYLAND-1",
+    "lockscreen-clock@HDMI-A-1",
+    "lockscreen-weather@HDMI-A-1",
+    "lockscreen-media@HDMI-A-1",
+    "lockscreen-login-box@HDMI-A-1"
+]
 
     [lockscreen_widgets.grid]
     cell_size = 16
     major_interval = 4
     visible = true
+
+    [lockscreen_widgets.widget."lockscreen-clock@HDMI-A-1"]
+    box_height = 260.0
+    box_width = 900.0
+    cx = 960.0
+    cy = 340.0
+    output = "HDMI-A-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "clock"
+
+        [lockscreen_widgets.widget."lockscreen-clock@HDMI-A-1".settings]
+        clock_style = "digital"
+        color = "primary"
 
     [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
     box_height = 196.0
@@ -67,13 +90,14 @@ widget_order = [ "lockscreen-login-box@WAYLAND-1", "lockscreen-login-box@HDMI-A-
         show_keyboard_layout = true
         show_login_button = true
         show_media = true
+        show_password_reveal = true
         show_session_buttons = true
         show_unlock_hint = true
         show_weather = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1"]
     box_height = 196.0
-    box_width = 608.0
+    box_width = 720.0
     cx = 320.0
     cy = 178.0
     output = "WAYLAND-1"
@@ -94,9 +118,32 @@ widget_order = [ "lockscreen-login-box@WAYLAND-1", "lockscreen-login-box@HDMI-A-
         show_keyboard_layout = true
         show_login_button = true
         show_media = true
+        show_password_reveal = true
         show_session_buttons = true
         show_unlock_hint = true
         show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-media@HDMI-A-1"]
+    box_height = 130.0
+    box_width = 560.0
+    cx = 960.0
+    cy = 660.0
+    output = "HDMI-A-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "media_player"
+
+    [lockscreen_widgets.widget."lockscreen-weather@HDMI-A-1"]
+    box_height = 90.0
+    box_width = 420.0
+    cx = 960.0
+    cy = 520.0
+    output = "HDMI-A-1"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "weather"
 
 [plugin_settings."noctalia/mpvpaper"]
 video_directory = "/home/maximilien/Videos/Wallpapers"
@@ -115,7 +162,11 @@ update_mode = "background"
 enabled = [ "noctalia/wallhaven", "yuuto/arch-updater" ]
 
 [shell]
-corner_radius_scale = 0.0
+corner_radius_scale = 1.0
+popup_shadows = true
+
+    [shell.panel]
+    transparency_mode = "glass"
 
 [theme]
 builtin = "Noctalia"
@@ -125,13 +176,13 @@ source = "wallpaper"
 wallpaper_scheme = "m3-content"
 
 [wallpaper.default]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-7je5x3.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zxyy5w.png"
 
 [wallpaper.last]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-7je5x3.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zxyy5w.png"
 
 [wallpaper.monitors.HDMI-A-1]
-path = "/home/maximilien/Pictures/Wallpapers/wallhaven-7je5x3.png"
+path = "/home/maximilien/Pictures/Wallpapers/wallhaven-zxyy5w.png"
 
 [widget.session]
 enabled = false

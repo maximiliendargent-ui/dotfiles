@@ -11,8 +11,8 @@ local gaps_off = true
 ---- LANCEUR ----
 -----------------
 hl.bind("SUPER + SUPER_L",     hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/menu-toggle"), { release = true, description = "Lanceur: Menu (appui seul sur Super)" })
-hl.bind("SUPER + Space",       hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"), { description = "Lanceur: Ouvrir le lanceur" })
-hl.bind("SUPER + ALT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle launcher"), { description = "Lanceur: Ouvrir le lanceur (applications)" })
+hl.bind("SUPER + Space",       hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/menu-toggle"), { description = "Lanceur: Ouvrir le lanceur" })
+hl.bind("SUPER + ALT + Space", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/menu-toggle"), { description = "Lanceur: Ouvrir le lanceur (applications)" })
 hl.bind("SUPER + CTRL + E",    hl.dsp.exec_cmd("noctalia msg panel-toggle launcher /emo"), { description = "Lanceur: Emojis" })
 hl.bind("SUPER + Period",      hl.dsp.exec_cmd("noctalia msg panel-toggle launcher /emo"), { description = "Lanceur: Emojis" })
 hl.bind("SUPER + K",           hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.keybinds -e " .. os.getenv("HOME") .. "/.local/bin/hypr-keybinds"), { description = "Lanceur: Aide des raccourcis" })
@@ -185,7 +185,6 @@ hl.bind("SUPER + CTRL + V",    hl.dsp.exec_cmd("noctalia msg panel-toggle clipbo
 ---------------
 hl.bind("SUPER + CTRL + Space",         hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/wallpicker-toggle"), { description = "Style: Carrousel de fonds d'écran" })
 hl.bind("SUPER + SHIFT + W",            hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/wallpicker-toggle"), { description = "Style: Carrousel de fonds d'écran" })
-hl.bind("SUPER + CTRL + SHIFT + Space", hl.dsp.exec_cmd("noctalia msg panel-toggle wallpaper"), { description = "Style: Sélecteur de fonds d'écran Noctalia" })
 hl.bind("SUPER + BackSpace", function()
     hl.dispatch(hl.dsp.window.set_prop({ prop = "opaque", value = "toggle" }))
 end, { description = "Style: Transparence de la fenêtre" })

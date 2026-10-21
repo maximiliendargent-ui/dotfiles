@@ -235,7 +235,6 @@ ShellRoot {
             // Actions et style
             { name: "Style", glyph: "", children: [
                 { name: "Wallpaper carousel", glyph: "", run: () => run([home + "/.local/bin/wallpicker-toggle"]) },
-                { name: "Wallpaper panel", glyph: "", run: () => msg("panel-toggle", "wallpaper") },
                 { name: "Hyprland look", glyph: "", run: () => edit(home + "/.config/hypr/config/decorations.lua") }
             ] },
             // Réglages : Setup, Settings et System réunis, en sous-sections
