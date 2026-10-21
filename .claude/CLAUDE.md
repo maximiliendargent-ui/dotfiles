@@ -138,7 +138,8 @@ avant de modifier quelque chose.
 - **shell-maison** (en construction) : shell de bureau entièrement en Quickshell pour remplacer Noctalia morceau par
   morceau, dépôt séparé `~/Projects/shell-maison` (GitHub `shell-maison`, privé), lié dans
   `~/.config/quickshell/shell-maison`, lancé par la session « Hyprland (Maison) » (à la main : `qs -c shell-maison`). Composants : île (centre de
-  contrôle et session), barre. Le bureau stable reste celui de ce fichier.
+  contrôle, session, historique des notifications), barre, notifications (bulles, service repris à Noctalia au
+  démarrage), OSD du volume. Le bureau stable reste celui de ce fichier.
 - `~/.config/bureau.code-workspace` : configs du bureau dans VS Code (fichiers générés en lecture seule), ouvert
   sur l'espace 2 à la connexion par `autostart.lua`.
 - `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j` (Hyprland seulement).
