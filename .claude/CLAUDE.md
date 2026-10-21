@@ -131,6 +131,10 @@ avant de modifier quelque chose.
 
 - `~/Config/` : raccourcis (liens symboliques) vers tous les dossiers de config modifiables, avec un
   `README.md` qui explique chacun. Mettre à jour ses liens et son README quand une config est ajoutée ou déplacée.
+- **shell-maison** (en construction) : shell de bureau entièrement en Quickshell pour remplacer Noctalia morceau par
+  morceau, dépôt séparé `~/Projects/shell-maison` (GitHub `shell-maison`, privé), lié dans
+  `~/.config/quickshell/shell-maison`, lancé à la main par `qs -c shell-maison`. Composants : île (centre de
+  contrôle et session), barre. Le bureau stable reste celui de ce fichier.
 - `~/.config/bureau.code-workspace` : configs du bureau dans VS Code (fichiers générés en lecture seule), ouvert
   sur l'espace 2 à la connexion par `autostart.lua`.
 - `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j` (Hyprland seulement).
