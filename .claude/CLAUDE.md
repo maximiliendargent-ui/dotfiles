@@ -38,6 +38,10 @@ avant de modifier quelque chose.
   avant de démarrer). **KDE Plasma** est une session secondaire (jeux / secours).
 - **« Niri (Noctalia) »** : session niri via UWSM, calquée sur Hyprland
   (`/usr/share/wayland-sessions/niri-uwsm-clean.desktop`, copie source dans `~/.config/niri/`).
+- **« Hyprland (Maison) »** : même config Hyprland + le shell en construction `~/Projects/shell-maison`
+  (`/usr/share/wayland-sessions/hyprland-maison-uwsm-clean.desktop`, `uwsm start -D Hyprland:maison`, qui lit
+  `~/.config/uwsm/env-maison` → `SHELL_MAISON=1` ; `hyprland.lua` charge alors `hypr/maison.lua` du dépôt, et la
+  vue d'ensemble laisse les bords du haut à l'île).
 - Fond d'écran aléatoire à chaque connexion : côté greeter, `/usr/local/bin/noctalia-greeter-random-wallpaper`
   (commande de `/etc/greetd/config.toml`, hors dépôt) ; côté bureau, `noctalia msg wallpaper-random` au
   démarrage d'Hyprland (`autostart.lua`), de niri (`config.kdl`) et de KDE (`kde-noctalia-start`).
@@ -133,7 +137,7 @@ avant de modifier quelque chose.
   `README.md` qui explique chacun. Mettre à jour ses liens et son README quand une config est ajoutée ou déplacée.
 - **shell-maison** (en construction) : shell de bureau entièrement en Quickshell pour remplacer Noctalia morceau par
   morceau, dépôt séparé `~/Projects/shell-maison` (GitHub `shell-maison`, privé), lié dans
-  `~/.config/quickshell/shell-maison`, lancé à la main par `qs -c shell-maison`. Composants : île (centre de
+  `~/.config/quickshell/shell-maison`, lancé par la session « Hyprland (Maison) » (à la main : `qs -c shell-maison`). Composants : île (centre de
   contrôle et session), barre. Le bureau stable reste celui de ce fichier.
 - `~/.config/bureau.code-workspace` : configs du bureau dans VS Code (fichiers générés en lecture seule), ouvert
   sur l'espace 2 à la connexion par `autostart.lua`.

@@ -41,6 +41,9 @@ ShellRoot {
 
     // Hors d'Hyprland (essais) : fenêtres lues dans le fichier JSON désigné par OVERVIEW_MOCK
     readonly property bool onHyprland: !!Quickshell.env("HYPRLAND_INSTANCE_SIGNATURE")
+    // Session « Hyprland (Maison) » (SHELL_MAISON, ~/.config/uwsm/env-maison) : barre et bords du haut gérés par
+    // ~/Projects/shell-maison ; ici, seul le coin haut gauche reste
+    readonly property bool maison: !!Quickshell.env("SHELL_MAISON")
     property var mock: []
 
     readonly property int currentWs:
@@ -49,7 +52,7 @@ ShellRoot {
     // Espace gaming : barre de Noctalia masquée (elle ne ressort plus au bord gauche), réaffichée en le quittant
     readonly property bool onGaming:
         onHyprland && !!Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.name === "gaming"
-    onOnGamingChanged: Quickshell.execDetached(["noctalia", "msg", onGaming ? "bar-hide" : "bar-show"])
+    onOnGamingChanged: if (!maison) Quickshell.execDetached(["noctalia", "msg", onGaming ? "bar-hide" : "bar-show"])
 
     function show() {
         if (onHyprland) Hyprland.refreshToplevels()
@@ -171,7 +174,7 @@ ShellRoot {
     // ---- Coin actif : 1 pixel en haut à droite, ouvre le menu de session ----
 
     PanelWindow {
-        visible: !root.open
+        visible: !root.open && !root.maison
         anchors { top: true; right: true }
         implicitWidth: 1
         implicitHeight: 1
@@ -190,7 +193,7 @@ ShellRoot {
     // ---- Bord actif : 1 pixel de haut au milieu du bord haut, ouvre le centre de contrôle ----
 
     PanelWindow {
-        visible: !root.open
+        visible: !root.open && !root.maison
         anchors { top: true }
         implicitWidth: 400
         implicitHeight: 1

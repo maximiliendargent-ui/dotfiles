@@ -1,0 +1,3 @@
+# Session « Hyprland (Maison) » (uwsm start -D Hyprland:maison) : shell en construction ~/Projects/shell-maison
+# à la place de la barre et des panneaux de Noctalia. Lu par hyprland.lua et la vue d'ensemble.
+export SHELL_MAISON=1
