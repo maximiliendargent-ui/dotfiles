@@ -111,6 +111,11 @@ ShellRoot {
         // Laisse le menu disparaître avant d'agir (captures, pipette…)
         function runLater(cmd) { run(["sh", "-c", "sleep 0.3; " + cmd]) }
         function msg(...args) { run(["noctalia", "msg"].concat(args)) }
+        // Panneaux du centre de contrôle : l'île de shell-maison dans la session Maison (island-open), Noctalia sinon
+        function panel(tab, noctaliaPanel) {
+            if (Quickshell.env("SHELL_MAISON")) run([home + "/Projects/shell-maison/bin/island-open", tab])
+            else msg("panel-toggle", "control-center", noctaliaPanel)
+        }
         function app(...args) { run(["uwsm", "app", "--"].concat(args)) }
         function url(u) { run(["xdg-open", u]) }
         function edit(p) { app("code", p) }
@@ -240,9 +245,9 @@ ShellRoot {
             // Réglages : Setup, Settings et System réunis, en sous-sections
             { name: "System", glyph: "\uf013", children: [
                 { name: "Connections", glyph: "\uf1eb", children: [
-                    { name: "Audio", glyph: "\uf028", run: () => msg("panel-toggle", "control-center", "audio") },
-                    { name: "Wi-Fi", glyph: "\uf1eb", run: () => msg("panel-toggle", "control-center", "network") },
-                    { name: "Bluetooth", glyph: "\uf293", run: () => msg("panel-toggle", "control-center", "bluetooth") }
+                    { name: "Audio", glyph: "\uf028", run: () => panel("son", "audio") },
+                    { name: "Wi-Fi", glyph: "\uf1eb", run: () => panel("wifi", "network") },
+                    { name: "Bluetooth", glyph: "\uf293", run: () => panel("bluetooth", "bluetooth") }
                 ] },
                 { name: "Settings", glyph: "\uf1de", apps: () => systemApps("Settings"), children: [
                     { name: "Keybindings editor", glyph: "\uf11c", run: () => app("ghostty", "--class=dev.keybinds", "-e",

@@ -141,8 +141,9 @@ avant de modifier quelque chose.
   contrôle, session, notifications, Wi-Fi, Bluetooth, météo, calendrier), barre, notifications, OSD du volume, agent
   Polkit, verrouillage (pile PAM `pam/lock` du dépôt), veille (hypridle), lumière nocturne (hyprsunset), fond d'écran et
   couleurs (`bin/fond` : awww + matugen, `couleurs/matugen.toml`, mêmes fichiers de sortie que Noctalia ; le carrousel
-  l'appelle quand `SHELL_MAISON=1`), emojis, presse-papiers (cliphist). Noctalia n'y garde que ses plugins
-  (`noctalia/noctalia/zz-maison.toml`). Le bureau stable reste celui de ce fichier.
+  l'appelle quand `SHELL_MAISON=1`), emojis, presse-papiers (cliphist). Noctalia n'y est pas lancé (`autostart.lua`
+  le saute quand `SHELL_MAISON` est défini) ; Wallhaven (`Wallhaven.qml`), captures (`bin/capture` : grim, slurp,
+  satty) et mises à jour (`bin/mises-a-jour`, aussi appelé par `auto-update`) sont dans le dépôt. Le bureau stable reste celui de ce fichier.
 - `~/.config/bureau.code-workspace` : configs du bureau dans VS Code (fichiers générés en lecture seule), ouvert
   sur l'espace 2 à la connexion par `autostart.lua`.
 - `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j` (Hyprland seulement).

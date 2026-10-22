@@ -20,4 +20,7 @@ n=$({ [[ -n $repo ]] && echo "$repo"; paru -Qua; flatpak remote-ls --updates --c
 # -t 0 : la notification reste jusqu'à ce qu'on y réponde ou qu'on la ferme.
 choix=$(notify-send -a "Mises à jour" -i system-software-update -t 0 \
     -A update="Mettre à jour" "Mises à jour disponibles" "$n paquet(s) à mettre à jour.")
-[[ $choix == update ]] && exec noctalia msg plugin yuuto/arch-updater:service all update_background
+[[ $choix == update ]] || exit 0
+# Session « Hyprland (Maison) » : pas de Noctalia, mise à jour dans Ghostty (shell-maison)
+[[ -n $SHELL_MAISON ]] && exec ~/Projects/shell-maison/bin/mises-a-jour
+exec noctalia msg plugin yuuto/arch-updater:service all update_background
