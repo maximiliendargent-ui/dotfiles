@@ -13,7 +13,7 @@ enable_builtin_templates = true
 builtin_ids = ["ghostty", "btop", "cava", "gtk3", "gtk4", "kcolorscheme", "qt"]
 
 enable_community_templates = true
-community_ids = ["vscode", "zen-browser", "pywalfox", "discord", "papirus-icons", "yazi"]
+community_ids = ["vscode", "zen-browser", "pywalfox", "discord", "papirus-icons"]
 
 [shell.screenshot]
 directory = "/home/maximilien/Pictures/Screenshots"

@@ -105,7 +105,7 @@ avant de modifier quelque chose.
   `caffeine-toggle`, `settings-toggle`, `session lock`, `screenshot-region`, `greeter-sync`.
 - Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe).
   Modèles actifs : `builtin_ids` (ghostty, btop, cava, gtk3, gtk4, kcolorscheme, qt), `community_ids`
-  (vscode, zen-browser, pywalfox, discord, papirus-icons, yazi) et quatre modèles perso (`hyprland_borders`,
+  (vscode, zen-browser, pywalfox, discord, papirus-icons) et quatre modèles perso (`hyprland_borders`,
   `niri_borders`, `menu_colors`, `startpage_colors`) : `hyprland_borders` (bordures, groupes et barre
   d'onglets ; `~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`),
   `niri_borders` (`templates/niri-borders.kdl` → `~/.config/niri/noctalia.kdl`) et `startpage_colors`
@@ -138,8 +138,11 @@ avant de modifier quelque chose.
 - **shell-maison** (en construction) : shell de bureau entièrement en Quickshell pour remplacer Noctalia morceau par
   morceau, dépôt séparé `~/Projects/shell-maison` (GitHub `shell-maison`, privé), lié dans
   `~/.config/quickshell/shell-maison`, lancé par la session « Hyprland (Maison) » (à la main : `qs -c shell-maison`). Composants : île (centre de
-  contrôle, session, historique des notifications), barre, notifications (bulles, service repris à Noctalia au
-  démarrage), OSD du volume. Le bureau stable reste celui de ce fichier.
+  contrôle, session, notifications, Wi-Fi, Bluetooth, météo, calendrier), barre, notifications, OSD du volume, agent
+  Polkit, verrouillage (pile PAM `pam/lock` du dépôt), veille (hypridle), lumière nocturne (hyprsunset), fond d'écran et
+  couleurs (`bin/fond` : awww + matugen, `couleurs/matugen.toml`, mêmes fichiers de sortie que Noctalia ; le carrousel
+  l'appelle quand `SHELL_MAISON=1`), emojis, presse-papiers (cliphist). Noctalia n'y garde que ses plugins
+  (`noctalia/noctalia/zz-maison.toml`). Le bureau stable reste celui de ce fichier.
 - `~/.config/bureau.code-workspace` : configs du bureau dans VS Code (fichiers générés en lecture seule), ouvert
   sur l'espace 2 à la connexion par `autostart.lua`.
 - `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j` (Hyprland seulement).

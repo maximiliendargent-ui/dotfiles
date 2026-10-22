@@ -30,10 +30,14 @@ ShellRoot {
         WlrLayershell.namespace: "wallpicker"
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
+        // Session « Hyprland (Maison) » : fond et couleurs par shell-maison (bin/fond) au lieu de Noctalia
+        readonly property bool maison: Quickshell.env("SHELL_MAISON") === "1"
+        readonly property string fond: Quickshell.env("HOME") + "/Projects/shell-maison/bin/fond"
+
         function apply(path) {
             if (!ready || !path || path === currentPath) return
             currentPath = path
-            Quickshell.execDetached(["noctalia", "msg", "wallpaper-set", path])
+            Quickshell.execDetached(win.maison ? [win.fond, path] : ["noctalia", "msg", "wallpaper-set", path])
         }
 
         // Applique la carte sélectionnée sans attendre, puis ferme le carrousel
@@ -71,7 +75,7 @@ ShellRoot {
 
         // Récupère le fond d'écran actuel pour le présélectionner
         Process {
-            command: ["noctalia", "msg", "wallpaper-get"]
+            command: win.maison ? [win.fond, "get"] : ["noctalia", "msg", "wallpaper-get"]
             running: true
             stdout: StdioCollector {
                 onStreamFinished: {
