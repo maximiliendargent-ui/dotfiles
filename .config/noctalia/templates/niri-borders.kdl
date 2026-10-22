@@ -1,7 +1,0 @@
-// Généré par Noctalia à partir du fond d'écran : ne pas modifier à la main
-layout {
-    border {
-        active-gradient from="#{{colors.primary.default.hex_stripped}}" to="#{{colors.tertiary.default.hex_stripped}}" angle=45
-        inactive-color "#{{colors.outline.default.hex_stripped}}aa"
-    }
-}

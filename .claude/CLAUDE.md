@@ -30,27 +30,21 @@ avant de modifier quelque chose.
 
 ## Sessions
 
-- Écran de connexion : **greetd + Noctalia Greeter** (config : `/etc/greetd/config.toml`,
-  `/var/lib/noctalia-greeter/greeter.toml`, clavier `be` et Verr. Num. activés, logo masqué par
-  `hide_logo = true` sous `[appearance]`).
-- Session principale : **« Hyprland (Noctalia) »**, via UWSM
-  (`/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop`, qui nettoie `graphical-session.target`
-  avant de démarrer). **KDE Plasma** est une session secondaire (jeux / secours).
-- **« Niri (Noctalia) »** : session niri via UWSM, calquée sur Hyprland
-  (`/usr/share/wayland-sessions/niri-uwsm-clean.desktop`, copie source dans `~/.config/niri/`).
-- **« Hyprland (Maison) »** : même config Hyprland + le shell en construction `~/Projects/shell-maison`
-  (`/usr/share/wayland-sessions/hyprland-maison-uwsm-clean.desktop`, `uwsm start -D Hyprland:maison`, qui lit
-  `~/.config/uwsm/env-maison` → `SHELL_MAISON=1` ; `hyprland.lua` charge alors `hypr/maison.lua` du dépôt, et la
-  vue d'ensemble laisse les bords du haut à l'île).
-- Fond d'écran aléatoire à chaque connexion : côté greeter, `/usr/local/bin/noctalia-greeter-random-wallpaper`
-  (commande de `/etc/greetd/config.toml`, hors dépôt) ; côté bureau, `noctalia msg wallpaper-random` au
-  démarrage d'Hyprland (`autostart.lua`), de niri (`config.kdl`) et de KDE (`kde-noctalia-start`).
+- Écran de connexion : **greetd + écran de shell-maison** (Quickshell dans un Hyprland minimal ; sources
+  `~/Projects/shell-maison/greeter/`, installées dans `/etc/greetd/shell-maison/` par
+  `sudo ~/Projects/shell-maison/greeter/installer`, qui règle `command` dans `/etc/greetd/config.toml`).
+  Sessions proposées : « Hyprland (Maison) » (défaut) et KDE Plasma ; fond au hasard flouté. Piège : greetd
+  colle les arguments de `Greetd.launch` dans un `sh -c` (passer la ligne Exec en un seul morceau) et il faut
+  `XDG_SESSION_TYPE=wayland` dans son env pour que `pam_kwallet5` déverrouille KWallet.
+- Session principale : **« Hyprland (Maison) »**, via UWSM
+  (`/usr/share/wayland-sessions/hyprland-maison-uwsm-clean.desktop`, qui nettoie `graphical-session.target`
+  avant `uwsm start -D Hyprland:maison`). **KDE Plasma** est une session secondaire (jeux / secours).
+- Noctalia et niri sont **désinstallés** (2026-10-22). La session KDE n'a pas été retouchée : elle lance
+  encore `~/.local/bin/kde-noctalia-start` (autostart `noctalia-kde.desktop`), qui ne trouve plus Noctalia.
 - `KillUserProcesses=yes` (`/etc/systemd/logind.conf.d/kill-user-processes.conf`).
 - KDE fait aussi le ménage au démarrage : `~/.config/plasma-workspace/env/cleanup-graphical-session.sh`.
-- KDE reprend le look et les raccourcis d'Hyprland, avec Noctalia comme shell :
-  `~/.local/bin/kde-noctalia-start` (autostart `noctalia-kde.desktop`), `~/.config/kwinrulesrc` (sans bordure,
-  sauf Ghostty qui garde sa barre de titre sur KDE),
-  `~/.config/kwinrc` (9 bureaux), `~/.config/kglobalshortcutsrc` + lanceurs
+- KDE reprend le look et les raccourcis d'Hyprland : `~/.config/kwinrulesrc` (sans bordure, sauf Ghostty
+  qui garde sa barre de titre sur KDE), `~/.config/kwinrc` (9 bureaux), `~/.config/kglobalshortcutsrc` + lanceurs
   `~/.local/share/applications/net.local.*.desktop`.
 - KWallet est le gestionnaire de secrets : déverrouillé via `pam_kwallet5` dans `/etc/pam.d/greetd`
   et `/usr/lib/pam_kwallet_init` lancé au démarrage d'Hyprland. gnome-keyring est masqué
@@ -60,7 +54,7 @@ avant de modifier quelque chose.
 
 - Entrée : `~/.config/hypr/hyprland.lua`, qui charge `~/.config/hypr/config/*.lua` :
   `animations`, `autostart`, `colors`, `decorations`, `environment`, `inputs`, `binds`, `misc`, `monitors`,
-  `windowrules`, `workspaces`, puis `noctalia_colors` (via `pcall`).
+  `windowrules`, `workspaces`, puis `noctalia_colors` (via `pcall` ; fichier généré par matugen, nom hérité de Noctalia).
 - Hyprland **recharge automatiquement** la config à l'enregistrement. Une erreur de syntaxe Lua empêche
   le rechargement et s'affiche en haut de l'écran : vérifie après chaque modification.
 - Définitions de l'API Lua : `/usr/share/hypr/stubs/hl.meta.lua` (les paramètres des `hl.dsp.*` n'y sont
@@ -79,6 +73,9 @@ avant de modifier quelque chose.
   `env-hyprland` (sans `SDL_VIDEODRIVER` : le vieux SDL2 de certains jeux plante sur une liste) ; une modification demande de se déconnecter/reconnecter.
 - Style : coins carrés (`rounding = 0`), espacements 5/10, bordures dont les couleurs suivent le fond
   d'écran (fichier généré `noctalia_colors.lua`).
+- `autostart.lua` lance shell-maison (`qs -c shell-maison`), hypridle, `awww-daemon` puis `bin/fond` (fond au
+  hasard), cliphist et la vue d'ensemble ; `binds.lua` appelle les scripts `bin/` du dépôt et
+  `qs -c shell-maison ipc call …`.
 - btop et cava : terminaux Ghostty en tuiles (classes `dev.btop` et `dev.cava`), à lancer à la main
   (plus de démarrage automatique depuis le 2026-10-07, pour limiter la chauffe du CPU).
 - L'espace `gaming` est réservé aux jeux (règles dans `windowrules.lua`) : il ne doit pas être `default`
@@ -86,73 +83,44 @@ avant de modifier quelque chose.
 - Mod Organizer 2 a sa propre règle dans `windowrules.lua` (flottant, exclu de la règle des jeux) : traité
   comme un jeu, il boucle avec Hyprland sur la taille de fenêtre et sature le CPU (100 °C jeu fermé).
 
-## niri (configuration en **KDL**)
+## shell-maison (shell de bureau en **Quickshell**)
 
-- `~/.config/niri/config.kdl` (apparence, règles de fenêtres, démarrage) inclut `binds.kdl` (raccourcis
-  repris de `binds.lua`, titres `"Section: texte"`) et `noctalia.kdl` (bordures, fichier généré).
-- niri recharge la config à l'enregistrement ; vérifier avec `niri validate`.
-- AZERTY : touches liées par leur symbole sans Maj (`ampersand`, `eacute`… pour 1, 2… ; `parenright` et
-  `minus` pour Moins et Égal). Super seul n'est pas liable : le menu est sur Super + D.
-- Même environnement qu'Hyprland (`~/.config/uwsm/env`) et même préfixe `uwsm app -- `.
-
-## Noctalia (shell, **v5** : réécrit en C++, plus basé sur Quickshell)
-
-- Config : `~/.config/noctalia/config.toml`. Les réglages faits dans l'interface sont dans
-  `~/.local/state/noctalia/settings.toml` et **l'emportent** sur `config.toml`.
-- Recharger : `noctalia msg config-reload`. Aide complète : `noctalia msg --help`.
-- Commandes utiles : `noctalia msg panel-toggle <launcher|control-center [audio|bluetooth|network|notifications]|clipboard|session|wallpaper>`,
-  `wallpaper-set <chemin>`, `wallpaper-get`, `templates-apply`, `bar-toggle`, `nightlight-toggle`,
-  `caffeine-toggle`, `settings-toggle`, `session lock`, `screenshot-region`, `greeter-sync`.
-- Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe).
-  Modèles actifs : `builtin_ids` (ghostty, btop, cava, gtk3, gtk4, kcolorscheme, qt), `community_ids`
-  (vscode, zen-browser, pywalfox, discord, papirus-icons) et quatre modèles perso (`hyprland_borders`,
-  `niri_borders`, `menu_colors`, `startpage_colors`) : `hyprland_borders` (bordures, groupes et barre
-  d'onglets ; `~/.config/noctalia/templates/hyprland-borders.lua` → `~/.config/hypr/config/noctalia_colors.lua`),
-  `niri_borders` (`templates/niri-borders.kdl` → `~/.config/niri/noctalia.kdl`) et `startpage_colors`
-  (`templates/startpage-colors.css` → `~/.config/startpage/colors.css`).
-- Le modèle `papirus-icons` copie Papirus dans `~/.local/share/icons` et colore les dossiers avec la
-  teinte Papirus la plus proche du fond d'écran ; `discord` écrit les thèmes de Vesktop
-  (`~/.config/vesktop/themes/`).
-- Barre **à gauche** (`position = "left"`, masquage intelligent `smart_auto_hide`, sans place réservée
-  `reserve_space = false`, dans `[bar.default]` de `settings.toml`). Panneaux flottants
-  façon Caelestia (`[shell.panel]` de `config.toml`) : lanceur en bas, centre de contrôle en haut au
-  centre, session en haut à droite, OSD à droite. Moniteurs `sysmon` (`cpu`, `ram`, `gpu`, `gpu-temp`) définis dans
-  `config.toml` mais retirés de la barre.
-- Fonds d'écran : `~/Pictures/Wallpapers`. Captures : copiées dans le presse-papiers, enregistrées
-  seulement sur demande (Ctrl + S), dans `~/Pictures/Screenshots`.
-- Agent Polkit de Noctalia activé (`polkit_agent = true`).
-- Écran de verrouillage : widgets de Noctalia (horloge dans la couleur principale, météo, musique au-dessus du
-  mot de passe, bureau flouté ; `[lockscreen_widgets]` et `[lockscreen]` de `settings.toml`, éditeur :
-  `noctalia msg lockscreen-widgets-edit`). Panneaux arrondis et en verre (`corner_radius_scale = 1.0`,
-  `transparency_mode = "glass"`), alors que la barre et les fenêtres restent carrées.
-- Plugins activés (gérés dans la fenêtre Manager, enregistrés dans `settings.toml`) :
-  `noctalia/wallhaven`, `yuuto/arch-updater` (compteur de mises à jour dans la barre, mise à jour en
-  arrière-plan sans confirmation, mot de passe par Polkit). Leurs panneaux sont flottants en haut au centre
-  (`<panneau>_placement = "floating"` et `_position = "top_center"` dans `[plugin_settings."…"]`) : attachés, ils
-  prendraient la transparence de la barre.
+- Dépôt séparé `~/Projects/shell-maison` (GitHub `shell-maison`, privé ; son `README.md` liste chaque composant),
+  lié dans `~/.config/quickshell/shell-maison`. Relancer : `qs -c shell-maison` (Quickshell recharge les `.qml`
+  modifiés tout seul).
+- Composants : barre à gauche masquée (espaces, heure, Wallhaven, Claude, mises à jour), île en haut au centre
+  (centre de contrôle, musique, son, système, Wi-Fi, Bluetooth, météo, calendrier, notifications, session),
+  bulles de notification, OSD du volume, agent Polkit, verrouillage (`Lock.qml`, pile PAM `pam/lock` du dépôt,
+  sans délai après un échec), veille (`hypr/hypridle.conf` : verrouillage à 10 min, écran éteint à 15 min),
+  lumière nocturne (hyprsunset) et veille bloquée (`systemd-inhibit`), emojis, presse-papiers (cliphist),
+  Wallhaven (`Wallhaven.qml`), captures (`bin/capture zone|ecran` : grim, slurp, satty ; Entrée copie,
+  Ctrl + S enregistre dans `~/Pictures/Screenshots`), mises à jour (`bin/mises-a-jour`).
+- Commandes : `qs -c shell-maison ipc call <cible> <fonction>` (`island toggle <onglet>`, `lock lock`,
+  `system nightlight|caffeine`, `bar toggle`, `wallhaven toggle`…). Essais sans risque :
+  `qs -c shell-maison ipc call lock test`, `ISLAND_TEST=<onglet>`, `BAR_TEST=1`,
+  `GREETER_TEST=1 qs -p greeter/shell.qml`.
+- Déconnexion : `uwsm stop` (repli `loginctl terminate-session` si la session n'est pas lancée par UWSM).
+- Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe) :
+  `bin/fond <image>` (ou sans argument : au hasard ; `fond get` : fond actuel) applique le fond avec **awww** puis
+  lance **matugen** (`couleurs/matugen.toml`, modèles dans `couleurs/modeles/`) : Ghostty, btop, cava, GTK 3/4,
+  schéma KDE `noctalia`, qt5/qt6, VS Code, Zen (`~/.cache/shell-maison/zen-browser/`), Pywalfox, Vesktop, dossiers
+  Papirus (en arrière-plan), bordures Hyprland (`noctalia_colors.lua`), menu (`colors.json`), page d'accueil
+  (`colors.css`). Pour changer ces couleurs, modifier le **modèle**, jamais le fichier généré.
+- Fonds d'écran : `~/Pictures/Wallpapers`.
 
 ## Mes outils perso
 
 - `~/Config/` : raccourcis (liens symboliques) vers tous les dossiers de config modifiables, avec un
   `README.md` qui explique chacun. Mettre à jour ses liens et son README quand une config est ajoutée ou déplacée.
-- **shell-maison** (en construction) : shell de bureau entièrement en Quickshell pour remplacer Noctalia morceau par
-  morceau, dépôt séparé `~/Projects/shell-maison` (GitHub `shell-maison`, privé), lié dans
-  `~/.config/quickshell/shell-maison`, lancé par la session « Hyprland (Maison) » (à la main : `qs -c shell-maison`). Composants : île (centre de
-  contrôle, session, notifications, Wi-Fi, Bluetooth, météo, calendrier), barre, notifications, OSD du volume, agent
-  Polkit, verrouillage (pile PAM `pam/lock` du dépôt), veille (hypridle), lumière nocturne (hyprsunset), fond d'écran et
-  couleurs (`bin/fond` : awww + matugen, `couleurs/matugen.toml`, mêmes fichiers de sortie que Noctalia ; le carrousel
-  l'appelle quand `SHELL_MAISON=1`), emojis, presse-papiers (cliphist). Noctalia n'y est pas lancé (`autostart.lua`
-  le saute quand `SHELL_MAISON` est défini) ; Wallhaven (`Wallhaven.qml`), captures (`bin/capture` : grim, slurp,
-  satty) et mises à jour (`bin/mises-a-jour`, aussi appelé par `auto-update`) sont dans le dépôt. Le bureau stable reste celui de ce fichier.
 - `~/.config/bureau.code-workspace` : configs du bureau dans VS Code (fichiers générés en lecture seule), ouvert
   sur l'espace 2 à la connexion par `autostart.lua`.
 - `~/.local/bin/hypr-keybinds` : aide des raccourcis (Super + K), lit `hyprctl binds -j` (Hyprland seulement).
 - `~/.local/share/keybind-editor/kbe` : éditeur de raccourcis (Super + Shift + K, Hyprland seulement).
 - Carrousel de fonds d'écran en **Quickshell 0.3.1** (QML) : `~/.config/quickshell/wallpicker/shell.qml`,
   lancé par `~/.local/bin/wallpicker-toggle` (Super + Ctrl + Espace et Super + Shift + W). Il applique le
-  fond via `noctalia msg wallpaper-set`.
-- Bouton **Claude** dans la barre Noctalia (`[widget.claude]` dans `config.toml`, icône
-  `~/.config/noctalia/icons/claude.svg`) : ouvre `claude` dans Ghostty, dans le dossier `~/.config`
+  fond via `bin/fond` de shell-maison.
+- Bouton **Claude** dans la barre de shell-maison (`Bar.qml`, icône `claude.svg` du dépôt) : ouvre `claude`
+  dans Ghostty, dans le dossier `~/.config`
   (pas `~`, pour lequel Claude Code redemande la confiance à chaque lancement).
 - `~/.local/bin/jackify` : lance Jackify (installateur de modpacks Wabbajack) depuis sa version extraite
   `~/Applications/Jackify-app` (ne pas renommer ce dossier) ; `Jackify.AppImage` est trop lente à se
@@ -165,24 +133,20 @@ avant de modifier quelque chose.
   `pkexec`, le démarrage suivant revient à Limine). Entrée Windows du menu Quickshell.
 - `~/.local/bin/code-wait` : `code --wait` sans les avertissements de `~/.config/code-flags.conf` (sert d'`EDITOR`).
 - `~/.local/bin/auto-update` : à l'ouverture de session (autostart `auto-update.desktop`), s'il y a des
-  mises à jour (pacman, AUR, Flatpak), notification avec bouton « Mettre à jour » qui déclenche
-  `noctalia msg plugin yuuto/arch-updater:service all update_background` (mot de passe par Polkit).
+  mises à jour (pacman, AUR, Flatpak), notification avec bouton « Mettre à jour » qui lance
+  `bin/mises-a-jour` de shell-maison (paru + Flatpak dans Ghostty).
 - Menu façon Omarchy en **Quickshell** : `~/.config/quickshell/menu/shell.qml`, lancé par `~/.local/bin/menu-toggle`
-  (Super seul, Super + Espace ; le lanceur de Noctalia ne sert plus qu'aux emojis). Couleurs via le modèle Noctalia `menu_colors` → `colors.json` (généré). L'entrée
-  Manager ouvre la fenêtre Manager (paquets et plugins). Update = `paru -Syu --noconfirm` + `flatpak update -y`
-  (snapshots via `snap-pac`). Applis triées par usage : compteur du menu
-  (`~/.local/state/quickshell-menu/usage.json`) + celui de Noctalia (`usage_counts.json`).
+  (Super seul, Super + Espace). Couleurs via le modèle matugen `menu_colors` → `colors.json` (généré). L'entrée
+  Manager ouvre la fenêtre Manager (paquets). Update = `paru -Syu --noconfirm` + `flatpak update -y`
+  (snapshots via `snap-pac`). Applis triées par usage : `~/.local/state/quickshell-menu/usage.json`.
 - Vue d'ensemble des espaces de travail en **Quickshell** (Hyprland) : `~/.config/quickshell/overview/shell.qml`,
-  lancée par `autostart.lua` (`qs -c overview`), coin actif en haut à gauche, couleurs du menu ; bords actifs : milieu du haut → centre de contrôle,
-  coin haut droit → session (via `~/.local/bin/noctalia-panel-hover`, refermé quand la souris sort) ; glisser une
+  lancée par `autostart.lua` (`qs -c overview`), coin actif en haut à gauche, couleurs du menu ; glisser une
   fenêtre sur un autre espace l'y envoie, glisser le numéro d'un espace sur un autre les échange. Bascule :
-  `qs -c overview ipc call overview toggle`. Sous KDE, même coin via KWin (`[Effect-overview]` dans `kwinrc`) ;
-  sous niri, coin natif.
-- Fenêtre **Manager** en Quickshell (paquets officiels + AUR, plugins Noctalia) :
+  `qs -c overview ipc call overview toggle`. Sous KDE, même coin via KWin (`[Effect-overview]` dans `kwinrc`).
+- Fenêtre **Manager** en Quickshell (paquets officiels + AUR) :
   `~/.config/quickshell/manager/shell.qml`, données via `~/.local/bin/manager-data` (JSON), ouverte par
-  `~/.local/bin/manager-open [packages|plugins] [add|installed]`. Un clic sur un plugin ouvre sa fiche
-  (README du catalogue, via `manager-data plugin-info`). Mots de passe via l'agent Polkit de
-  Noctalia (`pkexec`). Couleurs partagées avec le menu (`menu/colors.json`).
+  `~/.local/bin/manager-open [add|installed]`. Mots de passe via l'agent Polkit de shell-maison (`pkexec`).
+  Couleurs partagées avec le menu (`menu/colors.json`).
 
 ## Applis et thèmes
 
@@ -192,12 +156,12 @@ avant de modifier quelque chose.
 - Ghostty : `performable:ctrl+v=paste_from_clipboard` → Ctrl + V colle le texte ; sans texte (image), la
   touche passe à l'appli (Claude Code colle alors l'image). Ne pas retirer `performable:`.
 - Navigateurs : Firefox (Pywalfox, navigateur par défaut) et Zen ; éditeur VS Code officiel (`code`) ;
-  Discord : Vesktop (thème Noctalia) ; Vesktop et le Discord officiel quittent vraiment à la fermeture
+  Discord : Vesktop (thème généré par matugen) ; Vesktop et le Discord officiel quittent vraiment à la fermeture
   de la fenêtre (réduction en arrière-plan désactivée dans leur `settings.json`).
 - Fichiers : **yazi** dans Ghostty, lancé par `~/.local/bin/yazi-open` (classe `dev.yazi`, fenêtre
   flottante, Super + E ; rend Ctrl + V, Ctrl + Maj + N et Ctrl + Tab à yazi, raccourcis dans
-  `~/.config/yazi/keymap.toml`), thème `flavors/ansi.yazi` (copie du thème Noctalia en couleurs ANSI : suit Ghostty en
-  direct, sans redémarrer yazi ; `flavors/noctalia.yazi` reste généré mais inutilisé) ;
+  `~/.config/yazi/keymap.toml`), thème `flavors/ansi.yazi` (couleurs ANSI : suit Ghostty en direct, sans
+  redémarrer yazi) ;
   `net.local.yazi.desktop` ouvre les dossiers (`inode/directory`) et sert d'entrée de menu, en fenêtre
   normale (classe `dev.yazi.tuile` par `YAZI_CLASS`, hors de la règle flottante) ; l'entrée « Yazi File Manager » du
   paquet est masquée par `~/.local/share/applications/yazi.desktop`. Dolphin reste installé (« Afficher dans le dossier » des applis l'appelle encore).
@@ -208,8 +172,8 @@ avant de modifier quelque chose.
   sources dans `~/.config/startpage/newtab/`, copiés dans `/usr/lib/firefox` et `/opt/zen-browser-bin`,
   à recopier si une mise à jour les retire).
 - `EDITOR=code-wait` (dans `config.fish`) : Ctrl + G dans Claude Code ouvre le prompt dans VS Code.
-- Icônes : **Papirus-Dark** (`kdeglobals`, `qt6ct.conf`, gsettings), dossiers colorés par Noctalia.
-- Thème Qt : **qt6ct-kde**, schéma de couleurs KDE `Noctalia`. Les applis GTK 4 ne rechargent leurs
+- Icônes : **Papirus-Dark** (`kdeglobals`, `qt6ct.conf`, gsettings), dossiers colorés par matugen.
+- Thème Qt : **qt6ct-kde**, schéma de couleurs KDE `noctalia` (généré par matugen, nom hérité). Les applis GTK 4 ne rechargent leurs
   couleurs qu'au démarrage (limite de GTK).
 - Curseur choisi avec `nwg-look`.
 - Démarrage automatique commun à tous les bureaux : `~/.config/autostart/` (Steam, fenêtre ouverte à la connexion).
@@ -243,12 +207,12 @@ avant de modifier quelque chose.
   (privé, GitHub).
 - Après une modification : `dots add -u` (fichiers déjà suivis), `dots add <nouveau fichier>`,
   `dots commit -m "..."`, `dots push`.
-- Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`, `.config/niri/noctalia.kdl`,
+- Exclus : `*.bak`, `.config/hypr/config/noctalia_colors.lua`,
   `.config/quickshell/menu/colors.json`, `.config/startpage/colors.css`.
-- Les fichiers système (`/etc/greetd`, `/etc/pam.d/greetd`, `/etc/systemd/logind.conf.d`,
-  `/usr/share/wayland-sessions/hyprland-uwsm-clean.desktop` et `niri-uwsm-clean.desktop`,
-  `/var/lib/noctalia-greeter`, les copies de `autoconfig.js` et `newtab.cfg` dans `/usr/lib/firefox` et
-  `/opt/zen-browser-bin`) ne sont **pas** dans ce dépôt.
+- shell-maison a son propre dépôt (`~/Projects/shell-maison`, `git push` direct), hors de `dots`.
+- Les fichiers système (`/etc/greetd` (l'écran de connexion vient de `shell-maison/greeter/`), `/etc/pam.d/greetd`,
+  `/etc/systemd/logind.conf.d`, `/usr/share/wayland-sessions/hyprland-maison-uwsm-clean.desktop`, les copies de
+  `autoconfig.js` et `newtab.cfg` dans `/usr/lib/firefox` et `/opt/zen-browser-bin`) ne sont **pas** dans ce dépôt.
 
 ## Maintenance de ce fichier
 
@@ -263,7 +227,7 @@ système, vérifie aussi que le reste de ce fichier est encore exact.
 - ajoute, renomme, déplace ou supprime un fichier de config, un dossier important (fonds d'écran,
   captures) ou un fichier de `~/.config/hypr/config/` ;
 - change le format des descriptions de raccourcis ou la façon de lier les touches ;
-- ajoute un outil perso (script dans `~/.local/bin`, composant Quickshell, plugin Noctalia) ;
+- ajoute un outil perso (script dans `~/.local/bin`, composant Quickshell ou de shell-maison) ;
 - change de matériel (carte graphique, écran, clavier) ;
 - change une préférence ou une règle de fonctionnement ;
 - modifie ma méthode de sauvegarde des dotfiles.
