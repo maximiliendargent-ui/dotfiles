@@ -1,7 +1,0 @@
-[Desktop Entry]
-Exec=noctalia msg panel-toggle launcher /emo
-Name=Emojis
-NoDisplay=true
-StartupNotify=false
-Type=Application
-X-KDE-GlobalAccel-CommandShortcut=true

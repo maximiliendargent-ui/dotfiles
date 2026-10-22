@@ -1,7 +1,0 @@
-[Desktop Entry]
-Exec=noctalia msg caffeine-toggle
-Name=Bloquer la mise en veille
-NoDisplay=true
-StartupNotify=false
-Type=Application
-X-KDE-GlobalAccel-CommandShortcut=true

@@ -1,17 +1,17 @@
 [1]
 Description=Style Hyprland : sans barre de titre
-noborder=true
-noborderrule=2
+decorationpolicy=none
+decorationpolicyrule=2
 wmclassmatch=0
 
 [2]
 Description=Ghostty : barre de titre pour pouvoir déplacer la fenêtre
+decorationpolicy=server
+decorationpolicyrule=2
 noborder=false
-noborderrule=2
 wmclass=^(com.mitchellh.ghostty|dev.(btop|cava))$
 wmclasscomplete=false
 wmclassmatch=3
 
 [General]
-count=2
-rules=2,1
+Order=steam,2,1

@@ -39,8 +39,8 @@ avant de modifier quelque chose.
 - Session principale : **« Hyprland (Maison) »**, via UWSM
   (`/usr/share/wayland-sessions/hyprland-maison-uwsm-clean.desktop`, qui nettoie `graphical-session.target`
   avant `uwsm start -D Hyprland:maison`). **KDE Plasma** est une session secondaire (jeux / secours).
-- Noctalia et niri sont **désinstallés** (2026-10-22). La session KDE n'a pas été retouchée : elle lance
-  encore `~/.local/bin/kde-noctalia-start` (autostart `noctalia-kde.desktop`), qui ne trouve plus Noctalia.
+- Noctalia et niri sont **désinstallés** (2026-10-22). La session KDE tourne sans shell perso (Plasma seul ;
+  restes Noctalia supprimés le 2026-10-22).
 - `KillUserProcesses=yes` (`/etc/systemd/logind.conf.d/kill-user-processes.conf`).
 - KDE fait aussi le ménage au démarrage : `~/.config/plasma-workspace/env/cleanup-graphical-session.sh`.
 - KDE reprend le look et les raccourcis d'Hyprland : `~/.config/kwinrulesrc` (sans bordure, sauf Ghostty
@@ -103,7 +103,7 @@ avant de modifier quelque chose.
 - Les **couleurs de tout le bureau suivent le fond d'écran** (je ne veux pas de palette fixe) :
   `bin/fond <image>` (ou sans argument : au hasard ; `fond get` : fond actuel) applique le fond avec **awww** puis
   lance **matugen** (`couleurs/matugen.toml`, modèles dans `couleurs/modeles/`) : Ghostty, btop, cava, GTK 3/4,
-  schéma KDE `noctalia`, qt5/qt6, VS Code, Zen (`~/.cache/shell-maison/zen-browser/`), Pywalfox, Vesktop, dossiers
+  schéma KDE `noctalia`, qt6ct, VS Code, Zen (`~/.cache/shell-maison/zen-browser/`), Pywalfox, Vesktop, dossiers
   Papirus (en arrière-plan), bordures Hyprland (`noctalia_colors.lua`), menu (`colors.json`), page d'accueil
   (`colors.css`). Pour changer ces couleurs, modifier le **modèle**, jamais le fichier généré.
 - Fonds d'écran : `~/Pictures/Wallpapers`.

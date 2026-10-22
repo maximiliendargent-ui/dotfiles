@@ -1,7 +1,0 @@
-[Desktop Entry]
-Exec=noctalia msg bar-toggle
-Name=Masquer / afficher la barre
-NoDisplay=true
-StartupNotify=false
-Type=Application
-X-KDE-GlobalAccel-CommandShortcut=true

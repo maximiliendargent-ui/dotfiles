@@ -1,5 +1,5 @@
 // Accueil du terminal. Les couleurs sont des noms ANSI : elles viennent de la palette
-// de Ghostty, que Noctalia met à jour selon le fond d'écran.
+// de Ghostty, que matugen (shell-maison) met à jour selon le fond d'écran.
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
