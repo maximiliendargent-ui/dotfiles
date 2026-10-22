@@ -1,7 +1,7 @@
 // Menu façon Omarchy : liste verticale de catégories (applis, actions, réglages, maintenance).
 // Taper pour chercher (à la racine : dans tout le menu), ↑/↓ pour choisir, Entrée pour ouvrir,
 // Échap ou Retour arrière (champ vide) pour revenir, clic à côté pour fermer.
-// Couleurs : colors.json, généré par Noctalia à partir du fond d'écran (modèle menu_colors).
+// Couleurs : colors.json, généré par matugen à partir du fond d'écran (shell-maison, bin/fond).
 // Lancement : ~/.local/bin/menu-toggle (qs -c menu)
 
 import QtQuick
@@ -30,9 +30,7 @@ ShellRoot {
         property var stack: []          // sous-menus ouverts
         property var shown: []          // lignes affichées
         property var recentIds: []      // applis lancées depuis ce menu
-        property var noctaliaRecent: [] // historique du lanceur Noctalia
         property var usage: ({})        // nombre de lancements depuis ce menu, par appli
-        property var noctaliaUsage: ({}) // nombre de lancements depuis le lanceur Noctalia
 
         // Les applis sont chargées en arrière-plan au premier accès : on recalcule quand elles arrivent
         readonly property var entries: DesktopEntries.applications.values
@@ -68,37 +66,12 @@ ShellRoot {
         }
 
         FileView {
-            path: win.home + "/.local/state/noctalia/recently_used.json"
-            onLoaded: {
-                try {
-                    win.noctaliaRecent = (JSON.parse(text()).Applications || [])
-                        .map(p => p.split("/").pop().replace(/\.desktop$/, ""))
-                } catch (e) {}
-            }
-        }
-
-        FileView {
             id: usageFile
             path: win.home + "/.local/state/quickshell-menu/usage.json"
             blockWrites: true
             printErrors: false
             onLoaded: {
                 try { win.usage = JSON.parse(text()); refreshTimer.restart() } catch (e) {}
-            }
-        }
-
-        FileView {
-            path: win.home + "/.local/state/noctalia/usage_counts.json"
-            printErrors: false
-            onLoaded: {
-                try {
-                    const counts = JSON.parse(text()).Applications || {}
-                    const out = {}
-                    for (const p in counts)
-                        out[p.split("/").pop().replace(/\.desktop$/, "")] = counts[p]
-                    win.noctaliaUsage = out
-                    refreshTimer.restart()
-                } catch (e) {}
             }
         }
 
@@ -110,12 +83,8 @@ ShellRoot {
         }
         // Laisse le menu disparaître avant d'agir (captures, pipette…)
         function runLater(cmd) { run(["sh", "-c", "sleep 0.3; " + cmd]) }
-        function msg(...args) { run(["noctalia", "msg"].concat(args)) }
-        // Panneaux du centre de contrôle : l'île de shell-maison dans la session Maison (island-open), Noctalia sinon
-        function panel(tab, noctaliaPanel) {
-            if (Quickshell.env("SHELL_MAISON")) run([home + "/Projects/shell-maison/bin/island-open", tab])
-            else msg("panel-toggle", "control-center", noctaliaPanel)
-        }
+        // Onglet de l'île de shell-maison (~/Projects/shell-maison)
+        function panel(tab) { run([home + "/Projects/shell-maison/bin/island-open", tab]) }
         function app(...args) { run(["uwsm", "app", "--"].concat(args)) }
         function url(u) { run(["xdg-open", u]) }
         function edit(p) { app("code", p) }
@@ -130,7 +99,7 @@ ShellRoot {
 
         function useCount(e) {
             const id = normId(e.id)
-            return (usage[id] || 0) + (noctaliaUsage[id] || 0)
+            return usage[id] || 0
         }
 
         // Les plus utilisées d'abord, puis par ordre alphabétique
@@ -216,8 +185,7 @@ ShellRoot {
 
         function recentApps() {
             const apps = allApps()
-            const ids = recentIds.concat(noctaliaRecent.filter(x => !recentIds.includes(x)))
-            return ids.map(id => apps.find(e => normId(e.id) === id))
+            return recentIds.map(id => apps.find(e => normId(e.id) === id))
                 .filter(e => e).slice(0, maxRecent).map(appItem)
         }
 
@@ -245,16 +213,16 @@ ShellRoot {
             // Réglages : Setup, Settings et System réunis, en sous-sections
             { name: "System", glyph: "\uf013", children: [
                 { name: "Connections", glyph: "\uf1eb", children: [
-                    { name: "Audio", glyph: "\uf028", run: () => panel("son", "audio") },
-                    { name: "Wi-Fi", glyph: "\uf1eb", run: () => panel("wifi", "network") },
-                    { name: "Bluetooth", glyph: "\uf293", run: () => panel("bluetooth", "bluetooth") }
+                    { name: "Audio", glyph: "\uf028", run: () => panel("son") },
+                    { name: "Wi-Fi", glyph: "\uf1eb", run: () => panel("wifi") },
+                    { name: "Bluetooth", glyph: "\uf293", run: () => panel("bluetooth") }
                 ] },
                 { name: "Settings", glyph: "\uf1de", apps: () => systemApps("Settings"), children: [
                     { name: "Keybindings editor", glyph: "\uf11c", run: () => app("ghostty", "--class=dev.keybinds", "-e",
                         home + "/.local/share/keybind-editor/kbe", home + "/.config/hypr/config/binds.lua") },
                     { name: "Config files", glyph: "", children: [
                         { name: "Hyprland", glyph: "", run: () => edit(home + "/.config/hypr") },
-                        { name: "Noctalia", glyph: "", run: () => edit(home + "/.config/noctalia/config.toml") },
+                        { name: "shell-maison", glyph: "", run: () => edit(home + "/Projects/shell-maison") },
                         { name: "Ghostty", glyph: "", run: () => edit(home + "/.config/ghostty/config") },
                         { name: "Fish", glyph: "", run: () => edit(home + "/.config/fish/config.fish") },
                         { name: "Starship", glyph: "", run: () => edit(home + "/.config/starship.toml") },
@@ -272,7 +240,7 @@ ShellRoot {
             ] },
 
             // Maintenance
-            // Paquets (officiels + AUR) et plugins Noctalia : fenêtre Manager (~/.config/quickshell/manager)
+            // Paquets (officiels + AUR) : fenêtre Manager (~/.config/quickshell/manager)
             { name: "Manager", glyph: "", run: () => app(home + "/.local/bin/manager-open") },
             // Tout mettre à jour sans confirmation (snapshots automatiques via snap-pac)
             { name: "Update", glyph: "", run: () => term(
@@ -287,7 +255,6 @@ ShellRoot {
                 { name: "Hyprland wiki", glyph: "", run: () => url("https://wiki.hypr.land") },
                 { name: "Arch wiki", glyph: "", run: () => url("https://wiki.archlinux.org") },
                 { name: "CachyOS wiki", glyph: "", run: () => url("https://wiki.cachyos.org") },
-                { name: "Noctalia docs", glyph: "", run: () => url("https://docs.noctalia.dev/noctalia/") },
                 { name: "Quickshell docs", glyph: "", run: () => url("https://quickshell.org/docs/") }
             ] }
         ]

@@ -2,9 +2,8 @@
 // pousser la souris dans le coin haut gauche affiche les 9 espaces avec un aperçu de leurs fenêtres.
 // Clic sur un espace ou une fenêtre pour y aller ; Échap, clic à côté ou retour dans le coin pour fermer.
 // Glisser une fenêtre sur un autre espace l'y envoie ; glisser le numéro (ou le fond) d'un espace sur un autre les échange.
-// Pousser la souris dans le coin haut droit ouvre le menu de session de Noctalia (éteindre, redémarrer…),
-// au milieu du bord haut son centre de contrôle.
-// Couleurs : celles du menu (menu/colors.json, généré par Noctalia à partir du fond d'écran).
+// Le reste du bord haut est à l'île de shell-maison (~/Projects/shell-maison).
+// Couleurs : celles du menu (menu/colors.json, généré par matugen à partir du fond d'écran).
 // Lancement : au démarrage d'Hyprland (autostart.lua, qs -c overview), reste en arrière-plan.
 // Depuis un raccourci ou un script : qs -c overview ipc call overview toggle
 
@@ -41,18 +40,13 @@ ShellRoot {
 
     // Hors d'Hyprland (essais) : fenêtres lues dans le fichier JSON désigné par OVERVIEW_MOCK
     readonly property bool onHyprland: !!Quickshell.env("HYPRLAND_INSTANCE_SIGNATURE")
-    // Session « Hyprland (Maison) » (SHELL_MAISON, ~/.config/uwsm/env-maison) : barre et bords du haut gérés par
-    // ~/Projects/shell-maison ; ici, seul le coin haut gauche reste
-    readonly property bool maison: !!Quickshell.env("SHELL_MAISON")
     property var mock: []
 
     readonly property int currentWs:
         onHyprland && Hyprland.focusedWorkspace ? Hyprland.focusedWorkspace.id : 1
 
-    // Espace gaming : barre de Noctalia masquée (elle ne ressort plus au bord gauche), réaffichée en le quittant
     readonly property bool onGaming:
         onHyprland && !!Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.name === "gaming"
-    onOnGamingChanged: if (!maison) Quickshell.execDetached(["noctalia", "msg", onGaming ? "bar-hide" : "bar-show"])
 
     function show() {
         if (onHyprland) Hyprland.refreshToplevels()
@@ -68,13 +62,6 @@ ShellRoot {
     function cornerHit() {
         if (hotZonesOff()) return
         show()
-    }
-
-    // Bords actifs : ouvrent un panneau de Noctalia, refermé quand la souris en sort
-    // (noctalia-panel-hover ; mêmes exceptions que le coin)
-    function edgeHit(panel) {
-        if (hotZonesOff()) return
-        Quickshell.execDetached([home + "/.local/bin/noctalia-panel-hover", panel])
     }
 
     // Avec une adresse : focus sur cette fenêtre (toplevel.activate() est ignoré tant que la vue a le clavier)
@@ -168,44 +155,6 @@ ShellRoot {
             anchors.fill: parent
             hoverEnabled: true
             onEntered: root.cornerHit()
-        }
-    }
-
-    // ---- Coin actif : 1 pixel en haut à droite, ouvre le menu de session ----
-
-    PanelWindow {
-        visible: !root.open && !root.maison
-        anchors { top: true; right: true }
-        implicitWidth: 1
-        implicitHeight: 1
-        color: "transparent"
-        exclusionMode: ExclusionMode.Ignore
-        WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.namespace: "session-edge"
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            onEntered: root.edgeHit("session")
-        }
-    }
-
-    // ---- Bord actif : 1 pixel de haut au milieu du bord haut, ouvre le centre de contrôle ----
-
-    PanelWindow {
-        visible: !root.open && !root.maison
-        anchors { top: true }
-        implicitWidth: 400
-        implicitHeight: 1
-        color: "transparent"
-        exclusionMode: ExclusionMode.Ignore
-        WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.namespace: "control-center-edge"
-
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            onEntered: root.edgeHit("control-center")
         }
     }
 

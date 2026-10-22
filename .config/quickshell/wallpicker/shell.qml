@@ -1,7 +1,7 @@
 // Carrousel de fonds d'écran : cartes inclinées, la carte du centre mise en avant.
 // Flèches / molette pour naviguer : le fond est appliqué dès qu'on s'arrête sur une carte.
 // Espace pour un fond au hasard, Entrée, Échap ou clic pour fermer.
-// Le fond d'écran est appliqué par Noctalia (qui met à jour toutes les couleurs).
+// Le fond d'écran est appliqué par bin/fond de shell-maison (awww + matugen, qui met à jour toutes les couleurs).
 // Lancement : qs -c wallpicker
 
 import QtQuick
@@ -30,14 +30,13 @@ ShellRoot {
         WlrLayershell.namespace: "wallpicker"
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
-        // Session « Hyprland (Maison) » : fond et couleurs par shell-maison (bin/fond) au lieu de Noctalia
-        readonly property bool maison: Quickshell.env("SHELL_MAISON") === "1"
+        // Fond et couleurs : bin/fond de shell-maison (awww + matugen)
         readonly property string fond: Quickshell.env("HOME") + "/Projects/shell-maison/bin/fond"
 
         function apply(path) {
             if (!ready || !path || path === currentPath) return
             currentPath = path
-            Quickshell.execDetached(win.maison ? [win.fond, path] : ["noctalia", "msg", "wallpaper-set", path])
+            Quickshell.execDetached([win.fond, path])
         }
 
         // Applique la carte sélectionnée sans attendre, puis ferme le carrousel
@@ -75,7 +74,7 @@ ShellRoot {
 
         // Récupère le fond d'écran actuel pour le présélectionner
         Process {
-            command: win.maison ? [win.fond, "get"] : ["noctalia", "msg", "wallpaper-get"]
+            command: [win.fond, "get"]
             running: true
             stdout: StdioCollector {
                 onStreamFinished: {

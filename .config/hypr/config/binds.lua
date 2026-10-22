@@ -1,4 +1,4 @@
--- Raccourcis inspirés d'Omarchy, adaptés à Noctalia, à la config CachyOS et à l'AZERTY belge.
+-- Raccourcis inspirés d'Omarchy, adaptés à shell-maison (~/Projects/shell-maison), à la config CachyOS et à l'AZERTY belge.
 -- Chaque raccourci est écrit en toutes lettres pour être modifiable avec l'éditeur (Super + Shift + K).
 -- Description = "Section: texte" : l'aide (Super + K) les range par section.
 -- Chiffres et touches Moins/Égal liés par code physique (AZERTY) : 1..9 => code:10..18, 0 => code:19,
@@ -7,14 +7,18 @@
 -- État interne de quelques bascules
 local gaps_off = true
 
+-- shell-maison : ses scripts et ses commandes IPC (qs -c shell-maison ipc show)
+local maison = os.getenv("HOME") .. "/Projects/shell-maison/bin/"
+local ipc = "qs -c shell-maison ipc call "
+
 -----------------
 ---- LANCEUR ----
 -----------------
 hl.bind("SUPER + SUPER_L",     hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/menu-toggle"), { release = true, description = "Lanceur: Menu (appui seul sur Super)" })
 hl.bind("SUPER + Space",       hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/menu-toggle"), { description = "Lanceur: Ouvrir le lanceur" })
 hl.bind("SUPER + ALT + Space", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.local/bin/menu-toggle"), { description = "Lanceur: Ouvrir le lanceur (applications)" })
-hl.bind("SUPER + CTRL + E",    hl.dsp.exec_cmd("noctalia msg panel-toggle launcher /emo"), { description = "Lanceur: Emojis" })
-hl.bind("SUPER + Period",      hl.dsp.exec_cmd("noctalia msg panel-toggle launcher /emo"), { description = "Lanceur: Emojis" })
+hl.bind("SUPER + CTRL + E",    hl.dsp.exec_cmd(ipc .. "emojis toggle"), { description = "Lanceur: Emojis" })
+hl.bind("SUPER + Period",      hl.dsp.exec_cmd(ipc .. "emojis toggle"), { description = "Lanceur: Emojis" })
 hl.bind("SUPER + K",           hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.keybinds -e " .. os.getenv("HOME") .. "/.local/bin/hypr-keybinds"), { description = "Lanceur: Aide des raccourcis" })
 hl.bind("SUPER + SHIFT + K",   hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.keybinds -e " .. os.getenv("HOME") .. "/.local/share/keybind-editor/kbe " .. os.getenv("HOME") .. "/.config/hypr/config/binds.lua"), { description = "Lanceur: Éditeur de raccourcis" })
 
@@ -166,19 +170,18 @@ hl.bind("CTRL + SUPER + SHIFT + Down", hl.dsp.window.move({ workspace = "e+0" })
 -----------------
 ---- SYSTÈME ----
 -----------------
-hl.bind("SUPER + Escape",      hl.dsp.exec_cmd("noctalia msg panel-toggle session"), { description = "Système: Menu système (veille, redémarrage…)" })
-hl.bind("SUPER + CTRL + L",    hl.dsp.exec_cmd("noctalia msg session lock"),         { description = "Système: Verrouiller l'écran" })
+hl.bind("SUPER + Escape",      hl.dsp.exec_cmd(maison .. "island-open session"), { description = "Système: Menu système (veille, redémarrage…)" })
+hl.bind("SUPER + CTRL + L",    hl.dsp.exec_cmd(ipc .. "lock lock"),         { description = "Système: Verrouiller l'écran" })
 hl.bind("SUPER + SHIFT + L",   hl.dsp.exec_cmd("systemctl suspend-then-hibernate"),  { locked = true, description = "Système: Mise en veille" })
-hl.bind("SUPER + N",           hl.dsp.exec_cmd("noctalia msg panel-toggle control-center"),           { description = "Système: Centre de contrôle" })
-hl.bind("SUPER + CTRL + A",    hl.dsp.exec_cmd("noctalia msg panel-toggle control-center audio"),     { description = "Système: Panneau son" })
-hl.bind("SUPER + CTRL + B",    hl.dsp.exec_cmd("noctalia msg panel-toggle control-center bluetooth"), { description = "Système: Panneau Bluetooth" })
-hl.bind("SUPER + CTRL + W",    hl.dsp.exec_cmd("noctalia msg panel-toggle control-center network"),   { description = "Système: Panneau réseau" })
-hl.bind("SUPER + CTRL + N",    hl.dsp.exec_cmd("noctalia msg nightlight-toggle"),    { description = "Système: Veilleuse (lumière chaude)" })
-hl.bind("SUPER + CTRL + I",    hl.dsp.exec_cmd("noctalia msg caffeine-toggle"),      { description = "Système: Bloquer / autoriser la mise en veille" })
-hl.bind("SUPER + SHIFT + Space", hl.dsp.exec_cmd("noctalia msg bar-toggle"),         { description = "Système: Masquer / afficher la barre" })
-hl.bind("SUPER + Z",           hl.dsp.exec_cmd("noctalia msg settings-toggle"),      { description = "Système: Réglages de Noctalia" })
-hl.bind("SUPER + V",           hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"), { description = "Système: Historique du presse-papiers" })
-hl.bind("SUPER + CTRL + V",    hl.dsp.exec_cmd("noctalia msg panel-toggle clipboard"), { description = "Système: Historique du presse-papiers" })
+hl.bind("SUPER + N",           hl.dsp.exec_cmd(maison .. "island-open"),           { description = "Système: Centre de contrôle" })
+hl.bind("SUPER + CTRL + A",    hl.dsp.exec_cmd(maison .. "island-open son"),     { description = "Système: Panneau son" })
+hl.bind("SUPER + CTRL + B",    hl.dsp.exec_cmd(maison .. "island-open bluetooth"), { description = "Système: Panneau Bluetooth" })
+hl.bind("SUPER + CTRL + W",    hl.dsp.exec_cmd(maison .. "island-open wifi"),   { description = "Système: Panneau réseau" })
+hl.bind("SUPER + CTRL + N",    hl.dsp.exec_cmd(ipc .. "system nightlight"),    { description = "Système: Veilleuse (lumière chaude)" })
+hl.bind("SUPER + CTRL + I",    hl.dsp.exec_cmd(ipc .. "system caffeine"),      { description = "Système: Bloquer / autoriser la mise en veille" })
+hl.bind("SUPER + SHIFT + Space", hl.dsp.exec_cmd(ipc .. "bar toggle"),         { description = "Système: Masquer / afficher la barre" })
+hl.bind("SUPER + V",           hl.dsp.exec_cmd(ipc .. "clipboard toggle"), { description = "Système: Historique du presse-papiers" })
+hl.bind("SUPER + CTRL + V",    hl.dsp.exec_cmd(ipc .. "clipboard toggle"), { description = "Système: Historique du presse-papiers" })
 
 ---------------
 ---- STYLE ----
@@ -196,33 +199,31 @@ end, { description = "Style: Masquer / afficher les espacements" })
 -----------------------
 ---- NOTIFICATIONS ----
 -----------------------
-hl.bind("SUPER + Comma",               hl.dsp.exec_cmd("noctalia msg notification-clear-active"),  { description = "Notifications: Fermer les notifications" })
-hl.bind("SUPER + CTRL + Comma",        hl.dsp.exec_cmd("noctalia msg notification-dnd-toggle"),    { description = "Notifications: Ne pas déranger" })
-hl.bind("SUPER + ALT + Comma",         hl.dsp.exec_cmd("noctalia msg notification-invoke-latest"), { description = "Notifications: Ouvrir la dernière notification" })
-hl.bind("SUPER + SHIFT + ALT + Comma", hl.dsp.exec_cmd("noctalia msg panel-toggle control-center notifications"), { description = "Notifications: Historique" })
+hl.bind("SUPER + Comma",               hl.dsp.exec_cmd(ipc .. "notifs clear"),  { description = "Notifications: Fermer les notifications" })
+hl.bind("SUPER + CTRL + Comma",        hl.dsp.exec_cmd(ipc .. "notifs dnd"),    { description = "Notifications: Ne pas déranger" })
+hl.bind("SUPER + ALT + Comma",         hl.dsp.exec_cmd(ipc .. "notifs latest"), { description = "Notifications: Ouvrir la dernière notification" })
+hl.bind("SUPER + SHIFT + ALT + Comma", hl.dsp.exec_cmd(maison .. "island-open notifications"), { description = "Notifications: Historique" })
 
 ------------------
 ---- CAPTURES ----
 ------------------
-hl.bind("Print",               hl.dsp.exec_cmd("noctalia msg screenshot-fullscreen"), { description = "Captures: Écran entier" })
-hl.bind("SUPER + SHIFT + S",   hl.dsp.exec_cmd("noctalia msg screenshot-region"),     { description = "Captures: Zone de l'écran" })
+hl.bind("Print",               hl.dsp.exec_cmd(maison .. "capture ecran"), { description = "Captures: Écran entier" })
+hl.bind("SUPER + SHIFT + S",   hl.dsp.exec_cmd(maison .. "capture zone"),     { description = "Captures: Zone de l'écran" })
 hl.bind("SUPER + Print",       hl.dsp.exec_cmd("hyprpicker -a -n"),                   { description = "Captures: Pipette à couleurs" })
 hl.bind("SUPER + SHIFT + C",   hl.dsp.exec_cmd("hyprpicker -a -n"),                   { description = "Captures: Pipette à couleurs" })
 
 ----------------
 ---- MÉDIAS ----
 ----------------
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("noctalia msg volume-up"),   { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("noctalia msg volume-down"), { locked = true, repeating = true })
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("noctalia msg volume-mute"), { locked = true })
-hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("noctalia msg mic-mute"),    { locked = true })
-hl.bind("XF86AudioPlay",        hl.dsp.exec_cmd("noctalia msg media toggle"), { locked = true })
-hl.bind("XF86AudioPause",       hl.dsp.exec_cmd("noctalia msg media toggle"), { locked = true })
-hl.bind("XF86AudioNext",        hl.dsp.exec_cmd("noctalia msg media next"),     { locked = true })
-hl.bind("XF86AudioPrev",        hl.dsp.exec_cmd("noctalia msg media previous"), { locked = true })
-hl.bind("ALT + XF86AudioPlay",         hl.dsp.exec_cmd("noctalia msg media next"),     { locked = true, description = "Médias: Piste suivante (Alt + Lecture)" })
-hl.bind("ALT + SHIFT + XF86AudioPlay", hl.dsp.exec_cmd("noctalia msg media previous"), { locked = true, description = "Médias: Piste précédente (Alt + Shift + Lecture)" })
-hl.bind("SUPER + SHIFT + M",    hl.dsp.exec_cmd("noctalia msg volume-mute"), { locked = true, description = "Médias: Couper / rétablir le son" })
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("noctalia msg brightness-up"),   { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("noctalia msg brightness-down"), { locked = true, repeating = true })
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),   { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
+hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),    { locked = true })
+hl.bind("XF86AudioPlay",        hl.dsp.exec_cmd(ipc .. "media toggle"), { locked = true })
+hl.bind("XF86AudioPause",       hl.dsp.exec_cmd(ipc .. "media toggle"), { locked = true })
+hl.bind("XF86AudioNext",        hl.dsp.exec_cmd(ipc .. "media next"),     { locked = true })
+hl.bind("XF86AudioPrev",        hl.dsp.exec_cmd(ipc .. "media previous"), { locked = true })
+hl.bind("ALT + XF86AudioPlay",         hl.dsp.exec_cmd(ipc .. "media next"),     { locked = true, description = "Médias: Piste suivante (Alt + Lecture)" })
+hl.bind("ALT + SHIFT + XF86AudioPlay", hl.dsp.exec_cmd(ipc .. "media previous"), { locked = true, description = "Médias: Piste précédente (Alt + Shift + Lecture)" })
+hl.bind("SUPER + SHIFT + M",    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, description = "Médias: Couper / rétablir le son" })
 hl.bind("SUPER + CTRL + SHIFT + A", hl.dsp.exec_cmd("uwsm app -- ghostty --class=dev.ai --working-directory=" .. os.getenv("HOME") .. "/.config -e claude"), { description = "IA: Agent Claude Code" })

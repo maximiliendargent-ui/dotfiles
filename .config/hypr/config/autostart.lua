@@ -4,12 +4,17 @@
 hl.on("hyprland.start", function ()
     hl.exec_cmd("dbus-update-activation-environment --systemd --all")
     hl.exec_cmd("/usr/lib/pam_kwallet_init")
-    -- Session « Hyprland (Maison) » : shell-maison remplace Noctalia (fond au hasard par son bin/fond)
-    if not os.getenv("SHELL_MAISON") then
-        hl.exec_cmd("noctalia")
-        -- Nouveau fond d'écran à chaque connexion : réessaie jusqu'à ce que Noctalia réponde (10 s max)
-        hl.exec_cmd("sh -c 'for i in $(seq 50); do noctalia msg wallpaper-random >/dev/null 2>&1 && break; sleep 0.2; done'")
-    end
+    -- Shell de bureau : ~/Projects/shell-maison (barre, île, notifications, verrouillage…)
+    local maison = os.getenv("HOME") .. "/Projects/shell-maison/"
+    hl.exec_cmd("qs -c shell-maison")
+    -- Verrouillage et extinction de l'écran après inactivité
+    hl.exec_cmd("hypridle -c " .. maison .. "hypr/hypridle.conf")
+    -- Nouveau fond d'écran au hasard et couleurs assorties (bin/fond), une fois le démon awww prêt
+    hl.exec_cmd("awww-daemon")
+    hl.exec_cmd("sh -c 'until awww query >/dev/null 2>&1; do sleep 0.2; done; " .. maison .. "bin/fond'")
+    -- Historique du presse-papiers (Clipboard.qml de shell-maison) : texte et images
+    hl.exec_cmd("wl-paste --watch cliphist store")
+    hl.exec_cmd("wl-paste --type image --watch cliphist store")
     hl.exec_cmd("xhost +SI:localuser:root")
     -- Vue d'ensemble des espaces de travail (coin haut gauche) : ~/.config/quickshell/overview
     hl.exec_cmd("qs -c overview")

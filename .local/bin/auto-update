@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # Propose les mises à jour à l'ouverture de session (autostart auto-update.desktop).
 # S'il y en a, affiche une notification avec un bouton « Mettre à jour » ; un clic
-# demande au plugin Noctalia arch-updater de les installer en arrière-plan
-# (mot de passe par Polkit, journal et rollback dans son panneau).
+# lance la mise à jour dans Ghostty (~/Projects/shell-maison/bin/mises-a-jour).
 
-# Laisse la session, Noctalia et le Wi-Fi démarrer.
+# Laisse la session et le Wi-Fi démarrer.
 sleep 20
 
 # checkupdates : 0 = mises à jour, 2 = rien, 1 = échec (réseau pas encore prêt).
@@ -20,7 +19,5 @@ n=$({ [[ -n $repo ]] && echo "$repo"; paru -Qua; flatpak remote-ls --updates --c
 # -t 0 : la notification reste jusqu'à ce qu'on y réponde ou qu'on la ferme.
 choix=$(notify-send -a "Mises à jour" -i system-software-update -t 0 \
     -A update="Mettre à jour" "Mises à jour disponibles" "$n paquet(s) à mettre à jour.")
-[[ $choix == update ]] || exit 0
-# Session « Hyprland (Maison) » : pas de Noctalia, mise à jour dans Ghostty (shell-maison)
-[[ -n $SHELL_MAISON ]] && exec ~/Projects/shell-maison/bin/mises-a-jour
-exec noctalia msg plugin yuuto/arch-updater:service all update_background
+# Mise à jour dans Ghostty (shell-maison)
+[[ $choix == update ]] && exec ~/Projects/shell-maison/bin/mises-a-jour

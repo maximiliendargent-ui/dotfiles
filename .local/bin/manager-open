@@ -1,8 +1,7 @@
 #!/bin/sh
-# Ouvre la fenêtre Manager (paquets et plugins) sur l'onglet demandé :
-#   manager-open [packages|plugins] [add|installed]
-# Si elle est déjà ouverte, elle est fermée puis rouverte sur cet onglet.
+# Ouvre la fenêtre Manager (paquets) : manager-open [add|installed]
+# Si elle est déjà ouverte, elle est fermée puis rouverte.
 # Le motif « manage[r] » évite que pkill se trouve lui-même.
 pkill -f 'qs -c manage[r]'
-export MANAGER_PAGE="${1:-packages}" MANAGER_MODE="${2:-add}"
+export MANAGER_MODE="${1:-add}"
 exec qs -c manager
