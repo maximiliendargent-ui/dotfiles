@@ -86,8 +86,9 @@ avant de modifier quelque chose.
 ## shell-maison (shell de bureau en **Quickshell**)
 
 - Dépôt séparé `~/Projects/shell-maison` (GitHub `shell-maison`, privé ; son `README.md` liste chaque composant),
-  lié dans `~/.config/quickshell/shell-maison`. Relancer : `qs -c shell-maison` (Quickshell recharge les `.qml`
-  modifiés tout seul).
+  lié dans `~/.config/quickshell/shell-maison`. Après une modification d'un `.qml`, relancer le shell (pas de
+  rechargement automatique ici) : `pkill -f '^qs -c shell-maison$'` puis
+  `hyprctl dispatch 'hl.dsp.exec_cmd("qs -c shell-maison")'`.
 - Composants : barre à gauche masquée (espaces, heure, Wallhaven, Claude, mises à jour), île en haut au centre
   (centre de contrôle, musique, son, système, Wi-Fi, Bluetooth, météo, calendrier, notifications, session),
   bulles de notification, OSD du volume, agent Polkit, verrouillage (`Lock.qml`, pile PAM `pam/lock` du dépôt,
@@ -96,7 +97,7 @@ avant de modifier quelque chose.
   Wallhaven (`Wallhaven.qml`), captures (`bin/capture zone|ecran` : grim, slurp, satty ; Entrée copie,
   Ctrl + S enregistre dans `~/Pictures/Screenshots`), mises à jour (`bin/mises-a-jour`).
 - Commandes : `qs -c shell-maison ipc call <cible> <fonction>` (`island toggle <onglet>`, `lock lock`,
-  `system nightlight|caffeine`, `bar toggle`, `wallhaven toggle`…). Essais sans risque :
+  `system nightlight|caffeine`, `bar toggle`, `bar peek` (sort la barre un instant), `wallhaven toggle`…). Essais sans risque :
   `qs -c shell-maison ipc call lock test`, `ISLAND_TEST=<onglet>`, `BAR_TEST=1`,
   `GREETER_TEST=1 qs -p greeter/shell.qml`.
 - Déconnexion : `uwsm stop` (repli `loginctl terminate-session` si la session n'est pas lancée par UWSM).
