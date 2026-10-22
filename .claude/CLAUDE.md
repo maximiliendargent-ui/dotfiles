@@ -156,8 +156,8 @@ avant de modifier quelque chose.
 - Ghostty : `performable:ctrl+v=paste_from_clipboard` → Ctrl + V colle le texte ; sans texte (image), la
   touche passe à l'appli (Claude Code colle alors l'image). Ne pas retirer `performable:`.
 - Navigateurs : Firefox (Pywalfox, navigateur par défaut) et Zen ; éditeur VS Code officiel (`code`) ;
-  Discord : Vesktop (thème généré par matugen) ; Vesktop et le Discord officiel quittent vraiment à la fermeture
-  de la fenêtre (réduction en arrière-plan désactivée dans leur `settings.json`).
+  Discord : Vesktop (thème généré par matugen) ; Vesktop quitte vraiment à la fermeture
+  de la fenêtre (réduction en arrière-plan désactivée dans son `settings.json`).
 - Fichiers : **yazi** dans Ghostty, lancé par `~/.local/bin/yazi-open` (classe `dev.yazi`, fenêtre
   flottante, Super + E ; rend Ctrl + V, Ctrl + Maj + N et Ctrl + Tab à yazi, raccourcis dans
   `~/.config/yazi/keymap.toml`), thème `flavors/ansi.yazi` (couleurs ANSI : suit Ghostty en direct, sans
