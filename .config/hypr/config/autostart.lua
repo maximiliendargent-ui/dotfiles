@@ -4,8 +4,8 @@
 hl.on("hyprland.start", function ()
     hl.exec_cmd("dbus-update-activation-environment --systemd --all")
     hl.exec_cmd("/usr/lib/pam_kwallet_init")
-    -- Shell de bureau : ~/Projects/shell-maison (barre, île, notifications, verrouillage…)
-    local maison = os.getenv("HOME") .. "/Projects/shell-maison/"
+    -- Shell de bureau : ~/.config/quickshell/shell-maison (barre, île, notifications, verrouillage…)
+    local maison = os.getenv("HOME") .. "/.config/quickshell/shell-maison/"
     hl.exec_cmd("qs -c shell-maison")
     -- Verrouillage et extinction de l'écran après inactivité
     hl.exec_cmd("hypridle -c " .. maison .. "hypr/hypridle.conf")

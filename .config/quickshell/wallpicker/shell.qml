@@ -31,7 +31,7 @@ ShellRoot {
         WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
         // Fond et couleurs : bin/fond de shell-maison (awww + matugen)
-        readonly property string fond: Quickshell.env("HOME") + "/Projects/shell-maison/bin/fond"
+        readonly property string fond: Quickshell.env("HOME") + "/.config/quickshell/shell-maison/bin/fond"
 
         function apply(path) {
             if (!ready || !path || path === currentPath) return

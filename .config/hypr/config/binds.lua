@@ -1,4 +1,4 @@
--- Raccourcis inspirés d'Omarchy, adaptés à shell-maison (~/Projects/shell-maison), à la config CachyOS et à l'AZERTY belge.
+-- Raccourcis inspirés d'Omarchy, adaptés à shell-maison (~/.config/quickshell/shell-maison), à la config CachyOS et à l'AZERTY belge.
 -- Chaque raccourci est écrit en toutes lettres pour être modifiable avec l'éditeur (Super + Shift + K).
 -- Description = "Section: texte" : l'aide (Super + K) les range par section.
 -- Chiffres et touches Moins/Égal liés par code physique (AZERTY) : 1..9 => code:10..18, 0 => code:19,
@@ -8,7 +8,7 @@
 local gaps_off = true
 
 -- shell-maison : ses scripts et ses commandes IPC (qs -c shell-maison ipc show)
-local maison = os.getenv("HOME") .. "/Projects/shell-maison/bin/"
+local maison = os.getenv("HOME") .. "/.config/quickshell/shell-maison/bin/"
 local ipc = "qs -c shell-maison ipc call "
 
 -----------------

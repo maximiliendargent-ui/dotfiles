@@ -83,8 +83,8 @@ ShellRoot {
         }
         // Laisse le menu disparaître avant d'agir (captures, pipette…)
         function runLater(cmd) { run(["sh", "-c", "sleep 0.3; " + cmd]) }
-        // Onglet de l'île de shell-maison (~/Projects/shell-maison)
-        function panel(tab) { run([home + "/Projects/shell-maison/bin/island-open", tab]) }
+        // Onglet de l'île de shell-maison (~/.config/quickshell/shell-maison)
+        function panel(tab) { run([home + "/.config/quickshell/shell-maison/bin/island-open", tab]) }
         function app(...args) { run(["uwsm", "app", "--"].concat(args)) }
         function url(u) { run(["xdg-open", u]) }
         function edit(p) { app("code", p) }
@@ -222,7 +222,7 @@ ShellRoot {
                         home + "/.local/share/keybind-editor/kbe", home + "/.config/hypr/config/binds.lua") },
                     { name: "Config files", glyph: "", children: [
                         { name: "Hyprland", glyph: "", run: () => edit(home + "/.config/hypr") },
-                        { name: "shell-maison", glyph: "", run: () => edit(home + "/Projects/shell-maison") },
+                        { name: "shell-maison", glyph: "", run: () => edit(home + "/.config/quickshell/shell-maison") },
                         { name: "Ghostty", glyph: "", run: () => edit(home + "/.config/ghostty/config") },
                         { name: "Fish", glyph: "", run: () => edit(home + "/.config/fish/config.fish") },
                         { name: "Starship", glyph: "", run: () => edit(home + "/.config/starship.toml") },

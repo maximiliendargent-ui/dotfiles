@@ -16,7 +16,7 @@ ne voient aucune différence. Supprimer ce dossier ne casse rien.
 | Raccourci | Vrai emplacement | Ce qu'on y règle |
 |---|---|---|
 | `hyprland/` | `~/.config/hypr` | Hyprland (rechargé à l'enregistrement) |
-| `shell-maison/` | `~/Projects/shell-maison` | Shell de bureau en Quickshell (dépôt à part, voir son `README.md`) : `modules/` (un dossier par élément visible), `services/` (données), `components/` (briques), scripts `bin/`, couleurs `couleurs/` (modèles matugen), écran de connexion `greeter/` |
+| `shell-maison/` | `~/.config/quickshell/shell-maison` | Shell de bureau en Quickshell (dépôt à part, voir son `README.md`) : `modules/` (un dossier par élément visible), `services/` (données), `components/` (briques), scripts `bin/`, couleurs `couleurs/` (modèles matugen), écran de connexion `greeter/` |
 | `quickshell/` | `~/.config/quickshell` | Menu (`menu/`), vue d'ensemble (`overview/`), carrousel (`wallpicker/`), Manager (`manager/`) |
 | `scripts/` | `~/.local/bin` | Petits scripts lancés par les raccourcis et le menu |
 | `lanceurs/` | `~/.local/share/applications` | Entrées de menu (`.desktop`) |

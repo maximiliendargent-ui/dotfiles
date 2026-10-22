@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Propose les mises à jour à l'ouverture de session (autostart auto-update.desktop).
 # S'il y en a, affiche une notification avec un bouton « Mettre à jour » ; un clic
-# lance la mise à jour dans Ghostty (~/Projects/shell-maison/bin/mises-a-jour).
+# lance la mise à jour dans Ghostty (~/.config/quickshell/shell-maison/bin/mises-a-jour).
 
 # Laisse la session et le Wi-Fi démarrer.
 sleep 20
@@ -20,4 +20,4 @@ n=$({ [[ -n $repo ]] && echo "$repo"; paru -Qua; flatpak remote-ls --updates --c
 choix=$(notify-send -a "Mises à jour" -i system-software-update -t 0 \
     -A update="Mettre à jour" "Mises à jour disponibles" "$n paquet(s) à mettre à jour.")
 # Mise à jour dans Ghostty (shell-maison)
-[[ $choix == update ]] && exec ~/Projects/shell-maison/bin/mises-a-jour
+[[ $choix == update ]] && exec ~/.config/quickshell/shell-maison/bin/mises-a-jour

@@ -2,7 +2,7 @@
 // pousser la souris dans le coin haut gauche affiche les 9 espaces avec un aperçu de leurs fenêtres.
 // Clic sur un espace ou une fenêtre pour y aller ; Échap, clic à côté ou retour dans le coin pour fermer.
 // Glisser une fenêtre sur un autre espace l'y envoie ; glisser le numéro (ou le fond) d'un espace sur un autre les échange.
-// Le reste du bord haut est à l'île de shell-maison (~/Projects/shell-maison).
+// Le reste du bord haut est à l'île de shell-maison (~/.config/quickshell/shell-maison).
 // Couleurs : celles du menu (menu/colors.json, généré par matugen à partir du fond d'écran).
 // Lancement : au démarrage d'Hyprland (autostart.lua, qs -c overview), reste en arrière-plan.
 // Depuis un raccourci ou un script : qs -c overview ipc call overview toggle
